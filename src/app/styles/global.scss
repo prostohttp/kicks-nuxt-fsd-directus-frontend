@@ -1,0 +1,118 @@
+@use "reset";
+@use "variables" as *;
+
+@mixin transition {
+    transition: all .3s;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    color: $dark-color;
+    font-family: $open-sans;
+    background-color: $light-gray-color;
+    min-width: 375px;
+
+    >*::selection {
+        background-color: #ffa52f;
+        color: #232321;
+    }
+}
+
+a {
+    @include transition;
+
+    &:hover {
+        @include transition;
+    }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Rubik";
+    line-height: 1.1;
+}
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+button {
+    @include transition;
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 8px 16px;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+
+    &:hover {
+        @include transition;
+    }
+}
+
+.wrapper {
+    max-width: 1352px;
+    margin: 32px auto 18px;
+    padding: 0 16px;
+
+    @media (max-width: 1199px) {}
+}
+
+.icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.b-wrapper {
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+    padding: 0;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0 15px;
+
+    &__title {
+        font-size: 2rem;
+        line-height: 1.4;
+        text-align: center;
+        margin-top: 30px;
+
+        @media (max-width: 768px) {
+            font-size: 18px;
+        }
+    }
+
+    &__text {
+        font-size: 18px;
+    }
+
+    &__button {
+        background: $dark-color;
+        color: #fff;
+        text-transform: uppercase;
+    }
+}

@@ -1,0 +1,20 @@
+import type { DirectusQueryParams } from "nuxt-directus";
+import type { CollectionType } from "../types/collection";
+
+export const getBanner = (bannerId: string, collection: CollectionType) => {
+  try {
+    const params: DirectusQueryParams = {
+      fields: [
+        "banner.image",
+        "banner.small_heading",
+        "banner.heading",
+        "banner.description",
+      ],
+    };
+
+    return useNuxtApp().$api.getById(collection, bannerId, params);
+  } catch (e) {
+    const error = e as Error;
+    throw createError({ message: error.message });
+  }
+};

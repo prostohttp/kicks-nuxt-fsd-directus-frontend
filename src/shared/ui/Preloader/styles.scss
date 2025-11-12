@@ -1,0 +1,28 @@
+.loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+
+    &__indicator {
+        width: 70px;
+        height: 30px;
+    }
+
+    .ellipse:nth-child(1) {
+        animation: gooey 1s cubic-bezier(0.59, 0.8, 0.29, 0.1) infinite both alternate-reverse;
+        animation-delay: 0.3s;
+    }
+}
+
+@keyframes gooey {
+    to {
+        transform: translate3d(230px, 0, 0);
+    }
+}

@@ -1,0 +1,8 @@
+.carousel-navigation {
+    display: flex;
+    gap: 15px;
+
+    .chevron-left {
+        transform: rotate(180deg);
+    }
+}

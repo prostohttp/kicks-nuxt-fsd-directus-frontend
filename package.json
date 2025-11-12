@@ -1,0 +1,41 @@
+{
+  "name": "@prostohttp/kicks",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@nuxt/eslint": "^1.10.0",
+    "@nuxt/fonts": "^0.12.1",
+    "@nuxt/image": "^2.0.0",
+    "@nuxt/test-utils": "^3.20.1",
+    "@nuxtjs/seo": "^3.2.2",
+    "@pinia/colada": "^0.17.8",
+    "@pinia/colada-nuxt": "^0.2.4",
+    "@pinia/nuxt": "^0.11.3",
+    "@vueuse/nuxt": "^14.0.0",
+    "eslint": "^9.39.1",
+    "nuxt": "^4.2.1",
+    "nuxt-directus": "^5.7.0",
+    "nuxt-security": "^2.4.0",
+    "nuxt-typed-router": "^4.0.2",
+    "pinia": "^3.0.4",
+    "prettier": "^3.6.2",
+    "v-gsap-nuxt": "^1.4.4",
+    "vue": "^3.5.24",
+    "vue-router": "^4.6.3",
+    "vue3-carousel-nuxt": "^1.1.6",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@feature-sliced/steiger-plugin": "^0.5.7",
+    "@pinia/colada-devtools": "^0.1.8",
+    "sass": "^1.94.0",
+    "steiger": "^0.5.11"
+  }
+}

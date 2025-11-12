@@ -1,0 +1,13 @@
+export { default as IconAccount } from "./IconAccount.vue";
+export { default as IconSearch } from "./IconSearch.vue";
+export { default as IconCaretDown } from "./IconCaretDown.vue";
+export { default as IconBurger } from "./IconBurger.vue";
+export { default as IconClose } from "./IconClose.vue";
+export { default as IconArrowTopRight } from "./IconArrowTopRight.vue";
+export { default as IconAdd } from "./IconAdd.vue";
+export { default as IconFieldError } from "./IconFieldError.vue";
+export { default as IconChevronRight } from "./IconChevronRight.vue";
+export { default as IconFacebook } from "./social/IconFacebook.vue";
+export { default as IconInstagram } from "./social/IconInstagram.vue";
+export { default as IconTiktok } from "./social/IconTiktok.vue";
+export { default as IconTwitter } from "./social/IconTwitter.vue";

@@ -1,0 +1,93 @@
+@mixin btn-disabled {
+    color: #8F8C91;
+    cursor: default;
+}
+
+.btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    // justify-content: space-between;
+    gap: 4px;
+    text-align: center;
+    letter-spacing: 0.25px;
+    outline: 1px solid transparent;
+    outline-offset: 1px;
+    transition: all .3s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+    &:hover {
+        outline: 1px solid #232321;
+        transition: all .2s cubic-bezier(0.075, 0.82, 0.165, 1);
+    }
+
+    &:disabled {
+        outline: none;
+    }
+
+    svg {
+        height: 21px;
+    }
+
+    &-text {
+        font-family: "Rubik";
+        display: flex;
+    }
+
+    &-small {
+        height: 32px;
+    }
+
+    &-normal {
+        height: 40px;
+    }
+
+    &-large {
+        height: 50px;
+        padding-left: 24px;
+        padding-right: 24px;
+
+        @media (max-width: 991px) {
+            padding-left: 19px;
+            padding-right: 19px;
+        }
+    }
+
+    &-square {
+        width: 40px;
+        height: 40px;
+    }
+
+    &-fill {
+        background-color: #232321;
+        color: #fff;
+
+        &:disabled {
+            @include btn-disabled;
+            background-color: rgb(35 35 33 / 45%);
+
+            path {
+                outline: none;
+                stroke: #8F8C91;
+            }
+        }
+    }
+
+    &-outline {
+        background-color: transparent;
+        color: #232321;
+        border: 1px solid #232321;
+
+        &:disabled {
+            border-color: #d2d1d3;
+
+            &:hover {
+                outline: none;
+            }
+        }
+    }
+
+    &-transparent {
+        color: #232321;
+        background-color: transparent;
+    }
+}

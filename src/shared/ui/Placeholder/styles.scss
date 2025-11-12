@@ -1,0 +1,15 @@
+.placeholder {
+    background-color: hsl(210deg 1.08% 79.95%);
+    width: 100%;
+    height: 100%;
+}
+
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(.4, 0, .6, 1) infinite;
+}
+
+@keyframes pulse {
+    50% {
+        opacity: 0.5;
+    }
+}

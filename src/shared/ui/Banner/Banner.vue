@@ -1,0 +1,66 @@
+<script setup lang="ts">
+import type { BannerType } from "./types";
+
+const { image, heading, small_heading, description } =
+  defineProps<BannerType>();
+
+const { getThumbnail: banner } = useDirectusFiles();
+const smallTitleRef = useTemplateRef("small-title");
+const titleRef = useTemplateRef("title");
+const descriptionRef = useTemplateRef("description");
+onMounted(() => {
+  if (smallTitleRef.value && titleRef.value && descriptionRef.value) {
+    useGSAP()
+      .fromTo(
+        smallTitleRef.value,
+        { x: -100, opacity: 0 },
+        {
+          x: 0,
+          opacity: 1,
+        },
+      )
+      .duration(0.4);
+    useGSAP()
+      .fromTo(titleRef.value, { x: -100, opacity: 0 }, { x: 0, opacity: 1 })
+      .delay(0.6)
+      .duration(0.3);
+    useGSAP()
+      .fromTo(
+        descriptionRef.value,
+        { x: -100, opacity: 0 },
+        { x: 0, opacity: 1 },
+      )
+      .delay(0.3)
+      .duration(0.6);
+  }
+});
+</script>
+
+<template>
+  <section class="banner">
+    <NuxtImg
+      class="banner__image"
+      alt="heading"
+      :src="banner(image, { format: 'webp', fit: 'cover' })"
+    />
+    <div class="banner__info">
+      <h3
+        v-if="small_heading"
+        ref="small-title"
+        class="banner__info__small-title"
+      >
+        {{ small_heading }}
+      </h3>
+      <h2 v-if="heading" ref="title" class="banner__info__title">
+        {{ heading }}
+      </h2>
+      <p v-if="description" ref="description" class="banner__info__description">
+        {{ description }}
+      </p>
+    </div>
+  </section>
+</template>
+
+<style lang="scss">
+@use "styles";
+</style>

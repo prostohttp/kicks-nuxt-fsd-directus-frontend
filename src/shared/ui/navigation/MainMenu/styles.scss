@@ -1,0 +1,120 @@
+.overflow-hidden {
+    overflow: hidden;
+}
+
+.horizontal-menu {
+    font-size: 16px;
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    font-family: "Rubik";
+
+    @media (max-width: 991px) {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 100;
+        width: 100vw;
+        height: 100vh;
+        background-color: #4a69e2;
+        overflow-y: auto;
+        overflow-x: hidden;
+        display: block;
+        padding-top: 35px;
+        padding-bottom: 20px;
+    }
+
+    &__item {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        line-height: 30px;
+
+        @media (max-width: 991px) {
+            gap: 0;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        &-children {
+            position: absolute;
+            z-index: 100;
+            top: 0;
+            left: 0;
+            top: 30px;
+            background: #232321;
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            overflow: hidden;
+
+            .horizontal-menu__item {
+                &-link {
+                    font-weight: 400;
+                    color: #fff;
+                }
+            }
+
+            @media (max-width: 991px) {
+                position: relative;
+                width: 100%;
+                border-radius: 0;
+                top: 0;
+
+                &[data-visible="false"] {
+                    padding: 0;
+                }
+            }
+        }
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &-link {
+            color: #232321;
+            font-weight: 600;
+            text-decoration: none;
+
+            &.router-link-active {
+                color: #ffa52f;
+            }
+
+            @media (max-width: 991px) {
+                font-size: 1.5rem;
+                text-transform: uppercase;
+
+                &-icon {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+.mobile-menu-trigger {
+    display: none;
+    border: none;
+    background-color: transparent;
+    transform: scale(1.2);
+    position: relative;
+    z-index: 101;
+
+    @media (max-width: 991px) {
+        display: flex;
+        padding: 10px;
+        align-items: center;
+        justify-content: center;
+
+        &-icon {
+            position: absolute;
+        }
+
+        .icon-close {
+            transform: scale(1.7)
+        }
+    }
+}

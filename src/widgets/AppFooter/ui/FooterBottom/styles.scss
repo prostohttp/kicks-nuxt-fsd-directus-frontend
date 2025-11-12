@@ -1,0 +1,137 @@
+.footer-bottom {
+    position: relative;
+    border-radius: 48px;
+    background-color: #232321;
+    padding: 0 29px;
+    overflow: hidden;
+    color: #e7e7e3;
+
+    @media (max-width: 991px) {
+        padding: 0 16px;
+        border-radius: 24px;
+    }
+
+    &__logo {
+        a {
+            position: relative;
+            bottom: -105px;
+
+            @media (max-width: 991px) {
+                top: 40px;
+            }
+        }
+
+        img {
+            filter: brightness(0) invert(1);
+        }
+    }
+
+    &__section {
+        display: flex;
+        gap: 20px;
+        padding: 40px 0 0;
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 1.5;
+
+        @media (max-width:991px) {
+            padding-top: 24px;
+            flex-direction: column;
+            font-size: 16px;
+            gap: 24px;
+        }
+
+        h3 {
+            color: #ffa52f;
+            font-size: 36px;
+            margin-bottom: 4px;
+
+            @media (max-width:991px) {
+                font-size: 24px;
+            }
+        }
+
+        h4 {
+            color: #ffa52f;
+            font-size: 24px;
+            margin-bottom: 16px;
+
+            @media (max-width: 991px) {
+                font-size: 20px;
+                width: 100%;
+            }
+        }
+
+        &__one {
+            width: 40%;
+
+            @media (max-width: 991px) {
+                width: 100%;
+
+                p {
+                    max-width: 100%;
+                }
+            }
+
+            p {
+                max-width: 90%;
+            }
+        }
+
+        &__two {
+            width: 20%;
+
+            @media (max-width:991px) {
+                width: 100%;
+            }
+        }
+
+        &__three {
+            width: 20%;
+
+            @media (max-width:991px) {
+                width: 100%;
+            }
+        }
+
+        &__four {
+            width: 20%;
+
+            @media (max-width:991px) {
+                width: 100%;
+            }
+        }
+    }
+
+    .social-links {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+
+        @media (max-width:991px) {
+            gap: 16px;
+        }
+    }
+}
+
+.copyright {
+    margin-top: 28px;
+    display: flex;
+    justify-content: center;
+
+    &__text {
+        border-bottom: 1px solid #232321;
+        padding-bottom: 1px;
+
+        @media (max-width:991px) {
+            border-bottom: none;
+            text-align: center;
+        }
+
+        a {
+            color: #4a69e2;
+            text-decoration: none;
+            font-weight: 500;
+        }
+    }
+}
