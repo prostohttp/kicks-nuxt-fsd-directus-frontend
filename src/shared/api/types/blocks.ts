@@ -15,3 +15,10 @@ export interface BlockProductType {
   columns: number;
   button_text: string;
 }
+
+export interface BlockCategoryType {
+  heading: string;
+  collection: CollectionType;
+  limit: number;
+  columns: number;
+}

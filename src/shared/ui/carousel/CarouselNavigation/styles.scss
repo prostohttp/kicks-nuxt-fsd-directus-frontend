@@ -1,8 +1,29 @@
 .carousel-navigation {
-    display: flex;
-    gap: 15px;
+  display: flex;
+  gap: 15px;
 
-    .chevron-left {
-        transform: rotate(180deg);
+  @media (max-width: 991px) {
+    gap: 8px;
+  }
+
+  .chevron-left {
+    transform: rotate(180deg);
+  }
+
+  &-dark {
+    .btn {
+      background-color: #e7e7e3;
+
+      &:hover {
+        outline: 1px solid #e7e7e3;
+        transition: all 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+      }
+
+      svg {
+        path {
+          stroke: #232321 !important;
+        }
+      }
     }
+  }
 }

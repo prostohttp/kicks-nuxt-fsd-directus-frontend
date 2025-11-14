@@ -6,8 +6,11 @@ export type { ProductType } from "./types/product";
 export type { GlobalType } from "./types/global";
 export type { BlockSliderType } from "./types/blocks";
 export type { BlockProductType } from "./types/blocks";
+export type { BlockCategoryType } from "./types/blocks";
 
 export { getPageBlocksAndSeo } from "./base/pageApi";
 export { getBanner } from "./base/bannerApi";
 export { getBlockSlider } from "./base/blockSliderApi";
+export { getBlockProducts } from "./base/blockProductsApi";
+export { getBlockCategories } from "./base/blockCategoriesApi";
 export { getSlider } from "./base/sliderApi";

@@ -2,6 +2,8 @@
 import Button from "../../Button/Button.vue";
 import { IconChevronRight } from "../../icons";
 
+const { variant = "light" } = defineProps<{ variant?: "light" | "dark" }>();
+
 defineEmits<{
   prev: [];
   next: [];
@@ -9,7 +11,10 @@ defineEmits<{
 </script>
 
 <template>
-  <section class="carousel-navigation">
+  <section
+    class="carousel-navigation"
+    :class="{ 'carousel-navigation-dark': variant === 'dark' }"
+  >
     <Button
       variant="fill"
       size="normal"

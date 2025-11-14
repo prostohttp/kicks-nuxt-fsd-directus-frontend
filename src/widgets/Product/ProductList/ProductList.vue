@@ -3,6 +3,11 @@ import { ProductCard, useProductStore } from "~/src/entities/Product";
 import { CollectionType, type BlockProductType } from "~/src/shared/api";
 import { Button } from "~/src/shared/ui/Button";
 import { CarouselNavigation } from "~/src/shared/ui/carousel";
+import {
+  HeadingWithNav,
+  LargeHeading,
+  SmallHeading,
+} from "~/src/shared/ui/heading";
 
 const { settings, label } = defineProps<{
   settings: BlockProductType;
@@ -47,14 +52,14 @@ const columnClass = () =>
 <template>
   <section class="product-list">
     <div v-if="is_carousel" class="product-list__carousel">
-      <div class="product-list__heading">
-        <h3 v-if="heading" class="product-list__heading__title-carousel">
-          {{ heading }}
-        </h3>
-        <div class="product-list__heading__scroll-nav">
+      <HeadingWithNav>
+        <template #heading>
+          <SmallHeading v-if="heading" :heading />
+        </template>
+        <template #nav>
           <CarouselNavigation @prev="prevHandler" @next="nextHandler" />
-        </div>
-      </div>
+        </template>
+      </HeadingWithNav>
       <div class="product-list__cards">
         <Carousel v-bind="carouselConfig" ref="productCarousel">
           <Slide v-for="product in data" :key="product.id">
@@ -69,9 +74,7 @@ const columnClass = () =>
     </div>
     <div v-else class="product-list__grid">
       <div class="product-list__heading">
-        <h3 v-if="heading" class="product-list__heading__title">
-          {{ heading }}
-        </h3>
+        <LargeHeading v-if="heading" :heading />
         <div class="product-list__heading__button">
           <NuxtLink :to="button_url">
             <Button

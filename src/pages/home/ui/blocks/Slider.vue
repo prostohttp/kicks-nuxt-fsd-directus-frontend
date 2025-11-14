@@ -4,7 +4,7 @@ import { Slider, type SliderType } from "~/src/shared/ui/Slider";
 
 const { itemId } = defineProps<{ itemId: string }>();
 const { data: slider, isLoading } = useQuery({
-  key: ["home-hero-slider"],
+  key: ["home-hero-slider-block"],
   query: async () => (await getSlider(itemId)) as SliderType,
 });
 </script>

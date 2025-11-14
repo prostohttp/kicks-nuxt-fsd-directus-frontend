@@ -8,17 +8,6 @@
       &__track {
         align-items: flex-start;
       }
-
-      &__pagination-button {
-        width: 40px;
-        height: 6px;
-        background-color: #b6b6b2;
-        border-radius: 8px;
-
-        &--active {
-          background-color: #416aea;
-        }
-      }
     }
   }
 
@@ -55,27 +44,6 @@
     justify-content: space-between;
     align-items: flex-end;
     margin-bottom: 32px;
-
-    &__title {
-      width: 50%;
-      font-size: 74px;
-      font-weight: 600;
-      line-height: 98%;
-      text-transform: uppercase;
-
-      @media (max-width: 991px) {
-        font-size: 24px;
-      }
-    }
-
-    &__title-carousel {
-      font-size: 48px;
-      font-weight: 600;
-
-      @media (max-width: 991px) {
-        font-size: 24px;
-      }
-    }
 
     &__button {
       width: 50%;
