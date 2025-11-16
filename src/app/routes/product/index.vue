@@ -1,8 +1,7 @@
-<script setup lang='ts'>
-import { ROUTES } from '~/src/shared/routes';
+<script setup lang="ts">
+import { ROUTES } from "~/src/shared/routes";
 
-
-    definePageMeta({
-        redirect: ROUTES.main,
-    })
+definePageMeta({
+  redirect: ROUTES.main,
+});
 </script>

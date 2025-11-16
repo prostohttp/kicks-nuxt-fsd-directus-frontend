@@ -20,11 +20,13 @@ const isServerError = computed(() => error && error.statusCode >= 500);
     </h1>
   </div>
   <ClientOnly v-else>
-    <NuxtLayout name="default" >
+    <NuxtLayout name="default">
       <div class="error">
         <h1 class="error__title">{{ error?.statusCode }}</h1>
         <p class="error__text">{{ error?.statusMessage }}</p>
-        <button class="error__button" @click="handleError">Go to Home Page</button>
+        <button class="error__button" @click="handleError">
+          Go to Home Page
+        </button>
       </div>
     </NuxtLayout>
   </ClientOnly>

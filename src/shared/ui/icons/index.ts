@@ -7,6 +7,8 @@ export { default as IconArrowTopRight } from "./IconArrowTopRight.vue";
 export { default as IconAdd } from "./IconAdd.vue";
 export { default as IconFieldError } from "./IconFieldError.vue";
 export { default as IconChevronRight } from "./IconChevronRight.vue";
+export { default as IconStarFill } from "./IconStarFill.vue";
+export { default as IconStarOutline } from "./IconStarOutline.vue";
 export { default as IconFacebook } from "./social/IconFacebook.vue";
 export { default as IconInstagram } from "./social/IconInstagram.vue";
 export { default as IconTiktok } from "./social/IconTiktok.vue";

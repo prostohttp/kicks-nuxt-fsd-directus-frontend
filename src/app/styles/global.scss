@@ -14,6 +14,7 @@ body {
   font-family: $open-sans;
   background-color: $light-gray-color;
   min-width: 375px;
+  overflow-x: hidden;
 
   > *::selection {
     background-color: #ffa52f;

@@ -1,10 +1,11 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="heading-with-nav">
+  <div class="heading-with">
     <slot name="heading"/>
-    <div class="heading-with-nav__nav">
+    <div class="heading-with__right">
       <slot name="nav"/>
+      <slot name="button"/>
     </div>
   </div>
 </template>

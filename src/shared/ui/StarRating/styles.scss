@@ -1,0 +1,16 @@
+.star-rating {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+
+  &__icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    svg {
+      scale: 2;
+    }
+  }
+}

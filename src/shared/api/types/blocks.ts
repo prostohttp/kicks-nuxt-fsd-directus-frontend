@@ -22,3 +22,12 @@ export interface BlockCategoryType {
   limit: number;
   columns: number;
 }
+
+export interface BlockReviewsType {
+  heading: string;
+  collection: CollectionType;
+  limit?: number;
+  columns: number;
+  button_url?: string;
+  button_text?: string;
+}

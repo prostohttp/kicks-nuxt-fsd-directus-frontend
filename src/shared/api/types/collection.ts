@@ -9,6 +9,7 @@ export enum CollectionType {
   SLIDERS = "slider",
   CATEGORIES = "product_categories",
   PRODUCTS = "products",
+  REVIEWS = "reviews",
 
   PAGE_BLOCKS = "pages_blocks",
   BLOCKS_BANNER = "blocks_banner_2",

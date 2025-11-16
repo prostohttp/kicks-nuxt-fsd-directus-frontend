@@ -10,6 +10,10 @@
     transform: rotate(180deg);
   }
 
+  .btn:disabled {
+    opacity: 0.6;
+  }
+
   &-dark {
     .btn {
       background-color: #e7e7e3;

@@ -2,7 +2,7 @@
 import type { BlockCategoryType } from "~/src/shared/api";
 import { getCategories } from "./api";
 import { CarouselNavigation } from "~/src/shared/ui/carousel";
-import { HeadingWithNav, LargeHeading } from "~/src/shared/ui/heading";
+import { HeadingWith, LargeHeading } from "~/src/shared/ui/heading";
 import { Button } from "~/src/shared/ui/Button";
 import { IconArrowTopRight } from "~/src/shared/ui/icons";
 import { ROUTES } from "~/src/shared/routes";
@@ -15,11 +15,13 @@ const { data: categories } = useQuery({
 });
 
 const categoryCarousel = ref();
+const activeSlide = ref(0);
 const carouselConfig = {
   gap: 0,
   breakpointMode: "carousel",
   wrapAround: false,
   snapAlign: "start",
+  itemsToShow: 2,
   breakpoints: {
     991: {
       itemsToShow: 2,
@@ -29,27 +31,37 @@ const carouselConfig = {
     },
   },
 } as const;
-const prevHandler = () => categoryCarousel.value?.prev();
-const nextHandler = () => categoryCarousel.value?.next();
+const maxSlideIndex = categories.value ? categories.value.length - 1 : 0;
+const prevHandler = () =>
+  activeSlide.value ? categoryCarousel.value?.prev() : null;
+const nextHandler = () =>
+  activeSlide.value < maxSlideIndex ? categoryCarousel.value?.next() : null;
 const { getThumbnail: img } = useDirectusFiles();
 </script>
 
 <template>
   <section class="categories-carousel force-full-width">
     <div class="wrapper">
-      <HeadingWithNav>
+      <HeadingWith>
         <template #heading>
           <LargeHeading :heading="settings.heading" />
         </template>
         <template #nav>
           <CarouselNavigation
+            v-model="activeSlide"
             variant="dark"
+            :loop="false"
+            :max="maxSlideIndex"
             @prev="prevHandler"
             @next="nextHandler"
           />
         </template>
-      </HeadingWithNav>
-      <Carousel v-bind="carouselConfig" ref="categoryCarousel">
+      </HeadingWith>
+      <Carousel
+        v-bind="carouselConfig"
+        ref="categoryCarousel"
+        v-model="activeSlide"
+      >
         <Slide v-for="category in categories" :key="category.id">
           <div class="categories-carousel__item">
             <NuxtImg

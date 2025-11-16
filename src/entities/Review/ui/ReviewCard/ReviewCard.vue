@@ -1,0 +1,54 @@
+<script setup lang="ts">
+import { StarRating } from "~/src/shared/ui/StarRating";
+import type { ReviewType } from "../../api/types";
+import { ROUTES } from "~/src/shared/routes";
+
+const { gallery, product, rating, review, title, user_created } =
+  defineProps<ReviewType>();
+
+const ratingModel = ref(rating);
+const { getThumbnail: img } = useDirectusFiles();
+</script>
+
+<template>
+  <section class="review-card">
+    <div class="review-card__header">
+      <div class="review-card__header__info">
+        <h3>
+          <NuxtLink :to="ROUTES.product(product.slug)">
+            {{ title }}
+          </NuxtLink>
+        </h3>
+        <p>
+          <NuxtLink :to="ROUTES.product(product.slug)">
+            {{ review }}
+          </NuxtLink>
+        </p>
+        <StarRating v-model="ratingModel" />
+      </div>
+      <div class="review-card__header__avatar">
+        <NuxtImg
+          :src="
+            img(user_created.avatar, {
+              format: 'webp',
+            })
+          "
+        />
+      </div>
+    </div>
+    <div class="review-card__image">
+      <NuxtImg
+        v-if="gallery[0]?.directus_files_id"
+        :src="
+          img(gallery[0].directus_files_id, {
+            format: 'webp',
+          })
+        "
+      />
+    </div>
+  </section>
+</template>
+
+<style lang="scss">
+@use "styles";
+</style>

@@ -1,0 +1,26 @@
+.heading-with {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-bottom: 40px;
+
+  &__right {
+    &__button {
+      width: 50%;
+      display: flex;
+      justify-content: flex-end;
+
+      @media (max-width: 991px) {
+        button {
+          height: 40px;
+        }
+      }
+    }
+
+    a {
+      text-decoration: none;
+      width: fit-content;
+      display: block;
+    }
+  }
+}

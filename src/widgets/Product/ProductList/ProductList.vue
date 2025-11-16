@@ -4,7 +4,7 @@ import { CollectionType, type BlockProductType } from "~/src/shared/api";
 import { Button } from "~/src/shared/ui/Button";
 import { CarouselNavigation } from "~/src/shared/ui/carousel";
 import {
-  HeadingWithNav,
+  HeadingWith,
   LargeHeading,
   SmallHeading,
 } from "~/src/shared/ui/heading";
@@ -52,14 +52,14 @@ const columnClass = () =>
 <template>
   <section class="product-list">
     <div v-if="is_carousel" class="product-list__carousel">
-      <HeadingWithNav>
+      <HeadingWith>
         <template #heading>
           <SmallHeading v-if="heading" :heading />
         </template>
         <template #nav>
           <CarouselNavigation @prev="prevHandler" @next="nextHandler" />
         </template>
-      </HeadingWithNav>
+      </HeadingWith>
       <div class="product-list__cards">
         <Carousel v-bind="carouselConfig" ref="productCarousel">
           <Slide v-for="product in data" :key="product.id">
@@ -73,9 +73,11 @@ const columnClass = () =>
       <div class="product-list__dots"></div>
     </div>
     <div v-else class="product-list__grid">
-      <div class="product-list__heading">
-        <LargeHeading v-if="heading" :heading />
-        <div class="product-list__heading__button">
+      <HeadingWith>
+        <template #heading>
+          <LargeHeading v-if="heading" :heading />
+        </template>
+        <template #button>
           <NuxtLink :to="button_url">
             <Button
               variant="fill"
@@ -85,8 +87,8 @@ const columnClass = () =>
               {{ button_text }}
             </Button>
           </NuxtLink>
-        </div>
-      </div>
+        </template>
+      </HeadingWith>
       <div class="product-list__cards">
         <div :class="['product-list__cards__wrapper', columnClass()]">
           <ProductCard

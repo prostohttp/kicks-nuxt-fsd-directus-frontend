@@ -35,12 +35,12 @@
     width: 100%;
 
     img {
-      width: 80%;
+      width: 70%;
       margin: 0 auto;
       display: flex;
 
       @media (max-width: 991px) {
-        width: 90%;
+        width: 80%;
       }
     }
 
@@ -72,6 +72,10 @@
         margin-bottom: 5px;
         display: flex;
         justify-content: flex-end;
+
+        @media (max-width: 991px) {
+          margin-bottom: 0;
+        }
       }
     }
   }
