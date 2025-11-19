@@ -2,14 +2,19 @@
 import type { BlockCategoryType } from "~/src/shared/api";
 import { getCategories } from "./api";
 import { CarouselNavigation } from "~/src/shared/ui/carousel";
-import { HeadingWith, LargeHeading } from "~/src/shared/ui/heading";
+import {
+  EmptyDataHeading,
+  HeadingWith,
+  LargeHeading,
+} from "~/src/shared/ui/heading";
 import { Button } from "~/src/shared/ui/Button";
 import { IconArrowTopRight } from "~/src/shared/ui/icons";
 import { ROUTES } from "~/src/shared/routes";
+import { Preloader } from "~/src/shared/ui/preloader";
 
 const { settings } = defineProps<{ settings: BlockCategoryType }>();
 
-const { data: categories } = useQuery({
+const { data: categories, isLoading } = useQuery({
   key: ["home-categories-carousel"],
   query: async () => await getCategories(settings.collection, settings.limit),
 });
@@ -31,16 +36,14 @@ const carouselConfig = {
     },
   },
 } as const;
-const maxSlideIndex = categories.value ? categories.value.length - 1 : 0;
-const prevHandler = () =>
-  activeSlide.value ? categoryCarousel.value?.prev() : null;
-const nextHandler = () =>
-  activeSlide.value < maxSlideIndex ? categoryCarousel.value?.next() : null;
+const prevHandler = () => categoryCarousel.value?.prev();
+const nextHandler = () => categoryCarousel.value?.next();
 const { getThumbnail: img } = useDirectusFiles();
 </script>
 
 <template>
-  <section class="categories-carousel force-full-width">
+  <Preloader v-if="isLoading" />
+  <section v-else class="categories-carousel force-full-width">
     <div class="wrapper">
       <HeadingWith>
         <template #heading>
@@ -51,13 +54,14 @@ const { getThumbnail: img } = useDirectusFiles();
             v-model="activeSlide"
             variant="dark"
             :loop="false"
-            :max="maxSlideIndex"
+            :max="categories ? categories.length - 1 : 0"
             @prev="prevHandler"
             @next="nextHandler"
           />
         </template>
       </HeadingWith>
       <Carousel
+        v-if="categories?.length"
         v-bind="carouselConfig"
         ref="categoryCarousel"
         v-model="activeSlide"
@@ -84,6 +88,7 @@ const { getThumbnail: img } = useDirectusFiles();
           </div>
         </Slide>
       </Carousel>
+      <EmptyDataHeading v-else variant="dark" />
     </div>
   </section>
 </template>

@@ -14,7 +14,6 @@ useSeoMeta({
 
 <template>
   <main class="home-page">
-    <!-- <pre>{{ data?.blocks }}</pre> -->
     <component
       :is="homeBlocksMapper[block.id]"
       v-for="(block, index) in data?.blocks"

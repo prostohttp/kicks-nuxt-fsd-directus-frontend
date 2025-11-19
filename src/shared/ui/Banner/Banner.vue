@@ -41,6 +41,7 @@ onMounted(() => {
     <NuxtImg
       class="banner__image"
       alt="heading"
+      placeholder
       :src="banner(image, { format: 'webp', fit: 'cover' })"
     />
     <div class="banner__info">

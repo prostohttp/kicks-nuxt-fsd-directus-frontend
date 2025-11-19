@@ -47,10 +47,18 @@ defineOptions({
 
 <style lang="scss">
 .link-variant-wrapper {
+  width: 100%;
+
   @media (max-width: 991px) {
     display: block;
     text-align: center;
     padding: 20px 16px;
+  }
+
+  a {
+    height: 100%;
+    width: 100%;
+    display: flex;
   }
 }
 </style>

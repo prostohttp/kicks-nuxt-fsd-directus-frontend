@@ -1,0 +1,22 @@
+.error-message {
+  background-color: #da1e28;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 20px 30px;
+  position: relative;
+
+  &__close {
+    position: absolute;
+    z-index: 10;
+    top: 15px;
+    right: 15px;
+    scale: 1.8;
+    transition: all .2s;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

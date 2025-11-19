@@ -1,8 +1,8 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="loading">
-    <div class="loading__indicator">
+  <div class="overlay-preloader">
+    <div class="overlay-preloader__indicator">
       <svg class="loader" viewBox="204 184 264 32">
         <defs>
           <filter id="gooey" color-interpolation-filters="sRGB">

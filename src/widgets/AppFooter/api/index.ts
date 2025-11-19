@@ -1,6 +1,5 @@
 import type { DirectusQueryParams } from "nuxt-directus";
 import { CollectionType } from "~/src/shared/api";
-import type { SubscriptionType } from "~/src/shared/ui/form";
 
 export const getCopyright = () => {
   try {
@@ -77,39 +76,6 @@ export const getSocial = () => {
     };
 
     return useNuxtApp().$api.getSingleton(CollectionType.SETTINGS, params);
-  } catch (e) {
-    const error = e as Error;
-    throw createError({ message: error.message });
-  }
-};
-
-export const getForm = (formId: string) => {
-  try {
-    const params: DirectusQueryParams = {
-      fields: [
-        "id",
-        "submit_label",
-        "success_message",
-        "fields.id",
-        "fields.label",
-        "fields.placeholder",
-        "fields.type",
-        "fields.name",
-        "fields.validation",
-        "fields.required",
-      ],
-    };
-
-    return useNuxtApp().$api.getById(CollectionType.FORMS, formId, params);
-  } catch (e) {
-    const error = e as Error;
-    throw createError({ message: error.message });
-  }
-};
-
-export const createSubscription = (items: SubscriptionType[]) => {
-  try {
-    return useNuxtApp().$api.create(CollectionType.FORM_SUBMISSIONS, items);
   } catch (e) {
     const error = e as Error;
     throw createError({ message: error.message });

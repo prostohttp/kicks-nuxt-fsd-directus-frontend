@@ -1,7 +1,11 @@
-<script setup lang='ts'>
-    const route = useRoute();
+<script setup lang="ts">
+import { Category } from "~/src/pages/category";
+
+useSeoMeta({
+  title: "Category page",
+});
 </script>
 
 <template>
-    <h1>{{ route.fullPath }}</h1>
+  <Category />
 </template>

@@ -32,7 +32,6 @@ const { data: menu } = useQuery({
   </header>
 </template>
 
-<!-- TODO: Первичная загрузка (scoped) -->
 <style lang="scss">
 @use "styles";
 </style>

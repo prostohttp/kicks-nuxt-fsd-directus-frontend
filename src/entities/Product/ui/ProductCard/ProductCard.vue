@@ -24,7 +24,12 @@ const { getThumbnail: img } = useDirectusFiles();
     </div>
     <h3 class="product-card__title">{{ title }}</h3>
     <NuxtLink :to="ROUTES.product(slug)">
-      <Button variant="fill" size="large" class="product-card__button">
+      <Button
+        variant="fill"
+        size="large"
+        class="product-card__button"
+        style="justify-content: center"
+      >
         View Product - &nbsp;<strong>{{ formatUSD(price) }}</strong>
       </Button>
     </NuxtLink>

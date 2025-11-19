@@ -7,7 +7,7 @@
   width: 100%;
   display: flex;
   align-items: center;
-  // justify-content: space-between;
+  justify-content: space-between;
   gap: 4px;
   text-align: center;
   letter-spacing: 0.25px;
@@ -43,8 +43,8 @@
 
   &-large {
     height: 50px;
-    padding-left: 24px;
-    padding-right: 24px;
+    padding-left: 16px;
+    padding-right: 16px;
 
     @media (max-width: 991px) {
       padding-left: 19px;
@@ -55,6 +55,7 @@
   &-square {
     width: 48px;
     height: 48px;
+    justify-content: center;
 
     @media (max-width: 991px) {
       width: 38px;
@@ -68,11 +69,12 @@
 
     &:disabled {
       @include btn-disabled;
-      background-color: rgb(35 35 33 / 45%);
+      background-color: rgb(35 35 33 / 80%);
+      color: #fff;
 
       path {
         outline: none;
-        stroke: #8f8c91;
+        stroke: #fff;
       }
     }
   }

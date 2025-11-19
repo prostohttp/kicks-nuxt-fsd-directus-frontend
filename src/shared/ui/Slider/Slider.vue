@@ -16,7 +16,6 @@ const { getThumbnail: img } = useDirectusFiles();
 
 <template>
   <section class="slider">
-    <!-- TODO: Первичная загрузка -->
     <Placeholder v-if="isLoading" />
     <template v-else>
       <div class="slider__thumbs">
@@ -127,7 +126,7 @@ const { getThumbnail: img } = useDirectusFiles();
                 <Button
                   variant="fill"
                   size="large"
-                  style="background-color: #4a69e2"
+                  style="background-color: #4a69e2; justify-content: center;"
                 >
                   {{ banner.button_text }}
                 </Button>

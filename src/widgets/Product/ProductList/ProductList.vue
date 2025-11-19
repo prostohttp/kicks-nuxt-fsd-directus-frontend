@@ -4,10 +4,12 @@ import { CollectionType, type BlockProductType } from "~/src/shared/api";
 import { Button } from "~/src/shared/ui/Button";
 import { CarouselNavigation } from "~/src/shared/ui/carousel";
 import {
+  EmptyDataHeading,
   HeadingWith,
   LargeHeading,
   SmallHeading,
 } from "~/src/shared/ui/heading";
+import { Preloader } from "~/src/shared/ui/preloader";
 
 const { settings, label } = defineProps<{
   settings: BlockProductType;
@@ -34,7 +36,7 @@ const { heading, is_carousel, button_text, button_url, columns, limit } =
   settings;
 
 const productStore = useProductStore();
-const { data } = useQuery({
+const { data, isLoading } = useQuery({
   key: ["home-product-list"],
   query: async () =>
     await productStore.getAllProducts(CollectionType.PRODUCTS, limit, {
@@ -50,7 +52,9 @@ const columnClass = () =>
 </script>
 
 <template>
-  <section class="product-list">
+  <Preloader v-if="isLoading" />
+  <section v-else class="product-list">
+    <EmptyDataHeading v-if="!data?.length" />
     <div v-if="is_carousel" class="product-list__carousel">
       <HeadingWith>
         <template #heading>
@@ -82,7 +86,7 @@ const columnClass = () =>
             <Button
               variant="fill"
               size="large"
-              style="background-color: #416aea"
+              style="background-color: #416aea; justify-content: center"
             >
               {{ button_text }}
             </Button>

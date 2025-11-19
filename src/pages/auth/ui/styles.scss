@@ -1,0 +1,58 @@
+.auth {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+
+  @media (max-width: 991px) {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  &__forms {
+    width: 45%;
+    padding: 0 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    @media (max-width: 991px) {
+      width: 100%;
+      padding: 0;
+    }
+
+    &__divider {
+      font-size: 20px;
+      font-weight: 400;
+    }
+  }
+
+  &__benefits {
+    width: 55%;
+    background-color: #fafafa;
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    @media (max-width: 991px) {
+      width: auto;
+    }
+
+    h2 {
+      font-size: 36px;
+      font-weight: 600;
+      padding-right: 20px;
+    }
+
+    p {
+      padding-right: 20px;
+    }
+
+    ul {
+      list-style-type: disc;
+      padding-left: 20px;
+      line-height: 23px;
+    }
+  }
+}

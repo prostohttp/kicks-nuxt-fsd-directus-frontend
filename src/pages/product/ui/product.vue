@@ -1,4 +1,8 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+useSeoMeta({
+  title: "Product page"
+})
+</script>
 
 <template>
   <section class="product-page">Product page</section>

@@ -6,11 +6,9 @@ import {
   getCompany,
   getCopyright,
   getDescription,
-  getForm,
   getSocial,
 } from "../api";
 import type { Copyright, Description, Social } from "../model/types";
-import type { FormTypes } from "~/src/shared/ui/form";
 import type { Navigation } from "~/src/shared/ui/navigation";
 
 const { data: copyrights } = useQuery({
@@ -37,16 +35,11 @@ const { data: social } = useQuery({
   key: ["app-social"],
   query: async () => (await getSocial()) as Social,
 });
-
-const { data: form } = useQuery({
-  key: ["form-subscription"],
-  query: async () => (await getForm("1")) as FormTypes,
-});
 </script>
 
 <template>
   <footer class="footer wrapper">
-    <FooterTop v-if="form" v-bind="form" />
+    <FooterTop />
     <FooterBottom v-bind="{ copyrights, categories, company, about, social }" />
   </footer>
 </template>

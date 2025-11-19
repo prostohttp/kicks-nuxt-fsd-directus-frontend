@@ -1,7 +1,11 @@
-<script setup lang='ts'>
+<script setup lang="ts">
+import { Account } from "~/src/pages/account";
 
+definePageMeta({
+  middleware: ["user"],
+});
 </script>
 
 <template>
-    <h1>Account</h1>
+  <Account />
 </template>

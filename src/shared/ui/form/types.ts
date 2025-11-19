@@ -19,6 +19,5 @@ export interface FormType {
     type: FieldType;
     placeholder: string;
     validation: string;
-    required: boolean;
   }>;
 }

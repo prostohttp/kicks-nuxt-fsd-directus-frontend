@@ -20,6 +20,7 @@ export default defineNuxtConfig({
     pages: "./src/app/routes",
     layouts: "./src/app/layouts",
     plugins: "./src/shared/lib/plugins",
+    middleware: "./src/app/middleware",
   },
   css: ["@/app/styles/global.scss"],
   fonts: {

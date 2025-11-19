@@ -11,6 +11,7 @@ export type { BlockReviewsType } from "./types/blocks";
 
 export { getPageBlocksAndSeo } from "./base/pageApi";
 export { getBanner } from "./base/bannerApi";
+export { getForm } from "../ui/form/api";
 export { getBlockSlider } from "./base/blockSliderApi";
 export { getBlockProducts } from "./base/blockProductsApi";
 export { getBlockCategories } from "./base/blockCategoriesApi";

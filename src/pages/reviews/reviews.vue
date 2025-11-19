@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { CollectionType } from "~/src/shared/api";
 import { ReviewsList } from "~/src/widgets/Reviews/ReviewsList";
+
+useSeoMeta({
+  title: "All reviews page"
+})
 </script>
 
 <template>

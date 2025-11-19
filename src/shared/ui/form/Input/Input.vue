@@ -9,16 +9,12 @@ const {
   name,
   placeholder,
   label,
-  success,
   error,
   disabled = false,
   theme = "dark",
-  required = false,
+  type = "text",
 } = defineProps<InputType>();
 const model = defineModel<string>();
-const indicator = computed(() =>
-  error ? "error" : success ? "success" : undefined,
-);
 </script>
 
 <template>
@@ -31,21 +27,23 @@ const indicator = computed(() =>
     <label v-if="label" :for="name" class="input-label">
       {{ label }}
     </label>
-    <span :class="['input-field']" v-bind="$attrs">
+    <span
+      :class="['input-field', { 'input-field-error': error }]"
+      v-bind="$attrs"
+    >
       <input
         :id="name"
         v-model="model"
         :name="name"
-        type="text"
+        :type
         :placeholder
         autocomplete="off"
         :disabled
-        :required
       />
-      <IconFieldError v-if="indicator" :indicator class="input-field-icon" />
+      <IconFieldError v-if="error" class="input-field-icon" />
     </span>
-    <span v-if="indicator" :class="'input-message-' + indicator">
-      {{ error || success }}
+    <span v-if="error" class="input-message-error">
+      {{ error }}
     </span>
   </div>
 </template>
