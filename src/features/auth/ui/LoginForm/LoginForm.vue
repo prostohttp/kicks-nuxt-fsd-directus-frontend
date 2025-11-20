@@ -44,6 +44,7 @@ const loading = computed(
 const {
   mutate: loginHandler,
   error,
+  reset,
   asyncStatus,
 } = useMutation({
   mutation: async (data: { email: string; password: string }) => {
@@ -105,7 +106,7 @@ const {
       You have successfully logged in. <br />You will now be redirected to your
       account page.
     </SuccessWithCallbackMessage>
-    <ErrorMessage v-if="error" style="margin-top: 15px">
+    <ErrorMessage v-if="error" style="margin-top: 15px" @close="reset">
       Invalid credentials. Try again.
     </ErrorMessage>
   </section>

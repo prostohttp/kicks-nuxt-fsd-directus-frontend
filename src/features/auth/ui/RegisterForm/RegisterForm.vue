@@ -24,7 +24,7 @@ const clearErrors = () => {
 const isSuccess = ref(false);
 const email = ref();
 const password = ref();
-const isLoginMe = ref(false);
+const isLoginMe = ref(true);
 
 const loading = computed(() => asyncStatus.value === "loading");
 
@@ -85,7 +85,7 @@ const {
       <Checkbox
         v-model="isLoginMe"
         name="isLoginMe"
-        label="Please check the box to automatically authorize upon registration."
+        label="Automatically authorize me upon registration."
       />
       <Button variant="fill" size="large" type="submit" :disabled="loading">
         <template #default>Register</template>
