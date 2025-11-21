@@ -103,7 +103,7 @@ const {
       You have successfully register in. <br />Now you can login.
     </SuccessMessage>
     <ErrorMessage v-if="error" style="margin-top: 15px" @close="reset">
-      Email must be unique. Try again.
+      This email address is already taken
     </ErrorMessage>
   </section>
 </template>

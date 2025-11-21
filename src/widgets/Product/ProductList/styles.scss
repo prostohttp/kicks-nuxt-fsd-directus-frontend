@@ -1,29 +1,8 @@
 .product-list {
   margin-bottom: 60px;
 
-  &__carousel {
-    .carousel {
-      padding-bottom: 40px;
-
-      &__pagination-button {
-        width: 40px;
-        height: 6px;
-        background-color: #b6b6b2;
-        border-radius: 8px;
-
-        &--active {
-          background-color: #416aea;
-        }
-      }
-
-      &__track {
-        align-items: flex-start;
-      }
-    }
-  }
-
-  &__dots {
-    margin-top: 32px;
+  @media (max-width: 991px) {
+    margin-top: 20px;
   }
 
   &__cards {

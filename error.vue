@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { NuxtError } from "#app";
+import { Button } from "./src/shared/ui/Button";
 
 useHead({
   title: "Error",
@@ -22,11 +23,16 @@ const isServerError = computed(() => error && error.statusCode >= 500);
   <ClientOnly v-else>
     <NuxtLayout name="default">
       <div class="error">
-        <h1 class="error__title">{{ error?.statusCode }}</h1>
+        <NuxtImg src="not-found.png" :placeholder="[200, 200]" width="200" />
         <p class="error__text">{{ error?.statusMessage }}</p>
-        <button class="error__button" @click="handleError">
-          Go to Home Page
-        </button>
+        <Button
+          variant="fill"
+          size="large"
+          style="justify-content: center; width: 150px"
+          @click="handleError"
+        >
+          Go to Home
+        </Button>
       </div>
     </NuxtLayout>
   </ClientOnly>

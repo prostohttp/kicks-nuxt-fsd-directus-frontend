@@ -4,6 +4,10 @@
   align-items: flex-end;
   padding-bottom: 40px;
 
+  @media (max-width: 991px) {
+    padding-bottom: 10px;
+  }
+
   &__right {
     &__button {
       width: 50%;

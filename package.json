@@ -22,7 +22,7 @@
     "eslint": "^9.39.1",
     "nuxt": "^4.2.1",
     "nuxt-directus": "^5.7.0",
-    "nuxt-security": "^2.4.0",
+    "nuxt-security": "^2.5.0",
     "nuxt-typed-router": "^4.0.2",
     "pinia": "^3.0.4",
     "prettier": "^3.6.2",
@@ -35,7 +35,7 @@
   "devDependencies": {
     "@feature-sliced/steiger-plugin": "^0.5.7",
     "@pinia/colada-devtools": "^0.1.8",
-    "sass": "^1.94.0",
+    "sass": "^1.94.2",
     "steiger": "^0.5.11"
   }
 }

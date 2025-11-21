@@ -1,14 +1,7 @@
 <script setup lang="ts">
 import { ProductCard, useProductStore } from "~/src/entities/Product";
 import { CollectionType, type BlockProductType } from "~/src/shared/api";
-import { Button } from "~/src/shared/ui/Button";
-import { CarouselNavigation } from "~/src/shared/ui/carousel";
-import {
-  EmptyDataHeading,
-  HeadingWith,
-  LargeHeading,
-  SmallHeading,
-} from "~/src/shared/ui/heading";
+import { EmptyDataHeading } from "~/src/shared/ui/heading";
 import { Preloader } from "~/src/shared/ui/preloader";
 
 const { settings, label } = defineProps<{
@@ -32,8 +25,7 @@ const carouselConfig = {
   },
 } as const;
 
-const { heading, is_carousel, button_text, button_url, columns, limit } =
-  settings;
+const { is_carousel, columns, limit } = settings;
 
 const productStore = useProductStore();
 const { data, isLoading } = useQuery({
@@ -44,11 +36,11 @@ const { data, isLoading } = useQuery({
     }),
 });
 
-const prevHandler = () => productCarousel.value?.prev();
-const nextHandler = () => productCarousel.value?.next();
-
 const columnClass = () =>
   columns === 2 ? "two-column" : columns === 3 ? "three-column" : null;
+defineExpose({
+  productCarousel,
+});
 </script>
 
 <template>
@@ -56,14 +48,6 @@ const columnClass = () =>
   <section v-else class="product-list">
     <EmptyDataHeading v-if="!data?.length" />
     <div v-if="is_carousel" class="product-list__carousel">
-      <HeadingWith>
-        <template #heading>
-          <SmallHeading v-if="heading" :heading />
-        </template>
-        <template #nav>
-          <CarouselNavigation @prev="prevHandler" @next="nextHandler" />
-        </template>
-      </HeadingWith>
       <div class="product-list__cards">
         <Carousel v-bind="carouselConfig" ref="productCarousel">
           <Slide v-for="product in data" :key="product.id">
@@ -74,25 +58,8 @@ const columnClass = () =>
           </template>
         </Carousel>
       </div>
-      <div class="product-list__dots"></div>
     </div>
     <div v-else class="product-list__grid">
-      <HeadingWith>
-        <template #heading>
-          <LargeHeading v-if="heading" :heading />
-        </template>
-        <template #button>
-          <NuxtLink :to="button_url">
-            <Button
-              variant="fill"
-              size="large"
-              style="background-color: #416aea; justify-content: center"
-            >
-              {{ button_text }}
-            </Button>
-          </NuxtLink>
-        </template>
-      </HeadingWith>
       <div class="product-list__cards">
         <div :class="['product-list__cards__wrapper', columnClass()]">
           <ProductCard

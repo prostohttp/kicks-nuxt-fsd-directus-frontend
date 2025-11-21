@@ -1,35 +1,4 @@
 .categories-carousel {
-  background-color: #232321;
-  color: #fff;
-  padding-top: 40px;
-
-  .carousel__viewport {
-    overflow: visible;
-
-    @media (max-width: 991px) {
-      overflow: hidden;
-    }
-  }
-
-  .carousel__slide {
-    padding: 30px 48px;
-
-    &:first-child {
-      border-top-left-radius: 64px;
-
-      @media (max-width: 991px) {
-        border-top-left-radius: 24px;
-      }
-    }
-
-    &:nth-child(odd) {
-      background-color: #eceef0;
-    }
-
-    &:nth-child(even) {
-      background-color: #f6f6f6;
-    }
-  }
 
   &__item {
     width: 100%;
@@ -40,7 +9,7 @@
       display: flex;
 
       @media (max-width: 991px) {
-        width: 80%;
+        width: 70%;
       }
     }
 

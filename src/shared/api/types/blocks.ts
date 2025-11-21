@@ -9,11 +9,11 @@ export interface BlockSliderType {
 
 export interface BlockProductType {
   heading: string;
-  button_url: string;
   is_carousel: boolean;
   limit: number;
   columns: number;
-  button_text: string;
+  button_url?: string;
+  button_text?: string;
 }
 
 export interface BlockCategoryType {
@@ -26,7 +26,7 @@ export interface BlockCategoryType {
 export interface BlockReviewsType {
   heading: string;
   collection: CollectionType;
-  limit?: number;
+  limit: number;
   columns: number;
   button_url?: string;
   button_text?: string;

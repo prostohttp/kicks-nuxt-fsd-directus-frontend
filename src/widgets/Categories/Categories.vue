@@ -1,26 +1,24 @@
 <script setup lang="ts">
-import type { BlockCategoryType } from "~/src/shared/api";
+import type { CollectionType } from "~/src/shared/api";
 import { getCategories } from "./api";
-import { CarouselNavigation } from "~/src/shared/ui/carousel";
-import {
-  EmptyDataHeading,
-  HeadingWith,
-  LargeHeading,
-} from "~/src/shared/ui/heading";
+import { EmptyDataHeading } from "~/src/shared/ui/heading";
 import { Button } from "~/src/shared/ui/Button";
 import { IconArrowTopRight } from "~/src/shared/ui/icons";
 import { ROUTES } from "~/src/shared/routes";
 import { Preloader } from "~/src/shared/ui/preloader";
 
-const { settings } = defineProps<{ settings: BlockCategoryType }>();
-
+const { collection, limit } = defineProps<{
+  collection: CollectionType;
+  limit: number;
+}>();
+const activeSlide = defineModel<number>();
 const { data: categories, isLoading } = useQuery({
   key: ["home-categories-carousel"],
-  query: async () => await getCategories(settings.collection, settings.limit),
+  query: async () => await getCategories(collection, limit),
 });
 
 const categoryCarousel = ref();
-const activeSlide = ref(0);
+
 const carouselConfig = {
   gap: 0,
   breakpointMode: "carousel",
@@ -36,60 +34,49 @@ const carouselConfig = {
     },
   },
 } as const;
-const prevHandler = () => categoryCarousel.value?.prev();
-const nextHandler = () => categoryCarousel.value?.next();
+
 const { getThumbnail: img } = useDirectusFiles();
+const max = computed(() =>
+  categories.value ? categories.value.length - 1 : 0,
+);
+defineExpose({
+  categoryCarousel,
+  max: max.value,
+});
 </script>
 
 <template>
   <Preloader v-if="isLoading" />
-  <section v-else class="categories-carousel force-full-width">
-    <div class="wrapper">
-      <HeadingWith>
-        <template #heading>
-          <LargeHeading :heading="settings.heading" />
-        </template>
-        <template #nav>
-          <CarouselNavigation
-            v-model="activeSlide"
-            variant="dark"
-            :loop="false"
-            :max="categories ? categories.length - 1 : 0"
-            @prev="prevHandler"
-            @next="nextHandler"
+  <section v-else class="categories-carousel wrapper">
+    <Carousel
+      v-if="categories?.length"
+      v-bind="carouselConfig"
+      ref="categoryCarousel"
+      v-model="activeSlide"
+    >
+      <Slide v-for="category in categories" :key="category.id">
+        <div class="categories-carousel__item">
+          <NuxtImg
+            :src="
+              img(category.thumbnail, {
+                format: 'webp',
+              })
+            "
           />
-        </template>
-      </HeadingWith>
-      <Carousel
-        v-if="categories?.length"
-        v-bind="carouselConfig"
-        ref="categoryCarousel"
-        v-model="activeSlide"
-      >
-        <Slide v-for="category in categories" :key="category.id">
-          <div class="categories-carousel__item">
-            <NuxtImg
-              :src="
-                img(category.thumbnail, {
-                  format: 'webp',
-                })
-              "
-            />
-            <div class="categories-carousel__item__info">
-              <h3 class="categories-carousel__item__info__title">
-                {{ category.title }}
-              </h3>
-              <NuxtLink :to="ROUTES.category(category.slug)">
-                <Button variant="fill" size="large" class="btn-square">
-                  <IconArrowTopRight />
-                </Button>
-              </NuxtLink>
-            </div>
+          <div class="categories-carousel__item__info">
+            <h3 class="categories-carousel__item__info__title">
+              {{ category.title }}
+            </h3>
+            <NuxtLink :to="ROUTES.category(category.slug)">
+              <Button variant="fill" size="large" class="btn-square">
+                <IconArrowTopRight />
+              </Button>
+            </NuxtLink>
           </div>
-        </Slide>
-      </Carousel>
-      <EmptyDataHeading v-else variant="dark" />
-    </div>
+        </div>
+      </Slide>
+    </Carousel>
+    <EmptyDataHeading v-else variant="dark" />
   </section>
 </template>
 

@@ -17,3 +17,4 @@ export { getBlockProducts } from "./base/blockProductsApi";
 export { getBlockCategories } from "./base/blockCategoriesApi";
 export { getBlockReviews } from "./base/blockReviewsApi";
 export { getSlider } from "./base/sliderApi";
+export { blockMapper } from "./base/blockMapper";

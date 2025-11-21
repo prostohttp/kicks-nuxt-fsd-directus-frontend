@@ -7,8 +7,8 @@ const { data } = useQuery({
   query: async () => await getPageBlocksAndSeo("3"),
 });
 useSeoMeta({
-  title: data.value?.seo_data.title,
-  description: data.value?.seo_data.meta_description,
+  title: () => data.value?.seo_data.title,
+  description: () => data.value?.seo_data.meta_description,
 });
 </script>
 

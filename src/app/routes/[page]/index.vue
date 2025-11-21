@@ -1,7 +1,7 @@
-<script setup lang='ts'>
-
+<script setup lang="ts">
+import { Page } from "~/src/pages/page";
 </script>
 
 <template>
-    <h1>Page</h1>
+  <Page />
 </template>

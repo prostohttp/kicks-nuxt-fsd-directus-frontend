@@ -1,3 +1,1 @@
-export { default as Category } from "./category.vue";
-
-export { getCategory } from "./api";
+export { default as Category } from "./ui/category.vue";

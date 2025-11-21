@@ -2,7 +2,6 @@ import type { CollectionType } from "./collection";
 import type { SeoType } from "./seo";
 
 export interface BlockType {
-  id: number;
   item: string;
   collection: CollectionType;
 }

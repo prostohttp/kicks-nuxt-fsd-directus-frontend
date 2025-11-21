@@ -1,21 +1,17 @@
 <script setup lang="ts">
-import { CollectionType } from "~/src/shared/api";
+import { LargeHeading } from "~/src/shared/ui/heading";
 import { ReviewsList } from "~/src/widgets/Reviews/ReviewsList";
 
 useSeoMeta({
-  title: "All reviews page"
-})
+  title: "All reviews",
+});
 </script>
 
 <template>
-  <ReviewsList
-    :settings="{
-      columns: 3,
-      collection: CollectionType.REVIEWS,
-      heading: 'All reviews',
-    }"
-    style="padding: 0"
-  />
+  <section class="reviews-page">
+    <LargeHeading heading="Reviews" />
+    <ReviewsList style="padding: 0" />
+  </section>
 </template>
 
 <style lang="scss">

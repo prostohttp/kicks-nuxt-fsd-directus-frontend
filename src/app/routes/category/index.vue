@@ -1,9 +1,7 @@
 <script setup lang="ts">
-useSeoMeta({
-  title: "Categories page",
+import { ROUTES } from "~/src/shared/routes";
+
+definePageMeta({
+  redirect: ROUTES.main,
 });
 </script>
-
-<template>
-  <h1>Categories</h1>
-</template>
