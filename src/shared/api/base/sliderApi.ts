@@ -1,6 +1,7 @@
 import type { DirectusQueryParams } from "nuxt-directus";
 import { CollectionType } from "../types/collection";
 import type { BlockSliderType } from "../types/blocks";
+import type { SliderType } from "../../ui/Slider";
 
 export const getSlider = async (blockId: string) => {
   try {
@@ -30,7 +31,7 @@ export const getSlider = async (blockId: string) => {
 
     return nuxtApp.runWithContext(
       async () =>
-        await nuxtApp.$api.getById(
+        await nuxtApp.$api.getById<SliderType>(
           sliderBLock.slider.collection,
           sliderBLock.slider.key,
           sliderParams,

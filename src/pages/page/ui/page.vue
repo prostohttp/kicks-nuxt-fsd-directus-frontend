@@ -3,11 +3,16 @@ import { CollectionType } from "~/src/shared/api";
 import { getPage } from "../api";
 import { Preloader } from "~/src/shared/ui/preloader";
 import { NotFound } from "~/src/shared/ui/NotFound";
+import { pageBlocksMapper } from "../api/blocksMapper";
 
 const notFoundMessage = "Page not found!";
 const route = useRoute();
 const pageSlug = computed(() =>
-  "page" in route.params ? (route.params.page as string) : null,
+  "page" in route.params
+    ? (route.params.page as string)
+    : route.path === "/"
+      ? route.path
+      : null,
 );
 const { data, isLoading } = useQuery({
   key: () => ["pages", pageSlug.value],
@@ -23,8 +28,13 @@ useSeoMeta({
 <template>
   <Preloader v-if="isLoading" />
   <NotFound v-else-if="!page" :heading="notFoundMessage" />
-  <section v-else class="page-page">
-    <pre>{{ page }}</pre>
+  <section v-else-if="data && data[0]" class="page-page">
+    <component
+      :is="pageBlocksMapper[block.collection]"
+      v-for="block in data[0].blocks"
+      :key="block.id"
+      :item-id="block.item"
+    />
   </section>
 </template>
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { Home } from "@/pages/home";
+import { Page } from "~/src/pages/page";
 </script>
 
 <template>
-  <Home />
+  <Page />
 </template>

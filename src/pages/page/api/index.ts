@@ -11,6 +11,7 @@ export const getPage = (
         "permalink",
         "seo_data",
         "id",
+        "blocks.id",
         "blocks.item",
         "blocks.collection",
       ],

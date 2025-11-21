@@ -12,6 +12,10 @@ export const getBlockProducts = (productsBlockId: string) => {
         "limit",
         "columns",
         "button_text",
+        "paginatable",
+        "per_page",
+        "collection",
+        "label",
       ],
     };
 

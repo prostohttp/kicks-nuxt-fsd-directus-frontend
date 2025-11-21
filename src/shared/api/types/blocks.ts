@@ -8,12 +8,16 @@ export interface BlockSliderType {
 }
 
 export interface BlockProductType {
-  heading: string;
+  heading?: string;
   is_carousel: boolean;
   limit: number;
+  collection: CollectionType;
   columns: number;
+  label?: string;
   button_url?: string;
   button_text?: string;
+  paginatable?: boolean;
+  per_page?: number;
 }
 
 export interface BlockCategoryType {

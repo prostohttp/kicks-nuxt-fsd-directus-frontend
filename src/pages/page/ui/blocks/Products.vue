@@ -2,12 +2,16 @@
 import { getBlockProducts } from "~/src/shared/api";
 import { Button } from "~/src/shared/ui/Button";
 import { CarouselNavigation } from "~/src/shared/ui/carousel";
-import { HeadingWith, LargeHeading, SmallHeading } from "~/src/shared/ui/heading";
+import {
+  HeadingWith,
+  LargeHeading,
+  SmallHeading,
+} from "~/src/shared/ui/heading";
 import { ProductList } from "~/src/widgets/Product/ProductList";
 
 const { itemId } = defineProps<{ itemId: string }>();
 const { data } = useQuery({
-  key: ["home-products-grid-block"],
+  key: () => ["products", itemId],
   query: async () => await getBlockProducts(itemId),
 });
 const exposeRef = useTemplateRef("exposeRef");
@@ -15,8 +19,8 @@ const exposeRef = useTemplateRef("exposeRef");
 
 <template>
   <section class="products-block">
-    <div v-if="data && data.is_carousel" class="products-block_carousel">
-      <HeadingWith>
+    <div v-if="data && data.heading" class="products-block__heading">
+      <HeadingWith v-if="data.is_carousel">
         <template #heading>
           <SmallHeading v-if="data.heading" :heading="data.heading" />
         </template>
@@ -27,14 +31,12 @@ const exposeRef = useTemplateRef("exposeRef");
           />
         </template>
       </HeadingWith>
-    </div>
-    <div v-else class="products-block_grid">
-      <HeadingWith>
+      <HeadingWith v-else>
         <template #heading>
-          <LargeHeading v-if="data && data.heading" :heading="data.heading" />
+          <LargeHeading v-if="data.heading" :heading="data.heading" />
         </template>
         <template #button>
-          <NuxtLink v-if="data && data.button_url" :to="data.button_url">
+          <NuxtLink v-if="data.button_url" :to="data.button_url">
             <Button
               variant="fill"
               size="large"
@@ -46,7 +48,7 @@ const exposeRef = useTemplateRef("exposeRef");
         </template>
       </HeadingWith>
     </div>
-    <ProductList v-if="data" ref="exposeRef" :settings="data" label="New" />
+    <ProductList v-if="data" ref="exposeRef" :settings="data" />
   </section>
 </template>
 

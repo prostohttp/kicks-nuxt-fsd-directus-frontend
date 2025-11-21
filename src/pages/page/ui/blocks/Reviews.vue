@@ -6,7 +6,7 @@ import { ReviewsList } from "~/src/widgets/Reviews/ReviewsList";
 
 const { itemId } = defineProps<{ itemId: string }>();
 const { data } = useQuery({
-  key: ["home-reviews-list-block"],
+  key: () => ["reviews", itemId],
   query: async () => await getBlockReviews(itemId),
 });
 </script>

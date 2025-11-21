@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { getSlider } from "~/src/shared/api";
-import { Slider, type SliderType } from "~/src/shared/ui/Slider";
+import { Slider } from "~/src/shared/ui/Slider";
 
 const { itemId } = defineProps<{ itemId: string }>();
 const { data: slider, isLoading } = useQuery({
-  key: ["home-hero-slider-block"],
-  query: async () => (await getSlider(itemId)) as SliderType,
+  key: () => ["slider", itemId],
+  query: async () => await getSlider(itemId),
 });
 </script>
 

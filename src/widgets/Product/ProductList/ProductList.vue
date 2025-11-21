@@ -4,9 +4,8 @@ import { CollectionType, type BlockProductType } from "~/src/shared/api";
 import { EmptyDataHeading } from "~/src/shared/ui/heading";
 import { Preloader } from "~/src/shared/ui/preloader";
 
-const { settings, label } = defineProps<{
+const { settings } = defineProps<{
   settings: BlockProductType;
-  label?: string;
 }>();
 
 const productCarousel = ref();
@@ -28,12 +27,21 @@ const carouselConfig = {
 const { is_carousel, columns, limit } = settings;
 
 const productStore = useProductStore();
+const filter = computed(() =>
+  settings.label
+    ? {
+        label: { _eq: settings.label },
+      }
+    : undefined,
+);
 const { data, isLoading } = useQuery({
-  key: ["home-product-list"],
+  key: () => ["product-list", limit, settings.label!],
   query: async () =>
-    await productStore.getAllProducts(CollectionType.PRODUCTS, limit, {
-      label: { _eq: label },
-    }),
+    await productStore.getAllProducts(
+      CollectionType.PRODUCTS,
+      limit,
+      filter.value,
+    ),
 });
 
 const columnClass = () =>

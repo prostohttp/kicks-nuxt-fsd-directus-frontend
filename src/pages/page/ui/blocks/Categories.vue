@@ -6,7 +6,7 @@ import { Categories } from "~/src/widgets/Categories";
 
 const { itemId } = defineProps<{ itemId: string }>();
 const { data } = useQuery({
-  key: ["home-categories-carousel-block"],
+  key: () => ["categories-carousel", itemId],
   query: async () => await getBlockCategories(itemId),
 });
 
