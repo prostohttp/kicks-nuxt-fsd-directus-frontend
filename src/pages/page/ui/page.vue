@@ -15,7 +15,7 @@ const pageSlug = computed(() =>
       : null,
 );
 const { data, isLoading } = useQuery({
-  key: () => ["pages", pageSlug.value],
+  key: () => ["pages", { page: pageSlug.value }],
   query: async () => getPage(CollectionType.PAGES, pageSlug.value),
 });
 const page = computed(() => (data.value ? data.value[0] : null));

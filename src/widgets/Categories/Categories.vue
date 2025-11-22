@@ -13,7 +13,7 @@ const { collection, limit } = defineProps<{
 }>();
 const activeSlide = defineModel<number>();
 const { data: categories, isLoading } = useQuery({
-  key: ["home-categories-carousel"],
+  key: () => ["categories-carousel", { limit }],
   query: async () => await getCategories(collection, limit),
 });
 
