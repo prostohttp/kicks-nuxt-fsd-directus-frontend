@@ -35,3 +35,9 @@ export interface BlockReviewsType {
   button_url?: string;
   button_text?: string;
 }
+
+export interface BlockRichTextEditorType {
+  id: string;
+  title?: string;
+  text: string;
+}

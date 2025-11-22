@@ -16,5 +16,5 @@ export { getBlockSlider } from "./base/blockSliderApi";
 export { getBlockProducts } from "./base/blockProductsApi";
 export { getBlockCategories } from "./base/blockCategoriesApi";
 export { getBlockReviews } from "./base/blockReviewsApi";
+export { getBlockRichTextEditor } from "./base/blockRichTextEditorApi";
 export { getSlider } from "./base/sliderApi";
-export { blockMapper } from "./base/blockMapper";
