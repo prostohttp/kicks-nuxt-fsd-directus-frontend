@@ -14,10 +14,10 @@ const { data } = useQuery({
 <template>
   <section class="reviews-block">
     <HeadingWith v-if="data?.heading">
-      <template #heading>
+      <template #left>
         <LargeHeading :heading="data.heading" />
       </template>
-      <template #button>
+      <template #right>
         <NuxtLink v-if="data.button_url" :to="data.button_url">
           <Button
             variant="fill"

@@ -5,6 +5,7 @@ import { CarouselNavigation } from "~/src/shared/ui/carousel";
 import {
   HeadingWith,
   LargeHeading,
+  MediumHeading,
   SmallHeading,
 } from "~/src/shared/ui/heading";
 import { ProductList } from "~/src/widgets/Product/ProductList";
@@ -14,28 +15,29 @@ const { data } = useQuery({
   key: () => ["products", itemId],
   query: async () => await getBlockProducts(itemId),
 });
-const exposeRef = useTemplateRef("exposeRef");
+
+const productRef = ref();
 </script>
 
 <template>
   <section class="products-block">
     <div v-if="data && data.heading" class="products-block__heading">
       <HeadingWith v-if="data.is_carousel">
-        <template #heading>
-          <SmallHeading v-if="data.heading" :heading="data.heading" />
+        <template #left>
+          <MediumHeading :heading="data.heading" />
         </template>
-        <template #nav>
+        <template #right>
           <CarouselNavigation
-            @prev="exposeRef?.productCarousel.prev()"
-            @next="exposeRef?.productCarousel.next()"
+            @prev="productRef?.productCarousel.prev()"
+            @next="productRef?.productCarousel.next()"
           />
         </template>
       </HeadingWith>
-      <HeadingWith v-else>
-        <template #heading>
-          <LargeHeading v-if="data.heading" :heading="data.heading" />
+      <HeadingWith v-else-if="data.button_text">
+        <template #left>
+          <LargeHeading :heading="data.heading" />
         </template>
-        <template #button>
+        <template #right>
           <NuxtLink v-if="data.button_url" :to="data.button_url">
             <Button
               variant="fill"
@@ -47,8 +49,14 @@ const exposeRef = useTemplateRef("exposeRef");
           </NuxtLink>
         </template>
       </HeadingWith>
+      <HeadingWith v-else-if="data.sortable">
+        <template #left>
+          <SmallHeading :heading="data.heading" />
+        </template>
+        <template #right> sortable </template>
+      </HeadingWith>
     </div>
-    <ProductList v-if="data" ref="exposeRef" :settings="data" />
+    <ProductList v-if="data" ref="productRef" :settings="data" />
   </section>
 </template>
 

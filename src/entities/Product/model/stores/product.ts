@@ -1,16 +1,18 @@
 import type { CollectionType } from "~/src/shared/api";
 import type { ProductCardType, ProductDetailsType } from "../types";
 import { getProduct, getProducts } from "../../api";
+import type { ApiProductsCount } from "../../api/types";
 
 export const useProductStore = defineStore("products", () => {
   const products = ref<ProductCardType[]>([]);
-
   const getAllProducts = (
     collection: CollectionType,
+    meta: ApiProductsCount,
     limit?: number,
     filter?: Record<string, unknown>,
-  ): Promise<ProductCardType[]> => {
-    return getProducts(collection, limit, filter);
+    page?: number,
+  ) => {
+    return getProducts(collection, meta, limit, filter, page);
   };
 
   const product = ref<ProductDetailsType>();

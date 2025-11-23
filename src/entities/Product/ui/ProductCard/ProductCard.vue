@@ -15,6 +15,7 @@ const { getThumbnail: img } = useDirectusFiles();
         :src="
           img(image, {
             format: 'webp',
+            width: 300,
           })
         "
         :alt="title"

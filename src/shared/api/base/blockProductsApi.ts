@@ -13,7 +13,7 @@ export const getBlockProducts = (productsBlockId: string) => {
         "columns",
         "button_text",
         "paginatable",
-        "per_page",
+        "sortable",
         "collection",
         "label",
       ],

@@ -1,5 +1,7 @@
 import type {
   DirectusAuthCredentials,
+  DirectusItems,
+  DirectusMetaQueryParams,
   DirectusQueryParams,
   DirectusRegisterCredentials,
 } from "nuxt-directus";
@@ -12,12 +14,12 @@ export default defineNuxtPlugin(() => {
 
   const getAll = <T>(
     collection: CollectionType,
-    params?: DirectusQueryParams,
-  ) => {
+    params?: DirectusMetaQueryParams,
+  ): Promise<DirectusItems<T>> => {
     return getItems<T>({
       collection,
       params,
-    });
+    }) as unknown as Promise<DirectusItems<T>>;
   };
 
   const getById = <T>(

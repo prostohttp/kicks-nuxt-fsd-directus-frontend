@@ -17,10 +17,10 @@ const activeSlide = ref(0);
 <template>
   <section class="categories-block force-full-width">
     <HeadingWith class="wrapper">
-      <template #heading>
+      <template #left>
         <LargeHeading v-if="data" :heading="data.heading" />
       </template>
-      <template #nav>
+      <template #right>
         <CarouselNavigation
           v-model="activeSlide"
           variant="dark"

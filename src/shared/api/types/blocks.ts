@@ -17,7 +17,7 @@ export interface BlockProductType {
   button_url?: string;
   button_text?: string;
   paginatable?: boolean;
-  per_page?: number;
+  sortable?: boolean;
 }
 
 export interface BlockCategoryType {

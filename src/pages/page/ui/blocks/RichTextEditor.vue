@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { getBlockRichTextEditor } from "~/src/shared/api";
+import { SmallHeading } from "~/src/shared/ui/heading";
 import { Preloader } from "~/src/shared/ui/preloader";
 
 const { itemId } = defineProps<{ itemId: string }>();
@@ -13,9 +14,11 @@ const { data, isLoading } = useQuery({
 <template>
   <Preloader v-if="isLoading" />
   <section v-else-if="data" class="rich-text-editor">
-    <h1 v-if="data.title" class="rich-text-editor__heading">
-      {{ data.title }}
-    </h1>
+    <SmallHeading
+      v-if="data.title"
+      :heading="data.title"
+      style="padding-bottom: 15px"
+    />
     <div class="rich-text-editor__body" v-html="data.text"></div>
   </section>
 </template>
@@ -23,16 +26,6 @@ const { data, isLoading } = useQuery({
 <style lang="scss">
 .rich-text-editor {
   line-height: 1.5;
-
-  &__heading {
-    font-size: 32px;
-    font-weight: 600;
-    padding-bottom: 20px;
-
-    @media (max-width: 991px) {
-      font-size: 24px;
-    }
-  }
 
   &__body {
     h2 {
