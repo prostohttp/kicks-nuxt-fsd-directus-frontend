@@ -7,6 +7,7 @@ export { default as IconArrowTopRight } from "./IconArrowTopRight.vue";
 export { default as IconAdd } from "./IconAdd.vue";
 export { default as IconFieldError } from "./IconFieldError.vue";
 export { default as IconChevronRight } from "./IconChevronRight.vue";
+export { default as IconChevronDown } from "./IconChevronDown.vue";
 export { default as IconStarFill } from "./IconStarFill.vue";
 export { default as IconCheck } from "./IconCheck.vue";
 export { default as IconCloseFlat } from "./IconCloseFlat.vue";

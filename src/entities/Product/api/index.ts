@@ -12,6 +12,7 @@ export const getProducts = (
   limit?: number,
   filter?: Record<string, unknown>,
   page?: number,
+  sort?: string,
 ) => {
   try {
     const params: DirectusMetaQueryParams = {
@@ -20,11 +21,9 @@ export const getProducts = (
       limit,
       meta,
       page,
+      sort,
     };
-    return useNuxtApp().$api.getAll<ProductCardType>(
-      collection,
-      params,
-    );
+    return useNuxtApp().$api.getAll<ProductCardType>(collection, params);
   } catch (e) {
     const error = e as Error;
     throw createError({ message: error.message });

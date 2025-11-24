@@ -59,6 +59,10 @@ defineOptions({
     height: 100%;
     width: 100%;
     display: flex;
+
+    @media (max-width: 991px) {
+      display: inline;
+    }
   }
 }
 </style>

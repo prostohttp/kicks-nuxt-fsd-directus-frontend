@@ -20,7 +20,7 @@ export const getProduct = (collection: CollectionType, slug: string | null) => {
         slug: slug?.toString() || "",
       },
     };
-    return useNuxtApp().$api.getAll<ProductType>(collection, params);
+    return useNuxtApp().$api.getAllBySlug<ProductType>(collection, params);
   } catch (e) {
     const error = e as Error;
     throw createError({ message: error.message });

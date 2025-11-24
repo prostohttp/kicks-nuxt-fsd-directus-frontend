@@ -46,6 +46,7 @@ const activeSlide = ref(0);
   background-color: #232321;
   color: #fff;
   padding-top: 40px;
+  overflow: hidden;
 
   @media (max-width: 991px) {
     padding-top: 20px;

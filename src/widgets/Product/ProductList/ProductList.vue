@@ -65,7 +65,12 @@ watch(
 const { data: products } = useQuery({
   key: () => [
     "product-list",
-    { limit: limit, label: settings.label, page: currentPage.value },
+    {
+      limit: limit,
+      label: settings.label,
+      page: currentPage.value,
+      sort: route.query.sort as string,
+    },
   ],
   query: async () =>
     await productStore.getAllProducts(
@@ -74,6 +79,7 @@ const { data: products } = useQuery({
       limit,
       filter.value,
       currentPage.value,
+      route.query.sort?.toString(),
     ),
   placeholderData: (previousData) => previousData,
 });

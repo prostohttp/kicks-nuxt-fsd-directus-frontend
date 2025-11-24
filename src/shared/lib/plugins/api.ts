@@ -22,6 +22,16 @@ export default defineNuxtPlugin(() => {
     }) as unknown as Promise<DirectusItems<T>>;
   };
 
+  const getAllBySlug = <T>(
+    collection: CollectionType,
+    params?: DirectusQueryParams,
+  ): Promise<T[]> => {
+    return getItems<T>({
+      collection,
+      params,
+    });
+  };
+
   const getById = <T>(
     collection: CollectionType,
     id: string,
@@ -65,6 +75,7 @@ export default defineNuxtPlugin(() => {
     getSingleton,
     create,
     getAll,
+    getAllBySlug,
     loginUser,
     logOutUser,
     registerUser,

@@ -11,8 +11,9 @@ export const useProductStore = defineStore("products", () => {
     limit?: number,
     filter?: Record<string, unknown>,
     page?: number,
+    sort?: string,
   ) => {
-    return getProducts(collection, meta, limit, filter, page);
+    return getProducts(collection, meta, limit, filter, page, sort);
   };
 
   const product = ref<ProductDetailsType>();
