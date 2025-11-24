@@ -13,7 +13,7 @@ export const getCategories = (
       filter,
       limit,
     };
-    return useNuxtApp().$api.getAll<CategoryType>(collection, params);
+    return useNuxtApp().$api.getAllRaw<CategoryType>(collection, params);
   } catch (e) {
     const error = e as Error;
     throw createError({ message: error.message });

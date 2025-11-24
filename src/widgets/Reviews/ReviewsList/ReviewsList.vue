@@ -9,7 +9,7 @@ const { limit } = defineProps<{
 }>();
 
 const { data: reviews, isLoading } = useQuery({
-  key: () => ["home-reviews-list", limit ? limit : ""],
+  key: () => ["reviews", limit ? limit : ""],
   query: async () => await getReviews(CollectionType.REVIEWS, limit),
 });
 </script>

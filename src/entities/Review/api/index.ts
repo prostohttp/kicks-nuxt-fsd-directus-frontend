@@ -16,7 +16,7 @@ export const getReviews = (collection: CollectionType, limit?: number) => {
       ],
       limit,
     };
-    return useNuxtApp().$api.getAll<ReviewType>(collection, params);
+    return useNuxtApp().$api.getAllRaw<ReviewType>(collection, params);
   } catch (e) {
     const error = e as Error;
     throw createError({ message: error.message });
