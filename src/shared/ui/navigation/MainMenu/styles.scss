@@ -50,6 +50,7 @@
       flex-direction: column;
       align-items: start;
       overflow: hidden;
+      min-width: max-content;
 
       .horizontal-menu__item {
         width: 100%;

@@ -65,10 +65,19 @@ watch(sortValue, (newValue) => {
     });
   }
 });
+const filter = computed(() =>
+  data.value?.label
+    ? {
+        label: { _eq: data.value.label },
+      }
+    : undefined,
+);
+const productsRef = useTemplateRef("productsRef");
+const scrollToProductsRef = () => productsRef.value?.scrollIntoView();
 </script>
 
 <template>
-  <section class="products-block">
+  <section ref="productsRef" class="products-block">
     <div v-if="data && data.heading" class="products-block__heading">
       <HeadingWith v-if="data.is_carousel">
         <template #left>
@@ -106,7 +115,13 @@ watch(sortValue, (newValue) => {
         </template>
       </HeadingWith>
     </div>
-    <ProductList v-if="data" ref="productRef" :settings="data" />
+    <ProductList
+      v-if="data"
+      ref="productRef"
+      :filter="filter"
+      :settings="data"
+      @scroll-into="scrollToProductsRef"
+    />
   </section>
 </template>
 

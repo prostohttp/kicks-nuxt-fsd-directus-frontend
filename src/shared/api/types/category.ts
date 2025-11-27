@@ -1,3 +1,4 @@
+import type { BannerType } from "../../ui/Banner";
 import type { SeoType } from "./seo";
 
 export interface CategoryType {
@@ -5,9 +6,9 @@ export interface CategoryType {
   title: string;
   slug: string;
   description?: string;
+  show_filter: boolean;
   thumbnail: string;
   seo: SeoType;
-  banner: string | null;
-  products: number[];
+  banner: BannerType | null;
   children: number[];
 }

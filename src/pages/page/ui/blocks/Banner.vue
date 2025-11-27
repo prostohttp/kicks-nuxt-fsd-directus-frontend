@@ -4,7 +4,7 @@ import { Banner } from "~/src/shared/ui/Banner";
 import { Preloader } from "~/src/shared/ui/preloader";
 
 const { itemId } = defineProps<{ itemId: string }>();
-const { data: banner, isLoading } = useQuery({
+const { data, isLoading } = useQuery({
   key: () => ["banners", itemId],
   query: async () => await getBanner(itemId, CollectionType.BLOCKS_BANNER),
 });
@@ -12,5 +12,5 @@ const { data: banner, isLoading } = useQuery({
 
 <template>
   <Preloader v-if="isLoading" />
-  <Banner v-else-if="banner" v-bind="banner" />
+  <Banner v-else-if="data" v-bind="data.banner" />
 </template>

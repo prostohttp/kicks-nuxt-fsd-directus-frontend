@@ -1,4 +1,4 @@
-import type { CollectionType } from "~/src/shared/api";
+import type { ApiFilterType, CollectionType } from "~/src/shared/api";
 import type { ProductCardType, ProductDetailsType } from "../types";
 import { getProduct, getProducts } from "../../api";
 import type { ApiProductsCount } from "../../api/types";
@@ -9,7 +9,7 @@ export const useProductStore = defineStore("products", () => {
     collection: CollectionType,
     meta: ApiProductsCount,
     limit?: number,
-    filter?: Record<string, unknown>,
+    filter?: ApiFilterType,
     page?: number,
     sort?: string,
   ) => {

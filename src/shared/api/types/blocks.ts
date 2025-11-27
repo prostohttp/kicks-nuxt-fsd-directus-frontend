@@ -9,7 +9,7 @@ export interface BlockSliderType {
 
 export interface BlockProductType {
   heading?: string;
-  is_carousel: boolean;
+  is_carousel?: boolean;
   limit: number;
   collection: CollectionType;
   columns: number;

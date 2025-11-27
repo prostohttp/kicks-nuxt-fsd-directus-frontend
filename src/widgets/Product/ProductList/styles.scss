@@ -7,6 +7,21 @@
       margin-top: 20px;
     }
 
+    &-loading {
+
+      &::before {
+        content: "";
+        position: absolute;
+        z-index: 100;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background-color: #e7e7e3;
+        opacity: 0.1;
+      }
+    }
+
     &__cards {
       overflow: hidden;
       padding: 2px;

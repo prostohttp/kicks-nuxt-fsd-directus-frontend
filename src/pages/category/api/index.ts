@@ -14,15 +14,19 @@ export const getCategory = (
         "description",
         "thumbnail",
         "seo",
-        "banner",
-        "products",
+        "banner.id",
+        "banner.heading",
+        "banner.small_heading",
+        "banner.image",
+        "banner.description",
         "children",
+        "show_filter",
       ],
       filter: {
         slug: slug?.toString() || "",
       },
     };
-    return useNuxtApp().$api.getAll<CategoryType>(collection, params);
+    return useNuxtApp().$api.getAllRaw<CategoryType>(collection, params);
   } catch (e) {
     const error = e as Error;
     throw createError({ message: error.message });

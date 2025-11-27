@@ -8,7 +8,15 @@
     padding-bottom: 10px;
   }
 
+  &__left {
+    width: 50%;
+  }
+
   &__right {
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+
     &__button {
       width: 50%;
       display: flex;

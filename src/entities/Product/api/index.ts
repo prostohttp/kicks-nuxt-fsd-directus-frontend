@@ -1,4 +1,4 @@
-import type { CollectionType } from "~/src/shared/api";
+import type { ApiFilterType, CollectionType } from "~/src/shared/api";
 import type {
   DirectusMetaQueryParams,
   DirectusQueryParams,
@@ -10,7 +10,7 @@ export const getProducts = (
   collection: CollectionType,
   meta: ApiProductsCount,
   limit?: number,
-  filter?: Record<string, unknown>,
+  filter?: ApiFilterType,
   page?: number,
   sort?: string,
 ) => {

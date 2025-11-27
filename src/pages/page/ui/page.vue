@@ -16,7 +16,7 @@ const pageSlug = computed(() =>
 );
 const { data, isLoading } = useQuery({
   key: () => ["pages", { page: pageSlug.value }],
-  query: async () => getPage(CollectionType.PAGES, pageSlug.value),
+  query: async () => await getPage(CollectionType.PAGES, pageSlug.value),
 });
 const page = computed(() => (data.value ? data.value[0] : null));
 useSeoMeta({

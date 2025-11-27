@@ -1,11 +1,11 @@
 import type { DirectusQueryParams } from "nuxt-directus";
-import type { CollectionType } from "~/src/shared/api";
+import type { ApiFilterType, CollectionType } from "~/src/shared/api";
 import type { CategoryType } from "./types";
 
 export const getCategories = (
   collection: CollectionType,
   limit: number,
-  filter?: Record<string, unknown>,
+  filter?: ApiFilterType,
 ) => {
   try {
     const params: DirectusQueryParams = {

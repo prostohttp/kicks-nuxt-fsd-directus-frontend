@@ -2,7 +2,9 @@
 
 <template>
   <div class="heading-with">
-    <slot name="left"/>
+    <div class="heading-with__left">
+      <slot name="left"/>
+    </div>
     <div class="heading-with__right">
       <slot name="right"/>
     </div>

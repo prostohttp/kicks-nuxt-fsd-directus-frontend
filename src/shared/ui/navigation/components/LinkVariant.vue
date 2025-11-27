@@ -48,6 +48,8 @@ defineOptions({
 <style lang="scss">
 .link-variant-wrapper {
   width: 100%;
+  line-height: 1.4;
+  padding: 3px 0;
 
   @media (max-width: 991px) {
     display: block;

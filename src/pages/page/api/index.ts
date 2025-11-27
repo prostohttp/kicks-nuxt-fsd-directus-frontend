@@ -19,7 +19,7 @@ export const getPage = (
         permalink : permalink?.toString() || "",
       },
     };
-    return useNuxtApp().$api.getAll<PageType>(collection, params);
+    return useNuxtApp().$api.getAllRaw<PageType>(collection, params);
   } catch (e) {
     const error = e as Error;
     throw createError({ message: error.message });

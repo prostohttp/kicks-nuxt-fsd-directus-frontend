@@ -11,3 +11,5 @@ export interface ProductType {
   price: number;
   rating: number;
 }
+
+export type ApiFilterType = Record<string, unknown>;

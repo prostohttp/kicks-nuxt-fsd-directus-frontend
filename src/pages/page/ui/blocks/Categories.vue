@@ -2,10 +2,11 @@
 import { getBlockCategories } from "~/src/shared/api";
 import { CarouselNavigation } from "~/src/shared/ui/carousel";
 import { HeadingWith, LargeHeading } from "~/src/shared/ui/heading";
+import { Preloader } from "~/src/shared/ui/preloader";
 import { Categories } from "~/src/widgets/Categories";
 
 const { itemId } = defineProps<{ itemId: string }>();
-const { data } = useQuery({
+const { data, isLoading } = useQuery({
   key: () => ["categories-carousel", itemId],
   query: async () => await getBlockCategories(itemId),
 });
@@ -15,7 +16,8 @@ const activeSlide = ref(0);
 </script>
 
 <template>
-  <section class="categories-block force-full-width">
+  <Preloader v-if="isLoading" />
+  <section v-else class="categories-block force-full-width">
     <HeadingWith class="wrapper">
       <template #left>
         <LargeHeading v-if="data" :heading="data.heading" />

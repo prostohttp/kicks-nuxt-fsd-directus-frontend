@@ -4,14 +4,21 @@ import {
   Carousel,
 } from "vue3-carousel/dist/carousel";
 import { ProductCard, useProductStore } from "~/src/entities/Product";
-import { CollectionType, type BlockProductType } from "~/src/shared/api";
+import {
+  CollectionType,
+  type ApiFilterType,
+  type BlockProductType,
+} from "~/src/shared/api";
 import { EmptyDataHeading } from "~/src/shared/ui/heading";
 import { Pagination } from "~/src/shared/ui/Pagination";
 
-const { settings } = defineProps<{
+const { settings, filter } = defineProps<{
   settings: BlockProductType;
+  filter?: ApiFilterType;
 }>();
-const { is_carousel, columns, limit } = settings;
+const emit = defineEmits<{
+  scrollInto: [];
+}>();
 
 const productCarousel = ref();
 const carouselConfig = {
@@ -30,13 +37,6 @@ const carouselConfig = {
 } as const;
 
 const productStore = useProductStore();
-const filter = computed(() =>
-  settings.label
-    ? {
-        label: { _eq: settings.label },
-      }
-    : undefined,
-);
 
 const route = useRoute();
 const currentPage = ref((Number(route.query.page) as number) || 1);
@@ -45,11 +45,11 @@ const pagesCount = computed(() =>
     ? Math.ceil(products.value?.meta?.filter_count / settings.limit)
     : 0,
 );
-const productsRef = useTemplateRef("productsRef");
+
 watch(currentPage, (newValue) => {
   if (newValue) {
     navigateTo({ query: { ...route.query, page: newValue } });
-    productsRef.value?.scrollIntoView();
+    emit("scrollInto");
   }
 });
 watch(
@@ -62,30 +62,45 @@ watch(
   { immediate: true },
 );
 
-const { data: products } = useQuery({
+const { data: products, isLoading } = useQuery({
   key: () => [
     "product-list",
     {
-      limit: limit,
+      limit: settings.limit,
       label: settings.label,
       page: currentPage.value,
       sort: route.query.sort as string,
+      filter: filter,
     },
   ],
   query: async () =>
     await productStore.getAllProducts(
       CollectionType.PRODUCTS,
       "*",
-      limit,
-      filter.value,
+      settings.limit,
+      filter,
       currentPage.value,
       route.query.sort?.toString(),
     ),
   placeholderData: (previousData) => previousData,
 });
 
-const columnClass = () =>
-  columns === 2 ? "two-column" : columns === 3 ? "three-column" : null;
+const columnClass = computed(() =>
+  settings.columns === 2
+    ? "two-column"
+    : settings.columns === 3
+      ? "three-column"
+      : null,
+);
+
+const isPagination = computed(
+  () =>
+    products.value &&
+    settings.paginatable &&
+    products.value.meta &&
+    products.value.meta.filter_count &&
+    products.value.meta.filter_count > settings.limit,
+);
 
 defineExpose({
   productCarousel,
@@ -93,10 +108,10 @@ defineExpose({
 </script>
 
 <template>
-  <section v-if="products?.data" ref="productsRef" class="product-list">
-    <div class="product-list__products">
+  <section v-if="products?.data" class="product-list">
+    <div class="product-list__products" :class="{'product-list__products-loading': isLoading}">
       <EmptyDataHeading v-if="!products.data.length" />
-      <div v-if="is_carousel" class="product-list__products__carousel">
+      <div v-if="settings.is_carousel" class="product-list__products__carousel">
         <div class="product-list__products__cards">
           <Carousel v-bind="carouselConfig" ref="productCarousel">
             <Slide v-for="product in products.data" :key="product.id">
@@ -110,9 +125,7 @@ defineExpose({
       </div>
       <div v-else class="product-list__products__grid">
         <div class="product-list__products__cards">
-          <div
-            :class="['product-list__products__cards__wrapper', columnClass()]"
-          >
+          <div :class="['product-list__products__cards__wrapper', columnClass]">
             <ProductCard
               v-for="product in products.data"
               :key="product.id"
@@ -123,7 +136,7 @@ defineExpose({
       </div>
     </div>
     <Pagination
-      v-if="settings.paginatable && products.data.length"
+      v-if="isPagination"
       v-model="currentPage"
       :pages-count="pagesCount"
     />

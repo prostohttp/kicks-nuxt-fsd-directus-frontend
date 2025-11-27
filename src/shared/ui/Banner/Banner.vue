@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { BannerType } from "./types";
 
-const { banner } = defineProps<BannerType>();
+const banner = defineProps<BannerType>();
 
 const { getThumbnail: img } = useDirectusFiles();
 const smallTitleRef = useTemplateRef("small-title");
