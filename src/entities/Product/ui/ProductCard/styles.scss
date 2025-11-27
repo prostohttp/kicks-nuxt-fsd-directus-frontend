@@ -12,10 +12,16 @@
         position: relative;
         aspect-ratio: 1/1.1;
 
+        &-placeholder {
+            border-radius: 28px;
+            overflow: hidden;
+        }
+
         img {
             width: 100%;
             object-fit: cover;
             height: 100%;
+            border-radius: 28px;
         }
 
         &__label {

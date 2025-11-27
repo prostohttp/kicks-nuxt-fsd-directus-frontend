@@ -35,7 +35,6 @@ const carouselConfig = {
   },
 } as const;
 
-const { getThumbnail: img } = useDirectusFiles();
 const max = computed(() =>
   categories.value ? categories.value.length - 1 : 0,
 );
@@ -57,11 +56,10 @@ defineExpose({
       <Slide v-for="category in categories" :key="category.id">
         <div class="categories-carousel__item">
           <NuxtImg
-            :src="
-              img(category.thumbnail, {
-                format: 'webp',
-              })
-            "
+            provider="directus"
+            format="webp"
+            placeholder
+            :src="category.thumbnail"
           />
           <div class="categories-carousel__item__info">
             <h3 class="categories-carousel__item__info__title">

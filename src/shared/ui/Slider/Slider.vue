@@ -11,7 +11,6 @@ const { banners } = slider;
 
 const activeSlide = ref(banners[0]?.id);
 const changeActiveSlide = (slide: string) => (activeSlide.value = slide);
-const { getThumbnail: img } = useDirectusFiles();
 </script>
 
 <template>
@@ -32,7 +31,9 @@ const { getThumbnail: img } = useDirectusFiles();
         >
           <NuxtImg
             v-if="thumb.preview_image"
-            :src="img(thumb.preview_image)"
+            :src="thumb.preview_image"
+            provider="directus"
+            format="webp"
             alt="thumb"
             :class="{ active: activeSlide === thumb.id }"
             @click="changeActiveSlide(thumb.id)"
@@ -65,7 +66,9 @@ const { getThumbnail: img } = useDirectusFiles();
               duration: 0.2,
               delay: 0.8,
             }"
-            :src="img(banner.slide_label)"
+            provider="directus"
+            :src="banner.slide_label"
+            format="webp"
             :data-change="activeSlide === banner.id"
             alt="label"
           />
@@ -76,11 +79,10 @@ const { getThumbnail: img } = useDirectusFiles();
             scale: 1.4,
             duration: 0.16,
           }"
-          :src="
-            img(banner.image, {
-              format: 'webp',
-            })
-          "
+          provider="directus"
+          format="webp"
+          :placeholder="[100,70]"
+          :src="banner.image"
           :alt="banner.heading"
           class="slide__image"
         />

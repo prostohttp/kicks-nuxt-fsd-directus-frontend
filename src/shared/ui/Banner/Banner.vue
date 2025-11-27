@@ -3,7 +3,6 @@ import type { BannerType } from "./types";
 
 const banner = defineProps<BannerType>();
 
-const { getThumbnail: img } = useDirectusFiles();
 const smallTitleRef = useTemplateRef("small-title");
 const titleRef = useTemplateRef("title");
 const descriptionRef = useTemplateRef("description");
@@ -38,10 +37,13 @@ onMounted(() => {
 <template>
   <section class="banner">
     <NuxtImg
+      provider="directus"
       class="banner__image"
       alt="heading"
-      placeholder
-      :src="img(banner.image, { format: 'webp', fit: 'cover' })"
+      :src="banner.image"
+      format="webp"
+      fit="cover"
+      :placeholder="[10,3]"
     />
     <div class="banner__info">
       <h3

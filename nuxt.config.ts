@@ -58,9 +58,9 @@ export default defineNuxtConfig({
         },
       },
     },
-    //   directus: {
-    //     baseURL: "http://localhost:8055/assets",
-    //   },
+      directus: {
+        baseURL: "http://localhost:8055/assets",
+      },
   },
   vgsap: {
     presets: [],

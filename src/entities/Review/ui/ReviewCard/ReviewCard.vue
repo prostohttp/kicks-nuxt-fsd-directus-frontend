@@ -7,7 +7,6 @@ const { gallery, product, rating, review, title, user_created } =
   defineProps<ReviewType>();
 
 const ratingModel = ref(rating);
-const { getThumbnail: img } = useDirectusFiles();
 </script>
 
 <template>
@@ -27,23 +26,16 @@ const { getThumbnail: img } = useDirectusFiles();
         <StarRating v-model="ratingModel" />
       </div>
       <div class="review-card__header__avatar">
-        <NuxtImg
-          :src="
-            img(user_created.avatar, {
-              format: 'webp',
-            })
-          "
-        />
+        <NuxtImg provider="directus" format="webp" :src="user_created.avatar" />
       </div>
     </div>
     <div class="review-card__image">
       <NuxtImg
         v-if="gallery[0]?.directus_files_id"
-        :src="
-          img(gallery[0].directus_files_id, {
-            format: 'webp',
-          })
-        "
+        provider="directus"
+        format="webp"
+        placeholder
+        :src="gallery[0].directus_files_id"
       />
     </div>
   </section>

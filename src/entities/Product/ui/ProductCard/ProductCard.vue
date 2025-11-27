@@ -5,21 +5,18 @@ import { Button } from "~/src/shared/ui/Button";
 import { formatUSD } from "~/src/shared/lib";
 
 const { image, label, title, price, slug } = defineProps<ProductCardType>();
-const { getThumbnail: img } = useDirectusFiles();
 </script>
 
 <template>
   <section class="product-card">
     <div class="product-card__image">
       <NuxtImg
-        :src="
-          img(image, {
-            format: 'webp',
-            width: 300,
-          })
-        "
+        provider="directus"
+        :src="image"
+        format="webp"
         :alt="title"
         placeholder
+        placeholder-class="product-card__image-placeholder"
       />
       <span v-if="label" class="product-card__image__label">{{ label }}</span>
     </div>

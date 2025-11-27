@@ -11,7 +11,7 @@ const route = useRoute();
 const categorySlug = computed(() =>
   "category" in route.params ? (route.params.category as string) : null,
 );
-const { data } = useQuery({
+const { data, isLoading } = useQuery({
   key: () => ["category", categorySlug.value],
   query: async () =>
     await getCategory(CollectionType.CATEGORIES, categorySlug.value),
@@ -88,7 +88,7 @@ const scrollToProductsRef = () => headingRef.value?.scrollIntoView();
 </script>
 
 <template>
-  <NotFound v-if="!category" heading="Category not found!" />
+  <NotFound v-if="!isLoading && !category" heading="Category not found!" />
   <section v-else-if="category && data && data[0]" class="category-page">
     <Banner
       v-if="data[0].banner"
