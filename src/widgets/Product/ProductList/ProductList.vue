@@ -109,7 +109,10 @@ defineExpose({
 
 <template>
   <section v-if="products?.data" class="product-list">
-    <div class="product-list__products" :class="{'product-list__products-loading': isLoading}">
+    <div
+      class="product-list__products"
+      :class="{ 'product-list__products-loading': isLoading }"
+    >
       <EmptyDataHeading v-if="!products.data.length" />
       <div v-if="settings.is_carousel" class="product-list__products__carousel">
         <div class="product-list__products__cards">
@@ -138,6 +141,7 @@ defineExpose({
     <Pagination
       v-if="isPagination"
       v-model="currentPage"
+      style="margin-top: 50px;"
       :pages-count="pagesCount"
     />
   </section>

@@ -6,7 +6,6 @@
     grid-template-columns: 1fr 0.5fr 1fr;
     align-items: center;
     gap: 20px;
-    padding: 0 32px;
     margin-bottom: 40px;
 
     @media (max-width: 991px) {
@@ -35,7 +34,7 @@
         align-items: center;
 
         @media (max-width: 991px) {
-            gap: 9px;
+            gap: 12px;
 
             .icon {
                 transform: scale(0.9);

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { PiniaColadaDevtools } from "@pinia/colada-devtools";
-import { OverlayPreloader } from "./src/shared/ui/preloader";
+// import { OverlayPreloader } from "./src/shared/ui/preloader";
 </script>
 
 <template>
@@ -9,10 +9,13 @@ import { OverlayPreloader } from "./src/shared/ui/preloader";
   <PiniaColadaDevtools />
   <NuxtLayout>
     <NuxtPage />
-    <ClientOnly>
+
+    <!-- Overload preloader -->
+    <!-- <ClientOnly>
       <template #fallback>
         <OverlayPreloader />
       </template>
-    </ClientOnly>
+    </ClientOnly> -->
+
   </NuxtLayout>
 </template>

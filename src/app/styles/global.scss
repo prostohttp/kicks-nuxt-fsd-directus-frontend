@@ -74,10 +74,19 @@ button {
 
 .wrapper {
   max-width: 1352px;
-  margin: 32px auto 18px;
+  margin: 32px auto 40px;
   padding: 0 16px;
 
   @media (max-width: 1199px) {
+  }
+}
+
+// fix first load screen
+.header {
+  padding: 0 32px;
+
+  @media (max-width: 991px) {
+    margin-bottom: 30px;
   }
 }
 

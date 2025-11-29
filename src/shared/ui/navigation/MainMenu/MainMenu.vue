@@ -80,9 +80,9 @@ watch(
       </GSAPTransition>
     </button>
     <ul
-      v-gsap.onState-visible.delay-100.mobile.from="{
-        opacity: 0,
-        height: 0,
+      v-gsap.onState-visible.delay-100.mobile.to="{
+        height: '100%',
+        opacity: 1,
         transformOrigin: 'center',
         duration: 0.2,
       }"
@@ -102,17 +102,18 @@ watch(
           v-if="parent.children.length"
           class="horizontal-menu__item-link-icon"
         />
-
+        <!-- TODO: ssr first load remove -->
         <ul
           v-if="parent.children.length"
-          v-gsap.onState-visible.delay-100.desktop.from="{
-            height: 0,
-            opacity: 0,
+          v-gsap.onState-visible.delay-100.desktop.to="{
+            height: 'auto',
+            opacity: 1,
             y: 0,
             duration: 0.15,
           }"
-          v-gsap.onState-visible.mobile.from="{
-            height: 0,
+          v-gsap.onState-visible.mobile.to="{
+            height: 'auto',
+            opacity: 1,
             y: 0,
             duration: 0.15,
           }"

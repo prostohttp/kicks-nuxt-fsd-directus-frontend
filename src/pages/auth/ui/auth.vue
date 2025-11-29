@@ -2,19 +2,21 @@
 import { CollectionType } from "~/src/shared/api";
 import { getRegisterBenefits } from "../api";
 import { LoginForm, RegisterForm } from "~/src/features/auth";
+import { Preloader } from "~/src/shared/ui/preloader";
 
 useSeoMeta({
-  title: "Authentication page"
-})
+  title: "Authentication page",
+});
 
-const { data: benefits } = useQuery({
+const { data: benefits, isLoading } = useQuery({
   key: ["register-page-benefits"],
   query: async () => await getRegisterBenefits(CollectionType.SETTINGS),
 });
 </script>
 
 <template>
-  <section class="auth">
+  <Preloader v-if="isLoading" />
+  <section v-else class="auth">
     <div class="auth__forms">
       <LoginForm />
       <h3 class="auth__forms__divider">OR</h3>

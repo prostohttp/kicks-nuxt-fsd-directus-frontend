@@ -5,8 +5,9 @@ import { Preloader } from "~/src/shared/ui/preloader";
 import { NotFound } from "~/src/shared/ui/NotFound";
 import { pageBlocksMapper } from "../api/blocksMapper";
 
-const notFoundMessage = "Page not found!";
 const route = useRoute();
+
+// TODO: Вынести в composables, если необходимо
 const pageSlug = computed(() =>
   "page" in route.params
     ? (route.params.page as string)
@@ -27,7 +28,7 @@ useSeoMeta({
 
 <template>
   <Preloader v-if="isLoading" />
-  <NotFound v-else-if="!page" :heading="notFoundMessage" />
+  <NotFound v-else-if="!page" heading="Page not found!" />
   <section v-else-if="data && data[0]" class="page-page">
     <component
       :is="pageBlocksMapper[block.collection]"
