@@ -3,9 +3,12 @@ import { CollectionType, type BlockProductType } from "~/src/shared/api";
 import { getCategory } from "../api";
 import { NotFound } from "~/src/shared/ui/NotFound";
 import { Banner } from "~/src/shared/ui/Banner";
-import { Select, type SelectItemType } from "~/src/shared/ui/form";
 import { HeadingWith, SmallHeading } from "~/src/shared/ui/heading";
 import { ProductList } from "~/src/widgets/Product/ProductList";
+import { Preloader } from "~/src/shared/ui/preloader";
+import { useProductStore } from "~/src/entities/Product";
+import { Filter } from "~/src/widgets/Filter";
+import { SortProducts } from "~/src/features/sort";
 
 const route = useRoute();
 const categorySlug = computed(() =>
@@ -21,53 +24,6 @@ const category = computed(() => (data.value ? data.value[0] : null));
 useSeoMeta({
   title: () => category.value?.seo.title,
   description: () => category.value?.seo.meta_description,
-});
-const sortList: SelectItemType[] = reactive([
-  {
-    label: "Default",
-    value: "",
-  },
-  {
-    label: "Price up",
-    value: "price",
-  },
-  {
-    label: "Price down",
-    value: "-price",
-  },
-  {
-    label: "Newest",
-    value: "-date_created",
-  },
-  {
-    label: "Latest",
-    value: "date_created",
-  },
-]);
-const initialSortValue = () => {
-  const sortQuery = route.query.sort;
-  if (sortQuery) {
-    const sortListItem = sortList.find((item) => item.value === sortQuery);
-    return sortListItem?.label || "Default";
-  } else {
-    return "Default";
-  }
-};
-const sortValue = ref(initialSortValue());
-const sortQuery = computed(() => {
-  const sort = sortList.find((item) => item.label === sortValue.value);
-  return sort?.value || "";
-});
-
-watch(sortValue, (newValue) => {
-  if (newValue) {
-    navigateTo({
-      query: {
-        ...route.query,
-        sort: sortQuery.value,
-      },
-    });
-  }
 });
 
 const settings = computed<BlockProductType>(() => ({
@@ -85,10 +41,15 @@ const filter = computed(() => ({
 
 const headingRef = useTemplateRef("headingRef");
 const scrollToProductsRef = () => headingRef.value?.scrollIntoView();
+
+const productStore = useProductStore();
+const filterProducts = computed(
+  () => productStore.products?.meta?.filter_count,
+);
 </script>
 
 <template>
-  <NotFound v-if="!isLoading && !category" heading="Category not found!" />
+  <Preloader v-if="isLoading" />
   <section v-else-if="category && data && data[0]" class="category-page">
     <Banner
       v-if="data[0].banner"
@@ -99,14 +60,24 @@ const scrollToProductsRef = () => headingRef.value?.scrollIntoView();
       <HeadingWith style="align-items: flex-start">
         <template #left>
           <SmallHeading :heading="data[0].title" />
+          <ClientOnly>
+            <div class="category-page__heading__total">
+              {{ filterProducts }} items
+            </div>
+          </ClientOnly>
         </template>
         <template #right>
-          <Select v-model="sortValue" :list="sortList" />
+          <SortProducts />
         </template>
       </HeadingWith>
     </div>
     <div v-if="data[0].show_filter" class="category-page__content-with-filters">
-      <div class="category-page__content-with-filters__filters">filters</div>
+      <div class="category-page__content-with-filters__filters">
+        <h4 class="category-page__content-with-filters__filters__title">
+          Filters
+        </h4>
+        <Filter />
+      </div>
       <div class="category-page__content-with-filters__products">
         <ProductList :filter :settings @scroll-into="scrollToProductsRef" />
       </div>
@@ -117,6 +88,7 @@ const scrollToProductsRef = () => headingRef.value?.scrollIntoView();
       </div>
     </div>
   </section>
+  <NotFound v-else heading="Category not found!" />
 </template>
 
 <style lang="scss">

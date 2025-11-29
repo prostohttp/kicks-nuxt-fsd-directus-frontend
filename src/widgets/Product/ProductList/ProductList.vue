@@ -36,8 +36,6 @@ const carouselConfig = {
   },
 } as const;
 
-const productStore = useProductStore();
-
 const route = useRoute();
 const currentPage = ref((Number(route.query.page) as number) || 1);
 const pagesCount = computed(() =>
@@ -62,6 +60,7 @@ watch(
   { immediate: true },
 );
 
+const productStore = useProductStore();
 const { data: products, isLoading } = useQuery({
   key: () => [
     "product-list",
@@ -73,15 +72,18 @@ const { data: products, isLoading } = useQuery({
       filter: filter,
     },
   ],
-  query: async () =>
-    await productStore.getAllProducts(
+  query: async () => {
+    const products = await productStore.getAllProducts(
       CollectionType.PRODUCTS,
       "*",
       settings.limit,
       filter,
       currentPage.value,
       route.query.sort?.toString(),
-    ),
+    );
+    productStore.setProducts(products);
+    return products;
+  },
   placeholderData: (previousData) => previousData,
 });
 
@@ -141,7 +143,7 @@ defineExpose({
     <Pagination
       v-if="isPagination"
       v-model="currentPage"
-      style="margin-top: 50px;"
+      style="margin-top: 50px"
       :pages-count="pagesCount"
     />
   </section>

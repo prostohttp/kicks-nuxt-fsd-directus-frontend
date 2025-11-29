@@ -49,9 +49,15 @@ const activeSlide = ref(0);
   color: #fff;
   padding-top: 40px;
   overflow: hidden;
+  margin-top: 80px;
+
+  .heading-with {
+    padding-bottom: 10px;
+  }
 
   @media (max-width: 991px) {
-    padding-top: 20px;
+    padding-top: 0;
+    margin-top: 30px;
   }
 
   .carousel__viewport {

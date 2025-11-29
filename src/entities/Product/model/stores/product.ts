@@ -2,9 +2,10 @@ import type { ApiFilterType, CollectionType } from "~/src/shared/api";
 import type { ProductCardType, ProductDetailsType } from "../types";
 import { getProduct, getProducts } from "../../api";
 import type { ApiProductsCount } from "../../api/types";
+import type { DirectusItems } from "nuxt-directus";
 
 export const useProductStore = defineStore("products", () => {
-  const products = ref<ProductCardType[]>([]);
+  const products = ref<DirectusItems<ProductCardType>>();
   const getAllProducts = (
     collection: CollectionType,
     meta: ApiProductsCount,
@@ -14,6 +15,9 @@ export const useProductStore = defineStore("products", () => {
     sort?: string,
   ) => {
     return getProducts(collection, meta, limit, filter, page, sort);
+  };
+  const setProducts = (data: DirectusItems<ProductCardType>) => {
+    products.value = data;
   };
 
   const product = ref<ProductDetailsType>();
@@ -28,6 +32,7 @@ export const useProductStore = defineStore("products", () => {
   return {
     products,
     getAllProducts,
+    setProducts,
     product,
     getOneProduct,
   };

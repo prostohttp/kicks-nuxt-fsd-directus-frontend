@@ -84,6 +84,7 @@ button {
 // fix first load screen
 .header {
   padding: 0 32px;
+  margin-bottom: 60px;
 
   @media (max-width: 991px) {
     margin-bottom: 30px;

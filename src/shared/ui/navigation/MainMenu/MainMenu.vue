@@ -102,7 +102,6 @@ watch(
           v-if="parent.children.length"
           class="horizontal-menu__item-link-icon"
         />
-        <!-- TODO: ssr first load remove -->
         <ul
           v-if="parent.children.length"
           v-gsap.onState-visible.delay-100.desktop.to="{

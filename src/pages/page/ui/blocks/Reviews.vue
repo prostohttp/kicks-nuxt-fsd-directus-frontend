@@ -38,7 +38,7 @@ const { data } = useQuery({
   display: flex;
   flex-direction: column;
   gap: 30px;
-  margin-top: 60px;
+  margin-top: 80px;
 
   @media (max-width: 991px) {
     margin-top: 30px;

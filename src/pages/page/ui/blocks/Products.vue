@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import { SortProducts } from "~/src/features/sort";
 import { getBlockProducts } from "~/src/shared/api";
 import { Button } from "~/src/shared/ui/Button";
 import { CarouselNavigation } from "~/src/shared/ui/carousel";
-import { Select, type SelectItemType } from "~/src/shared/ui/form";
 import {
   HeadingWith,
   LargeHeading,
@@ -17,54 +17,7 @@ const { data } = useQuery({
   query: async () => await getBlockProducts(itemId),
 });
 const productRef = ref();
-const sortList: SelectItemType[] = reactive([
-  {
-    label: "Default",
-    value: "",
-  },
-  {
-    label: "Price up",
-    value: "price",
-  },
-  {
-    label: "Price down",
-    value: "-price",
-  },
-  {
-    label: "Newest",
-    value: "-date_created",
-  },
-  {
-    label: "Latest",
-    value: "date_created",
-  },
-]);
-const route = useRoute();
-const initialSortValue = () => {
-  const sortQuery = route.query.sort;
-  if (sortQuery) {
-    const sortListItem = sortList.find((item) => item.value === sortQuery);
-    return sortListItem?.label || "Default";
-  } else {
-    return "Default";
-  }
-};
-const sortValue = ref(initialSortValue());
-const sortQuery = computed(() => {
-  const sort = sortList.find((item) => item.label === sortValue.value);
-  return sort?.value || "";
-});
 
-watch(sortValue, (newValue) => {
-  if (newValue) {
-    navigateTo({
-      query: {
-        ...route.query,
-        sort: sortQuery.value,
-      },
-    });
-  }
-});
 const filter = computed(() =>
   data.value?.label
     ? {
@@ -111,7 +64,7 @@ const scrollToProductsRef = () => productsRef.value?.scrollIntoView();
           <SmallHeading :heading="data.heading" />
         </template>
         <template #right>
-          <Select v-model="sortValue" :list="sortList" />
+          <SortProducts />
         </template>
       </HeadingWith>
     </div>

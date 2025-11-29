@@ -53,6 +53,8 @@
     background-color: #f4f2f2;
     border-radius: 16px;
     padding: 10px 0;
+    height: 0;
+    opacity: 0;
 
     @media (max-width: 991px) {
       top: 50px;

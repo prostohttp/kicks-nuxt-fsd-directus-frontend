@@ -31,7 +31,18 @@ onClickOutside(menuRef, () => (isOpen.value = false), {
       <span>{{ selected }}</span>
       <IconChevronDown />
     </div>
-    <ul v-show="isOpen" ref="menuRef" class="select__list">
+    <ul
+      v-if="isOpen"
+      ref="menuRef"
+      v-gsap.onState-visible.to="{
+        height: 'auto',
+        opacity: 1,
+        y: 0,
+        duration: 0.15,
+      }"
+      class="select__list"
+      :data-visible="isOpen"
+    >
       <template v-for="item in list" :key="item.value">
         <li
           class="select__list__item"
