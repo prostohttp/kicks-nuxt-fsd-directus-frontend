@@ -58,7 +58,7 @@ defineExpose({
           <NuxtImg
             provider="directus"
             format="webp"
-            placeholder
+            loading="lazy"
             :src="category.thumbnail"
           />
           <div class="categories-carousel__item__info">

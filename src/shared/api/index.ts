@@ -8,6 +8,12 @@ export type { BlockSliderType } from "./types/blocks";
 export type { BlockProductType } from "./types/blocks";
 export type { BlockCategoryType } from "./types/blocks";
 export type { BlockReviewsType } from "./types/blocks";
+export type {
+  FiltersType,
+  FilterType,
+  OptionValueType,
+  OptionType,
+} from "./types/option";
 
 export { getPageBlocksAndSeo } from "./base/pageApi";
 export { getBanner } from "./base/bannerApi";

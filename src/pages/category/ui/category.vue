@@ -7,8 +7,10 @@ import { HeadingWith, SmallHeading } from "~/src/shared/ui/heading";
 import { ProductList } from "~/src/widgets/Product/ProductList";
 import { Preloader } from "~/src/shared/ui/preloader";
 import { useProductStore } from "~/src/entities/Product";
-import { Filter } from "~/src/widgets/Filter";
+import { Filters } from "~/src/widgets/Filter";
 import { SortProducts } from "~/src/features/sort";
+import { Placeholder } from "~/src/shared/ui/Placeholder";
+import { IconFilter } from "~/src/shared/ui/icons";
 
 const route = useRoute();
 const categorySlug = computed(() =>
@@ -59,24 +61,47 @@ const filterProducts = computed(
     <div ref="headingRef" class="category-page__heading">
       <HeadingWith style="align-items: flex-start">
         <template #left>
-          <SmallHeading :heading="data[0].title" />
-          <ClientOnly>
-            <div class="category-page__heading__total">
-              {{ filterProducts }} items
-            </div>
-          </ClientOnly>
+          <div class="category-heading">
+            <SmallHeading :heading="data[0].title" />
+            <ClientOnly>
+              <template #fallback>
+                <Placeholder h="24px" w="100px" m="5px 0 0" />
+              </template>
+              <div class="category-heading__total">
+                {{ filterProducts }} items
+              </div>
+            </ClientOnly>
+          </div>
+          <button class="category-page__heading__filter-button">
+            <span>Filters</span>
+            <IconFilter />
+          </button>
         </template>
         <template #right>
           <SortProducts />
         </template>
       </HeadingWith>
+      <div class="category-heading-mobile">
+        <SmallHeading :heading="data[0].title" />
+        <ClientOnly>
+          <template #fallback>
+            <Placeholder h="24px" w="100px" m="5px 0 0" />
+          </template>
+          <div class="category-heading__total">{{ filterProducts }} items</div>
+        </ClientOnly>
+      </div>
     </div>
     <div v-if="data[0].show_filter" class="category-page__content-with-filters">
       <div class="category-page__content-with-filters__filters">
         <h4 class="category-page__content-with-filters__filters__title">
           Filters
         </h4>
-        <Filter />
+        <ClientOnly>
+          <template #fallback>
+            <Placeholder h="60px" m="5px 0 0 " />
+          </template>
+          <Filters :filters="data[0].show_filter.options" />
+        </ClientOnly>
       </div>
       <div class="category-page__content-with-filters__products">
         <ProductList :filter :settings @scroll-into="scrollToProductsRef" />

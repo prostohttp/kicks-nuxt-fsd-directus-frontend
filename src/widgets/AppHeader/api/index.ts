@@ -1,5 +1,6 @@
 import type { DirectusQueryParams } from "nuxt-directus";
 import { CollectionType } from "~/src/shared/api";
+import type { Navigation } from "~/src/shared/ui/navigation";
 
 export const getMenu = () => {
   try {
@@ -20,7 +21,7 @@ export const getMenu = () => {
       ],
     };
 
-    return useNuxtApp().$api.getById(CollectionType.MENUS, "2", params);
+    return useNuxtApp().$api.getById<Navigation>(CollectionType.MENUS, "2", params);
   } catch (e) {
     const error = e as Error;
     throw createError({ message: error.message });

@@ -1,3 +1,13 @@
-.filter {
+.filters {
+  &__filter {
+    &__title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 19px;
+    }
 
+    &__component {
+      margin-bottom: 24px;
+    }
+  }
 }

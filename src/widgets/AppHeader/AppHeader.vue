@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { CartCount } from "~/src/shared/ui/CartCount";
 import { Logo } from "~/src/shared/ui/Logo";
-import { MainMenu, type Navigation } from "~/src/shared/ui/navigation";
+import { MainMenu } from "~/src/shared/ui/navigation";
 import { IconAccount, IconSearch } from "~/src/shared/ui/icons";
 import { getMenu } from "./api";
 import { ROUTES } from "~/src/shared/routes";
 
 const { data: menu } = useQuery({
   key: ["main-menu"],
-  query: async () => (await getMenu()) as Navigation,
+  query: async () => await getMenu(),
 });
 </script>
 

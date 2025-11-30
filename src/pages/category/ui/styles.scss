@@ -1,4 +1,6 @@
 .category-page {
+  position: relative;
+
   &__banner {
     margin-top: 60px;
 
@@ -9,6 +11,46 @@
 
   &__heading {
     margin-top: 30px;
+
+    &__filter-button {
+      display: none;
+      height: 40px;
+      border-radius: 8px;
+      font-weight: 500;
+      background-color: #f4f2f2;
+      border-radius: 8px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      font-family: "Rubik";
+      font-weight: 500;
+      font-size: 14px;
+      width: 100%;
+      text-transform: none;
+
+      @media (max-width: 991px) {
+        display: flex;
+      }
+
+      svg {
+        scale: 1.2;
+      }
+    }
+  }
+
+  .category-heading {
+    @media (max-width: 991px) {
+      display: none;
+    }
+
+    &-mobile {
+      display: none;
+      margin-top: 18px;
+
+      @media (max-width: 991px) {
+        display: block;
+      }
+    }
 
     &__total {
       font-size: 16px;
@@ -28,6 +70,11 @@
     &__filters {
       width: 25%;
 
+      @media (max-width: 991px) {
+        position: absolute;
+        opacity: 0;
+      }
+
       &__title {
         font-size: 24px;
         font-weight: 600;
@@ -37,6 +84,10 @@
 
     &__products {
       width: 75%;
+
+      @media (max-width: 991px) {
+        width: 100%;
+      }
     }
   }
 }

@@ -1,4 +1,5 @@
 import type { BannerType } from "../../ui/Banner";
+import type { FiltersType } from "./option";
 import type { SeoType } from "./seo";
 
 export interface CategoryType {
@@ -6,7 +7,7 @@ export interface CategoryType {
   title: string;
   slug: string;
   description?: string;
-  show_filter: boolean;
+  show_filter: FiltersType | null;
   thumbnail: string;
   seo: SeoType;
   banner: BannerType | null;

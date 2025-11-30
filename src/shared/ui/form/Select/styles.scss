@@ -25,8 +25,9 @@
     border-radius: 16px;
 
     @media (max-width: 991px) {
-      height: 36px;
+      height: 40px;
       border-radius: 8px;
+      font-weight: 500;
     }
 
     &:hover {
