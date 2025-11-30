@@ -14,9 +14,8 @@ const { image, label, title, price, slug } = defineProps<ProductCardType>();
         provider="directus"
         :src="image"
         format="webp"
+        loading="lazy"
         :alt="title"
-        placeholder
-        placeholder-class="product-card__image-placeholder"
       />
       <span v-if="label" class="product-card__image__label">{{ label }}</span>
     </div>

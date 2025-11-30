@@ -81,7 +81,6 @@ const changeActiveSlide = (slide: string) => (activeSlide.value = slide);
           }"
           provider="directus"
           format="webp"
-          :placeholder="[100,70]"
           :src="banner.image"
           :alt="banner.heading"
           class="slide__image"

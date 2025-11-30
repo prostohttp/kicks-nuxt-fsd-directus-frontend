@@ -43,7 +43,6 @@ onMounted(() => {
       :src="banner.image"
       format="webp"
       fit="cover"
-      :placeholder="[10,3]"
     />
     <div class="banner__info">
       <h3

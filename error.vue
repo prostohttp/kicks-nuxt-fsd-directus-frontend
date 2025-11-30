@@ -23,7 +23,7 @@ const isServerError = computed(() => error && error.statusCode >= 500);
   <ClientOnly v-else>
     <NuxtLayout name="default">
       <div class="error">
-        <NuxtImg src="not-found.png" :placeholder="[200, 200]" width="200" />
+        <NuxtImg src="not-found.png" width="200" />
         <p class="error__text">{{ error?.statusMessage }}</p>
         <Button
           variant="fill"

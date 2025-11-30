@@ -26,7 +26,12 @@ const ratingModel = ref(rating);
         <StarRating v-model="ratingModel" />
       </div>
       <div class="review-card__header__avatar">
-        <NuxtImg provider="directus" format="webp" :src="user_created.avatar" />
+        <NuxtImg
+          provider="directus"
+          loading="lazy"
+          format="webp"
+          :src="user_created.avatar"
+        />
       </div>
     </div>
     <div class="review-card__image">
@@ -34,7 +39,6 @@ const ratingModel = ref(rating);
         v-if="gallery[0]?.directus_files_id"
         provider="directus"
         format="webp"
-        placeholder
         :src="gallery[0].directus_files_id"
       />
     </div>
