@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { NuxtError } from "#app";
-import { Button } from "./src/shared/ui/Button";
+import { Button } from "./src/shared/ui/form";
 
 useHead({
   title: "Error",

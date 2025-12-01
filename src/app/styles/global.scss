@@ -13,7 +13,7 @@ body {
   color: $dark-color;
   font-family: $open-sans;
   background-color: $light-gray-color;
-  min-width: 480px;
+  // min-width: 480px;
   overflow-x: hidden;
   font-size: 16px;
   line-height: 1.4;
@@ -65,6 +65,10 @@ button {
   }
 }
 
+.overflow-hidden {
+  overflow: hidden;
+}
+
 .force-full-width {
   width: 100vw;
   position: relative;
@@ -78,6 +82,7 @@ button {
   padding: 0 16px;
 
   @media (max-width: 1199px) {
+    margin: 24px auto 30px;
   }
 }
 

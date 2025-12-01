@@ -10,7 +10,7 @@ import { useProductStore } from "~/src/entities/Product";
 import { Filters } from "~/src/widgets/Filter";
 import { SortProducts } from "~/src/features/sort";
 import { Placeholder } from "~/src/shared/ui/Placeholder";
-import { IconFilter } from "~/src/shared/ui/icons";
+import { IconCloseFlat, IconFilter } from "~/src/shared/ui/icons";
 
 const route = useRoute();
 const categorySlug = computed(() =>
@@ -48,6 +48,16 @@ const productStore = useProductStore();
 const filterProducts = computed(
   () => productStore.products?.meta?.filter_count,
 );
+
+const isActiveFilter = ref(false);
+
+watch(isActiveFilter, (newValue) => {
+  if (newValue) {
+    document.body.classList.add("overflow-hidden");
+  } else {
+    document.body.classList.remove("overflow-hidden");
+  }
+});
 </script>
 
 <template>
@@ -72,7 +82,10 @@ const filterProducts = computed(
               </div>
             </ClientOnly>
           </div>
-          <button class="category-page__heading__filter-button">
+          <button
+            class="category-page__heading__filter-button"
+            @click="isActiveFilter = true"
+          >
             <span>Filters</span>
             <IconFilter />
           </button>
@@ -81,6 +94,7 @@ const filterProducts = computed(
           <SortProducts />
         </template>
       </HeadingWith>
+
       <div class="category-heading-mobile">
         <SmallHeading :heading="data[0].title" />
         <ClientOnly>
@@ -92,15 +106,28 @@ const filterProducts = computed(
       </div>
     </div>
     <div v-if="data[0].show_filter" class="category-page__content-with-filters">
-      <div class="category-page__content-with-filters__filters">
+      <div
+        class="category-page__content-with-filters__filters"
+        :class="{
+          'category-page__content-with-filters__filters-active': isActiveFilter,
+        }"
+      >
         <h4 class="category-page__content-with-filters__filters__title">
-          Filters
+          <span>Filters</span>
+          <IconCloseFlat
+            class="category-page__content-with-filters__filters-active__close"
+            @click="isActiveFilter = false"
+          />
         </h4>
         <ClientOnly>
           <template #fallback>
             <Placeholder h="60px" m="5px 0 0 " />
           </template>
-          <Filters :filters="data[0].show_filter.options" />
+          <Filters
+            :filters="data[0].show_filter.options"
+            class="sticky-desktop-filters"
+            @close="isActiveFilter = false"
+          />
         </ClientOnly>
       </div>
       <div class="category-page__content-with-filters__products">

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { SortProducts } from "~/src/features/sort";
 import { getBlockProducts } from "~/src/shared/api";
-import { Button } from "~/src/shared/ui/Button";
 import { CarouselNavigation } from "~/src/shared/ui/carousel";
+import { Button } from "~/src/shared/ui/form";
 import {
   HeadingWith,
   LargeHeading,

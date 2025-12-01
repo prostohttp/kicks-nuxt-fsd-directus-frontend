@@ -1,3 +1,5 @@
+$filter-title-padding: 80px;
+
 .category-page {
   position: relative;
 
@@ -69,10 +71,72 @@
 
     &__filters {
       width: 25%;
+      position: relative;
+
+      .sticky-desktop-filters {
+        position: sticky;
+        top: 15px;
+      }
+
+      &-active__close {
+        display: none;
+      }
 
       @media (max-width: 991px) {
-        position: absolute;
+        position: fixed;
         opacity: 0;
+        display: flex;
+        flex-direction: column;
+
+        &-active {
+          transition: opacity 0.3s;
+          top: 0;
+          left: 0;
+          opacity: 1;
+          z-index: 101;
+          background-color: #e7e7e3;
+          width: 100%;
+          height: calc(100% - $filter-title-padding - 60px);
+          overflow-y: auto;
+          padding-top: $filter-title-padding;
+
+          h4 {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px;
+            background-color: #f4f2f2;
+            font-size: 20px;
+            position: fixed;
+            width: calc(100% - 32px);
+            z-index: 10;
+            left: 0;
+            top: 0;
+          }
+
+          .filters {
+            padding: 0 16px 24px;
+          }
+
+          &__close {
+            display: block;
+            scale: 2;
+          }
+
+          .filters__actions {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: calc(100% - 32px);
+            z-index: 11;
+            background-color: #e7e7e3;
+            padding: 20px 16px 24px;
+          }
+        }
+
+        .sticky-desktop-filters {
+          position: static;
+        }
       }
 
       &__title {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ROUTES } from "../../routes";
-import { Button } from "../Button";
+import { Button } from "../form";
 
 const { heading } = defineProps<{
   heading: string;

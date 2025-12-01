@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { Button } from "~/src/shared/ui/Button";
-import { Checkbox, Form, Input } from "~/src/shared/ui/form";
+import { Button, Checkbox, Form, Input } from "~/src/shared/ui/form";
 import { IconArrowRight, IconCircleLoading } from "~/src/shared/ui/icons";
 import { registerUser } from "./api";
 import { Register } from "../../model/registerSchema";

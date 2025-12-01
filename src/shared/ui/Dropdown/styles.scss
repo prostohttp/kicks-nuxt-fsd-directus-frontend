@@ -1,0 +1,31 @@
+.dropdown {
+  &__heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 19px;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    span {
+      font-family: "Rubik";
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    svg {
+      transition: all 0.2s;
+
+      &.is-open {
+        rotate: 180deg;
+      }
+    }
+  }
+
+  &__content {
+    height: 0;
+    opacity: 0;
+  }
+}

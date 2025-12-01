@@ -2,10 +2,10 @@
 import type { CollectionType } from "~/src/shared/api";
 import { getCategories } from "./api";
 import { EmptyDataHeading } from "~/src/shared/ui/heading";
-import { Button } from "~/src/shared/ui/Button";
 import { IconArrowTopRight } from "~/src/shared/ui/icons";
 import { ROUTES } from "~/src/shared/routes";
 import { Preloader } from "~/src/shared/ui/preloader";
+import { Button } from "~/src/shared/ui/form";
 
 const { collection, limit } = defineProps<{
   collection: CollectionType;

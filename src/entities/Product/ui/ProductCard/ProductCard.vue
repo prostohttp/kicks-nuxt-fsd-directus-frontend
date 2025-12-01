@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ROUTES } from "~/src/shared/routes";
 import type { ProductCardType } from "../../model/types";
-import { Button } from "~/src/shared/ui/Button";
 import { formatUSD } from "~/src/shared/lib";
+import { Button } from "~/src/shared/ui/form";
 
 const { image, label, title, price, slug } = defineProps<ProductCardType>();
 </script>

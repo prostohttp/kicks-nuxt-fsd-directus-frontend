@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { getBlockReviews } from "~/src/shared/api";
-import { Button } from "~/src/shared/ui/Button";
+import { Button } from "~/src/shared/ui/form";
 import { HeadingWith, LargeHeading } from "~/src/shared/ui/heading";
 import { ReviewsList } from "~/src/widgets/Reviews/ReviewsList";
 

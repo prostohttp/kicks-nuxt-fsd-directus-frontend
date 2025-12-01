@@ -143,7 +143,6 @@ defineExpose({
     <Pagination
       v-if="isPagination"
       v-model="currentPage"
-      style="margin-top: 50px"
       :pages-count="pagesCount"
     />
   </section>

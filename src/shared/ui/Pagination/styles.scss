@@ -2,6 +2,11 @@
   display: flex;
   gap: 16px;
   justify-content: center;
+  margin-top: 50px;
+
+  @media (max-width: 991px) {
+    margin-top: 20px;
+  }
 
   &__page {
     height: 32px;

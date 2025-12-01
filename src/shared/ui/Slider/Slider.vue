@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Button } from "../Button";
+import Button from "../form/Button/Button.vue";
 import { Placeholder } from "../Placeholder";
 import type { SliderType } from "./types";
 
@@ -127,7 +127,7 @@ const changeActiveSlide = (slide: string) => (activeSlide.value = slide);
                 <Button
                   variant="fill"
                   size="large"
-                  style="background-color: #4a69e2; justify-content: center;"
+                  style="background-color: #4a69e2; justify-content: center"
                 >
                   {{ banner.button_text }}
                 </Button>
