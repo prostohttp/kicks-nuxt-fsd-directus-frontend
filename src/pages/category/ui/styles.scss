@@ -121,6 +121,10 @@ $filter-title-padding: 80px;
           &__close {
             display: block;
             scale: 2;
+
+            &:hover {
+              cursor: pointer;
+            }
           }
 
           .filters__actions {

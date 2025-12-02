@@ -1,3 +1,15 @@
 .round-checkbox-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
 
+  &__checkbox {
+    background-color: #fff;
+    color: #232321;
+
+    &-active {
+      background-color: #232321;
+      color: #fff;
+    }
+  }
 }

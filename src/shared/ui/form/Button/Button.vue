@@ -16,7 +16,7 @@ const classFromSize = computed(() => "btn-" + size);
   <button :type :class="['btn', classFromSize, classFromType]" :disabled>
     <slot name="left-icon" />
     <span class="btn-text">
-      <slot>Button</slot>
+      <slot />
     </span>
     <slot name="right-icon" />
   </button>

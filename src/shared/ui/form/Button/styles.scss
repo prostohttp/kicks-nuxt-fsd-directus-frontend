@@ -69,8 +69,8 @@
 
     &:disabled {
       @include btn-disabled;
-      background-color: rgb(35 35 33 / 80%);
-      color: #fff;
+      background-color: #d2d1d3;
+      color: #8f8c91;
 
       path {
         outline: none;

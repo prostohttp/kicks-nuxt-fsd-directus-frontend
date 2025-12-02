@@ -1,3 +1,22 @@
 .color-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
 
+  &__color {
+    &:disabled {
+      opacity: 0.1;
+    }
+
+    &-active {
+      outline: 1px solid #232321;
+
+      svg {
+        scale: 1.3;
+        color: #0000009e;
+        stroke: #e8e8e8;
+        stroke-width: 3px;
+      }
+    }
+  }
 }

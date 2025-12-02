@@ -1,3 +1,36 @@
 .slider-filter {
+  padding-top: 20px;
 
+  &__min-max {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 10px;
+  }
+
+  .vue-slider-rail {
+    background-color: #232321;
+    border-radius: 8px;
+    height: 5px;
+  }
+
+  .vue-slider-dot-handle {
+    background-color: #4a69e2;
+    box-shadow: none;
+  }
+
+  .vue-slider-process {
+    background-color: #4a69e2;
+  }
+
+  .vue-slider-dot {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  .vue-slider-dot-tooltip-inner {
+    border-color: #4a69e2;
+    background-color: #4a69e2;
+  }
 }

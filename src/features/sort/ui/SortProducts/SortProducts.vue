@@ -40,6 +40,11 @@ const initialSortValue = () => {
   }
 };
 const sortValue = ref(initialSortValue());
+const sortQuery = computed(() => {
+  const sort = list.find((item) => item.label === sortValue.value);
+  return sort?.value || "";
+});
+
 const sortStore = useSortStore();
 const { sortSafety } = storeToRefs(sortStore);
 callOnce(
@@ -48,10 +53,6 @@ callOnce(
       route.query.sort as SortProductsType,
     )),
 );
-const sortQuery = computed(() => {
-  const sort = list.find((item) => item.label === sortValue.value);
-  return sort?.value || "";
-});
 
 watch(sortValue, (newValue) => {
   if (newValue) {
