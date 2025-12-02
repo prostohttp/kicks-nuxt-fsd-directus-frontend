@@ -12,7 +12,7 @@ const isOpen = ref(true);
       <IconChevronDown :class="{ 'is-open': isOpen }" />
     </div>
     <div
-      v-if="isOpen"
+      v-show="isOpen"
       v-gsap.onState-visible.to="{
         height: 'auto',
         opacity: 1,

@@ -1,7 +1,12 @@
 <script setup lang="ts">
-import { Select, type SelectItemType } from "~/src/shared/ui/form";
+import { Select } from "~/src/shared/ui/form";
+import { useSortStore } from "../../model/stores/sort";
+import type {
+  SortProductsType,
+  SortProductTypeObject,
+} from "../../model/types";
 
-const list: SelectItemType[] = reactive([
+const list: SortProductTypeObject[] = reactive([
   {
     label: "Default",
     value: "",
@@ -35,6 +40,14 @@ const initialSortValue = () => {
   }
 };
 const sortValue = ref(initialSortValue());
+const sortStore = useSortStore();
+const { sortSafety } = storeToRefs(sortStore);
+callOnce(
+  () =>
+    (sortSafety.value = sortStore.toSortSafety(
+      route.query.sort as SortProductsType,
+    )),
+);
 const sortQuery = computed(() => {
   const sort = list.find((item) => item.label === sortValue.value);
   return sort?.value || "";
@@ -42,6 +55,9 @@ const sortQuery = computed(() => {
 
 watch(sortValue, (newValue) => {
   if (newValue) {
+    sortSafety.value = sortStore.toSortSafety(
+      sortQuery.value as SortProductsType,
+    );
     navigateTo({
       query: {
         ...route.query,

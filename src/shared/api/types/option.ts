@@ -6,6 +6,7 @@ export interface FilterType {
   options_id: {
     id: number;
     title: string;
+    for_filter: string;
     type: OptionType;
     values: OptionValueType[];
   };
@@ -21,6 +22,7 @@ export interface OptionValueType {
 export type OptionType =
   | "checkbox"
   | "custom_checkbox"
+  | "radio"
   | "color"
   | "slider"
   | "button";

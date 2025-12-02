@@ -22,6 +22,7 @@ export const getCategory = (
         "children",
         "show_filter.options.options_id.id",
         "show_filter.options.options_id.title",
+        "show_filter.options.options_id.for_filter",
         "show_filter.options.options_id.type",
         "show_filter.options.options_id.values.id",
         "show_filter.options.options_id.values.text",

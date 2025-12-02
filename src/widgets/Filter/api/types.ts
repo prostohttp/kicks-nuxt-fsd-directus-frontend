@@ -1,3 +1,6 @@
+import type { OptionValueType } from "~/src/shared/api";
+
 export interface ApiFilterType {
-  id: string;
+  values: OptionValueType[];
+  queryString: string;
 }

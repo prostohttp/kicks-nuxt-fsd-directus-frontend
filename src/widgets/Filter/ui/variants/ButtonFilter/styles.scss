@@ -1,3 +1,22 @@
-.button-filter {
+.buttons-filter {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
 
+  &__button {
+    font-family: "Rubik";
+    font-weight: 600;
+    font-size: 12px;
+    border-radius: 12px;
+    padding: 12px 16px;
+    background-color: #fff;
+    color: #232321;
+    width: auto;
+    text-transform: none;
+
+    &-active {
+      background-color: #4a69e2;
+      color: #fff;
+    }
+  }
 }

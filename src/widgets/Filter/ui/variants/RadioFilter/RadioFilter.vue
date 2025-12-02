@@ -5,7 +5,7 @@ const { values, queryString } = defineProps<ApiFilterType>();
 </script>
 
 <template>
-  <section class="round-checkbox-filter">
+  <section class="radio-filter">
     {{ values }}
   </section>
 </template>

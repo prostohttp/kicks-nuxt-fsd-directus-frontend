@@ -23,6 +23,7 @@ const isActions = computed(() => true);
       <Dropdown :heading="filter.title" style="margin-bottom: 24px">
         <component
           :is="filtersMapper[filter.type]"
+          :query-string="filter.for_filter"
           :values="filter.values"
           class="filters__filter__component"
         />

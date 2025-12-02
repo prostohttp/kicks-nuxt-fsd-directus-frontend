@@ -1,12 +1,25 @@
 <script setup lang="ts">
-import type { OptionValueType } from "~/src/shared/api";
+import type { ApiFilterType } from "~/src/widgets/Filter/api/types";
+import { Button } from "~/src/shared/ui/form";
 
-const { values } = defineProps<{ values: OptionValueType }>();
+const { values, queryString } = defineProps<ApiFilterType>();
+const buttons = ref<boolean[]>([]);
+
 </script>
 
 <template>
-  <section class="button-filter">
-    {{ values }}
+  <section class="buttons-filter">
+    <Button
+      v-for="(button, index) in values"
+      :key="button.id"
+      variant="fill"
+      size="normal"
+      class="buttons-filter__button"
+      :class="{ 'buttons-filter__button-active': buttons[index] }"
+      @click="buttons[index] = !buttons[index]"
+    >
+      {{ button.text }}
+    </Button>
   </section>
 </template>
 

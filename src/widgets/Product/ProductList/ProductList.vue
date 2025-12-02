@@ -4,6 +4,7 @@ import {
   Carousel,
 } from "vue3-carousel/dist/carousel";
 import { ProductCard, useProductStore } from "~/src/entities/Product";
+import { useSortStore } from "~/src/features/sort";
 import {
   CollectionType,
   type ApiFilterType,
@@ -61,6 +62,7 @@ watch(
 );
 
 const productStore = useProductStore();
+const sortStore = useSortStore();
 const { data: products, isLoading } = useQuery({
   key: () => [
     "product-list",
@@ -68,7 +70,7 @@ const { data: products, isLoading } = useQuery({
       limit: settings.limit,
       label: settings.label,
       page: currentPage.value,
-      sort: route.query.sort as string,
+      sort: sortStore.sortSafety,
       filter: filter,
     },
   ],
@@ -79,7 +81,7 @@ const { data: products, isLoading } = useQuery({
       settings.limit,
       filter,
       currentPage.value,
-      route.query.sort?.toString(),
+      sortStore.sortSafety,
     );
     productStore.setProducts(products);
     return products;

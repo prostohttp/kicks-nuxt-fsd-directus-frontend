@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { OptionValueType } from "~/src/shared/api";
+import type { ApiFilterType } from "~/src/widgets/Filter/api/types";
 
-const { values } = defineProps<{ values: OptionValueType }>();
+const { values, queryString } = defineProps<ApiFilterType>();
 </script>
 
 <template>
