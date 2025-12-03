@@ -16,7 +16,16 @@ export const getProducts = (
 ) => {
   try {
     const params: DirectusMetaQueryParams = {
-      fields: ["id", "title", "slug", "image", "label", "sort", "price"],
+      fields: [
+        "id",
+        "title",
+        "slug",
+        "image",
+        "label",
+        "sort",
+        "price",
+        "option_values.option_values_id",
+      ],
       filter,
       limit,
       meta,

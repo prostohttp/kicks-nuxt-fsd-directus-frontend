@@ -5,6 +5,7 @@ import RoundCheckboxFilter from "../ui/variants/RoundCheckboxFilter/RoundCheckbo
 import ColorFilter from "../ui/variants/ColorFilter/ColorFilter.vue";
 import ButtonFilter from "../ui/variants/ButtonFilter/ButtonFilter.vue";
 import SliderFilter from "../ui/variants/SliderFilter/SliderFilter.vue";
+import RadioFilter from "../ui/variants/RadioFilter/RadioFilter.vue";
 
 export const filtersMapper: Record<OptionType, Component> = {
   checkbox: CheckboxFilter,
@@ -12,4 +13,5 @@ export const filtersMapper: Record<OptionType, Component> = {
   color: ColorFilter,
   button: ButtonFilter,
   slider: SliderFilter,
+  radio: RadioFilter
 };

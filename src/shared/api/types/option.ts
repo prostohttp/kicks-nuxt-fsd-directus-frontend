@@ -14,6 +14,7 @@ export interface FilterType {
 
 export interface OptionValueType {
   id: string;
+  title: string;
   text: string | null;
   color: string | null;
   image: string | null;

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { IconCheck } from "../../icons";
 
-const model = defineModel<boolean>({ required: true });
+const model = defineModel<boolean>();
 const { name, label } = defineProps<{
   name: string;
   label: string;

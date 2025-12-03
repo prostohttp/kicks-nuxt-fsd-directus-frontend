@@ -8,7 +8,8 @@ const { filters } = defineProps<{
   filters: FilterType[];
 }>();
 const emit = defineEmits<{
-  close: [];
+  apply: [];
+  reset: [];
 }>();
 const isActions = computed(() => true);
 </script>
@@ -30,8 +31,8 @@ const isActions = computed(() => true);
       </Dropdown>
     </div>
     <div v-if="isActions" class="filters__actions">
-      <ResetFilters @click="emit('close')" />
-      <ApplyFilters @click="emit('close')" />
+      <ResetFilters @click="emit('reset')" />
+      <ApplyFilters @click="emit('apply')" />
     </div>
   </section>
 </template>

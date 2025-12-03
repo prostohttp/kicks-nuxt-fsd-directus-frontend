@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { Checkbox } from "~/src/shared/ui/form";
 import type { ApiFilterType } from "~/src/widgets/Filter/api/types";
+import { useWatchFilterQuery } from "../../useWatchFilterQuery";
 
 const { values, queryString } = defineProps<ApiFilterType>();
-const checkboxes = ref<boolean[]>(values.map(() => false));
+const checkboxes = ref<boolean[]>([]);
+
+useWatchFilterQuery(checkboxes, values, queryString);
 </script>
 
 <template>
@@ -11,7 +14,7 @@ const checkboxes = ref<boolean[]>(values.map(() => false));
     <Checkbox
       v-for="(checkbox, index) in values"
       :key="checkbox.id"
-      v-model="checkboxes[index]!"
+      v-model="checkboxes[index]"
       :label="checkbox.text!"
       :name="checkbox.text!"
       class="checkbox-filter__checkbox"

@@ -5,7 +5,8 @@ import { PiniaColadaDevtools } from "@pinia/colada-devtools";
 
 <template>
   <NuxtRouteAnnouncer />
-  <NuxtLoadingIndicator :throttle="0" color="#ffa52f" />
+  <!-- :throttle="0"  -->
+  <NuxtLoadingIndicator color="#ffa52f" />
   <PiniaColadaDevtools />
   <NuxtLayout>
     <NuxtPage />

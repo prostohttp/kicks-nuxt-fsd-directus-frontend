@@ -11,13 +11,17 @@ const { data } = useQuery({
   key: () => ["app-logo", logo],
   query: async () => (await getLogo(logo)) as Promise<LogoQueryResponse>,
 });
-
-const { getThumbnail: img } = useDirectusFiles();
 </script>
 
 <template>
   <NuxtLink v-if="data" :to="ROUTES.main" class="logo">
-    <NuxtImg :src="img(data[logo])" alt="logo" v-bind="$attrs" />
+    <NuxtImg
+      provider="directus"
+      :src="data[logo]"
+      format="webp"
+      alt="logo"
+      v-bind="$attrs"
+    />
   </NuxtLink>
   <NuxtLink v-else :to="ROUTES.main" class="logo">
     <NuxtImg src="/logo.svg" alt="logo" v-bind="$attrs" />

@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import type { ApiFilterType } from "~/src/widgets/Filter/api/types";
 import { Button } from "~/src/shared/ui/form";
+import { useWatchFilterQuery } from "../../useWatchFilterQuery";
 
 const { values, queryString } = defineProps<ApiFilterType>();
 const buttons = ref<boolean[]>([]);
 
+useWatchFilterQuery(buttons, values, queryString);
 </script>
 
 <template>

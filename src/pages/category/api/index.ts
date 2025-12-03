@@ -25,6 +25,7 @@ export const getCategory = (
         "show_filter.options.options_id.for_filter",
         "show_filter.options.options_id.type",
         "show_filter.options.options_id.values.id",
+        "show_filter.options.options_id.values.title",
         "show_filter.options.options_id.values.text",
         "show_filter.options.options_id.values.color",
         "show_filter.options.options_id.values.image",

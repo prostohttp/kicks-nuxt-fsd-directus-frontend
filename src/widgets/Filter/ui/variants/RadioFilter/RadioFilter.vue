@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ApiFilterType } from "~/src/widgets/Filter/api/types";
-
+// TODO: do it!
 const { values, queryString } = defineProps<ApiFilterType>();
 </script>
 

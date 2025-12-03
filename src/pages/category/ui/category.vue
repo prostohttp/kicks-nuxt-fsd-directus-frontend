@@ -58,6 +58,15 @@ watch(isActiveFilter, (newValue) => {
     document.body.classList.remove("overflow-hidden");
   }
 });
+const applyFilters = () => {
+  isActiveFilter.value = false;
+};
+const resetFilters = () => {
+  isActiveFilter.value = false;
+  navigateTo({
+    query: {},
+  });
+};
 </script>
 
 <template>
@@ -126,7 +135,8 @@ watch(isActiveFilter, (newValue) => {
           <Filters
             :filters="data[0].show_filter.options"
             class="sticky-desktop-filters"
-            @close="isActiveFilter = false"
+            @apply="applyFilters"
+            @reset="resetFilters"
           />
         </ClientOnly>
       </div>

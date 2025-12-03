@@ -1,7 +1,11 @@
 import type { ApiFilterType } from "~/src/shared/api";
 
 export const useFilterStore = defineStore("filters", () => {
-  const filter = ref<ApiFilterType>({});
+  const filters = ref<ApiFilterType>({});
 
-  return { filter };
+  const addFilter = (filter: ApiFilterType): ApiFilterType => {
+    return { ...filters.value, filter };
+  };
+
+  return { filters, addFilter };
 });

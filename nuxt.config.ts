@@ -46,6 +46,7 @@ export default defineNuxtConfig({
     public: {
       directus: {
         url: process.env.NUXT_PUBLIC_API_BASE,
+        // url: "http://localhost:8055",
       },
     },
   },

@@ -2,9 +2,12 @@
 import { Button } from "~/src/shared/ui/form";
 import { IconCloseFlat } from "~/src/shared/ui/icons";
 import type { ApiFilterType } from "~/src/widgets/Filter/api/types";
+import { useWatchFilterQuery } from "../../useWatchFilterQuery";
 
 const { values, queryString } = defineProps<ApiFilterType>();
 const colors = ref<boolean[]>([]);
+
+useWatchFilterQuery(colors, values, queryString);
 </script>
 
 <template>
@@ -17,7 +20,6 @@ const colors = ref<boolean[]>([]);
       class="btn-square color-filter__color"
       :class="{ 'color-filter__color-active': colors[index] }"
       :style="{ 'background-color': color.color }"
-      :disabled="index === 2"
       @click="colors[index] = !colors[index]"
     >
       <IconCloseFlat v-show="colors[index]" />
