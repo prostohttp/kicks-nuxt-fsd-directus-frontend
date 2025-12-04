@@ -3,14 +3,18 @@ import { ApplyFilters, ResetFilters } from "~/src/features/filter";
 import type { FilterType } from "~/src/shared/api";
 import { filtersMapper } from "../api/filtersMapper";
 import { Dropdown } from "~/src/shared/ui/Dropdown";
+import { useFilterStore } from "../model/stores/filter";
 
-const { filters } = defineProps<{
+const { filters, categoryId } = defineProps<{
   filters: FilterType[];
+  categoryId: number;
 }>();
 const emit = defineEmits<{
   apply: [];
   reset: [];
 }>();
+const filterStore = useFilterStore();
+const { apiFilters } = storeToRefs(filterStore);
 const isActions = computed(() => true);
 </script>
 
@@ -26,6 +30,7 @@ const isActions = computed(() => true);
           :is="filtersMapper[filter.type]"
           :query-string="filter.for_filter"
           :values="filter.values"
+          :category-id="categoryId"
           class="filters__filter__component"
         />
       </Dropdown>
@@ -34,6 +39,7 @@ const isActions = computed(() => true);
       <ResetFilters @click="emit('reset')" />
       <ApplyFilters @click="emit('apply')" />
     </div>
+    {{ apiFilters }}
   </section>
 </template>
 

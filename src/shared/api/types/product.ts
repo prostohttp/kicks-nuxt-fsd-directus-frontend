@@ -9,7 +9,12 @@ export interface ProductType {
   related_products: number[];
   label?: string;
   price: number;
-  rating: number;
+  gallery: {
+    directus_files_id: string;
+  }[];
+  option_values: {
+    option_values_id: string;
+  }[];
 }
 
 export type ApiFilterType = Record<string, unknown>;

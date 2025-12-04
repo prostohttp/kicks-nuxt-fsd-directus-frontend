@@ -134,6 +134,7 @@ const resetFilters = () => {
           </template>
           <Filters
             :filters="data[0].show_filter.options"
+            :category-id="data[0].id"
             class="sticky-desktop-filters"
             @apply="applyFilters"
             @reset="resetFilters"

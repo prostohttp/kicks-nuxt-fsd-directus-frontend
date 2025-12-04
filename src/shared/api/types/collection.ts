@@ -11,6 +11,8 @@ export enum CollectionType {
   FORM_SUBMISSIONS = "form_submissions",
   FORM_SUBMISSION_VALUES = "form_submission_values",
 
+  API_PRODUCTS = "/items/products",
+
   PAGE_BLOCKS = "pages_blocks",
   BLOCKS_HERO = "blocks_hero",
   BLOCKS_BANNER = "blocks_banner_2",

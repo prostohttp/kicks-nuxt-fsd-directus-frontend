@@ -12,9 +12,10 @@ export const getProduct = (collection: CollectionType, slug: string | null) => {
         "slug",
         "description",
         "related_products",
+        "gallery.directus_files_id",
+        "option_values.option_values_id",
         "label",
         "price",
-        "rating",
       ],
       filter: {
         slug: slug?.toString() || "",
