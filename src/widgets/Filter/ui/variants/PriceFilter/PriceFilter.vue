@@ -4,18 +4,18 @@ import "vue-slider-component/dist-css/vue-slider-component.css";
 import "vue-slider-component/theme/default.css";
 
 import { formatUSD } from "~/src/shared/lib";
-import type { ApiFilterType } from "~/src/widgets/Filter/api/types";
-import { useFilterStore } from "../../../model/stores/filter";
+import { useProductFilterStore } from "~/src/entities/Filter";
+import type { ApiFilterType } from "../../../model/types";
 
 const { queryString, categoryId } = defineProps<ApiFilterType>();
 const route = useRoute();
 const queryStringValue = Number(route.query[queryString]);
-const filterStore = useFilterStore();
+const productFilterStore = useProductFilterStore();
 
-await callOnce(() => filterStore.minMaxPrice(categoryId), {
+await callOnce(() => productFilterStore.minMaxPrice(categoryId), {
   mode: "navigation",
 });
-const { minPrice, maxPrice } = storeToRefs(filterStore);
+const { minPrice, maxPrice } = storeToRefs(productFilterStore);
 
 const initialValue = computed(() =>
   !queryStringValue ||
@@ -26,14 +26,17 @@ const initialValue = computed(() =>
 );
 const price = ref(initialValue.value);
 const queryValue = ref();
-const debounceQueryValue = useDebounceFn(
-  (value) => (queryValue.value = value),
-  200,
-);
 
 watch(price, (newValue) => {
-  if (newValue) {
-    debounceQueryValue(newValue);
+  if (newValue && newValue > minPrice.value) {
+    queryValue.value = newValue;
+  } else if (newValue && newValue <= minPrice.value) {
+    navigateTo({
+      query: {
+        ...route.query,
+        price: undefined,
+      },
+    });
   }
 });
 watch(
@@ -62,7 +65,7 @@ watch(queryValue, (newValue) => {
       v-model="price"
       :min="minPrice"
       :max="maxPrice"
-      :tooltip-formatter="formatUSD(price!)"
+      :tooltip-formatter="formatUSD(price)"
       :tooltip="'always'"
     />
     <div class="slider-filter__min-max">

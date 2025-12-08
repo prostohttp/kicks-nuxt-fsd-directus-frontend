@@ -8,6 +8,7 @@ export interface BlockSliderType {
 }
 
 export interface BlockProductType {
+  id?: number;
   heading?: string;
   is_carousel?: boolean;
   limit: number;

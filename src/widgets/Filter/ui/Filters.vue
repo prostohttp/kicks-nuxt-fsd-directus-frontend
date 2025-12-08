@@ -3,7 +3,6 @@ import { ApplyFilters, ResetFilters } from "~/src/features/filter";
 import type { FilterType } from "~/src/shared/api";
 import { filtersMapper } from "../api/filtersMapper";
 import { Dropdown } from "~/src/shared/ui/Dropdown";
-import { useFilterStore } from "../model/stores/filter";
 
 const { filters, categoryId } = defineProps<{
   filters: FilterType[];
@@ -13,9 +12,6 @@ const emit = defineEmits<{
   apply: [];
   reset: [];
 }>();
-const filterStore = useFilterStore();
-const { apiFilters } = storeToRefs(filterStore);
-const isActions = computed(() => true);
 </script>
 
 <template>
@@ -35,11 +31,10 @@ const isActions = computed(() => true);
         />
       </Dropdown>
     </div>
-    <div v-if="isActions" class="filters__actions">
+    <div class="filters__actions">
       <ResetFilters @click="emit('reset')" />
       <ApplyFilters @click="emit('apply')" />
     </div>
-    {{ apiFilters }}
   </section>
 </template>
 

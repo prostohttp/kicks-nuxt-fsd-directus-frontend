@@ -12,19 +12,15 @@ import {
 import { ProductList } from "~/src/widgets/Product/ProductList";
 
 const { itemId } = defineProps<{ itemId: string }>();
+
 const { data } = useQuery({
   key: () => ["products", itemId],
-  query: async () => await getBlockProducts(itemId),
+  query: async () => {
+    return await getBlockProducts(itemId);
+  },
 });
-const productRef = ref();
 
-const filter = computed(() =>
-  data.value?.label
-    ? {
-        label: { _eq: data.value.label },
-      }
-    : undefined,
-);
+const productRef = ref();
 const productsRef = useTemplateRef("productsRef");
 const scrollToProductsRef = () => productsRef.value?.scrollIntoView();
 </script>
@@ -71,7 +67,6 @@ const scrollToProductsRef = () => productsRef.value?.scrollIntoView();
     <ProductList
       v-if="data"
       ref="productRef"
-      :filter="filter"
       :settings="data"
       @scroll-into="scrollToProductsRef"
     />

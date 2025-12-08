@@ -7,7 +7,5 @@ export { default as RoundCheckboxFilter } from "./ui/variants/RoundCheckboxFilte
 export { default as PriceFilter } from "./ui/variants/PriceFilter/PriceFilter.vue";
 
 export { filtersMapper } from "./api/filtersMapper";
-export type { ApiFilterType } from "./api/types";
-export type { OptionValuesFilterType, OptionValuesType } from "./model/types";
-
-export { useFilterStore } from "./model/stores/filter";
+export { useQueryFilter } from "./model/useQueryFilter";
+export type { ApiFilterType } from "./model/types";

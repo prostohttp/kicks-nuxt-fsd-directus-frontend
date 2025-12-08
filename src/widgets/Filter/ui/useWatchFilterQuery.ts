@@ -10,15 +10,13 @@ export const useWatchFilterQuery = (
 
   watch(
     state,
-    (newValue) => {
-      if (newValue) {
-        navigateTo({
-          query: {
-            ...route.query,
-            [filterQuery]: toValidQueryString(values, state.value),
-          },
-        });
-      }
+    (newState) => {
+      navigateTo({
+        query: {
+          ...route.query,
+          [filterQuery]: toValidQueryString(values, newState),
+        },
+      });
     },
     { deep: true },
   );
@@ -32,18 +30,12 @@ export const useWatchFilterQuery = (
             state.value[index] = true;
           }
         });
+      } else {
+        state.value = [];
       }
     },
     {
       immediate: true,
-    },
-  );
-  watch(
-    () => route.query[filterQuery],
-    (value) => {
-      if (!value) {
-        state.value = [];
-      }
     },
   );
 };

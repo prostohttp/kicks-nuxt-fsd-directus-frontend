@@ -5,17 +5,14 @@ import {
 } from "vue3-carousel/dist/carousel";
 import { ProductCard, useProductStore } from "~/src/entities/Product";
 import { useSortStore } from "~/src/features/sort";
-import {
-  CollectionType,
-  type ApiFilterType,
-  type BlockProductType,
-} from "~/src/shared/api";
+import { CollectionType, type BlockProductType } from "~/src/shared/api";
 import { EmptyDataHeading } from "~/src/shared/ui/heading";
 import { Pagination } from "~/src/shared/ui/Pagination";
+import { useQueryFilter } from "~/src/widgets/Filter/model/useQueryFilter";
 
-const { settings, filter } = defineProps<{
+const { settings, optionValues } = defineProps<{
   settings: BlockProductType;
-  filter?: ApiFilterType;
+  optionValues?: string[];
 }>();
 const emit = defineEmits<{
   scrollInto: [];
@@ -63,15 +60,18 @@ watch(
 
 const productStore = useProductStore();
 const sortStore = useSortStore();
+
+// Computed values
+const filter = ref(useQueryFilter(settings, optionValues));
+
 const { data: products, isLoading } = useQuery({
   key: () => [
     "product-list",
     {
       limit: settings.limit,
-      label: settings.label,
       page: currentPage.value,
       sort: sortStore.sortSafety,
-      filter: filter,
+      filter: filter.value,
     },
   ],
   query: async () => {
@@ -79,7 +79,7 @@ const { data: products, isLoading } = useQuery({
       CollectionType.PRODUCTS,
       "*",
       settings.limit,
-      filter,
+      filter.value,
       currentPage.value,
       sortStore.sortSafety,
     );
@@ -106,13 +106,18 @@ const isPagination = computed(
     products.value.meta.filter_count > settings.limit,
 );
 
+const refresh = () => {
+  filter.value = useQueryFilter(settings, optionValues)
+}
+
 defineExpose({
   productCarousel,
+  refresh
 });
 </script>
 
 <template>
-  <section v-if="products?.data" class="product-list">
+  <section v-if="products" class="product-list">
     <div
       class="product-list__products"
       :class="{ 'product-list__products-loading': isLoading }"

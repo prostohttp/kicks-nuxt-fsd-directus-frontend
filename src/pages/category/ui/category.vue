@@ -1,44 +1,44 @@
 <script setup lang="ts">
 import { CollectionType, type BlockProductType } from "~/src/shared/api";
-import { getCategory } from "../api";
 import { NotFound } from "~/src/shared/ui/NotFound";
 import { Banner } from "~/src/shared/ui/Banner";
 import { HeadingWith, SmallHeading } from "~/src/shared/ui/heading";
 import { ProductList } from "~/src/widgets/Product/ProductList";
-import { Preloader } from "~/src/shared/ui/preloader";
 import { useProductStore } from "~/src/entities/Product";
 import { Filters } from "~/src/widgets/Filter";
 import { SortProducts } from "~/src/features/sort";
 import { Placeholder } from "~/src/shared/ui/Placeholder";
+import { Preloader } from "~/src/shared/ui/preloader";
 import { IconCloseFlat, IconFilter } from "~/src/shared/ui/icons";
+import { getCategory } from "../api";
 
 const route = useRoute();
 const categorySlug = computed(() =>
   "category" in route.params ? (route.params.category as string) : null,
 );
-const { data, isLoading } = useQuery({
+
+const { data: category, isLoading } = useQuery({
   key: () => ["category", categorySlug.value],
-  query: async () =>
-    await getCategory(CollectionType.CATEGORIES, categorySlug.value),
+  query: async () => {
+    const categories = await getCategory(
+      CollectionType.CATEGORIES,
+      categorySlug.value,
+    );
+    return categories[0];
+  },
 });
-const category = computed(() => (data.value ? data.value[0] : null));
 
 useSeoMeta({
-  title: () => category.value?.seo.title,
-  description: () => category.value?.seo.meta_description,
+  title: () => category.value && category.value.seo.title,
+  description: () => category.value && category.value.seo.meta_description,
 });
 
 const settings = computed<BlockProductType>(() => ({
-  limit: data.value && data.value[0]?.show_filter ? 9 : 8,
+  id: category.value?.id,
+  limit: category.value && category.value.show_filter ? 9 : 8,
   collection: CollectionType.PRODUCTS,
-  columns: data.value && data.value[0]?.show_filter ? 3 : 4,
+  columns: category.value && category.value.show_filter ? 3 : 4,
   paginatable: true,
-}));
-
-const filter = computed(() => ({
-  categories: {
-    product_categories_id: { _in: data.value ? data.value[0]?.id : undefined },
-  },
 }));
 
 const headingRef = useTemplateRef("headingRef");
@@ -58,30 +58,48 @@ watch(isActiveFilter, (newValue) => {
     document.body.classList.remove("overflow-hidden");
   }
 });
+
+const exposeRef = ref();
 const applyFilters = () => {
+  navigateTo({
+    query: { ...route.query, page: 1 },
+  });
+  exposeRef.value.refresh();
   isActiveFilter.value = false;
+  scrollToProductsRef();
 };
+
 const resetFilters = () => {
-  isActiveFilter.value = false;
   navigateTo({
     query: {},
   });
+  setTimeout(() => exposeRef.value.refresh(), 200);
+  isActiveFilter.value = false;
+  scrollToProductsRef();
 };
+
+const optionValues = computed(() =>
+  category.value?.show_filter
+    ? category.value.show_filter.options.map(
+        (option) => option.options_id.for_filter,
+      )
+    : undefined,
+);
 </script>
 
 <template>
   <Preloader v-if="isLoading" />
-  <section v-else-if="category && data && data[0]" class="category-page">
+  <section v-else-if="!isLoading && category" class="category-page">
     <Banner
-      v-if="data[0].banner"
-      v-bind="data[0].banner"
+      v-if="category.banner"
+      v-bind="category.banner"
       class="category-page__banner"
     />
     <div ref="headingRef" class="category-page__heading">
       <HeadingWith style="align-items: flex-start">
         <template #left>
           <div class="category-heading">
-            <SmallHeading :heading="data[0].title" />
+            <SmallHeading :heading="category.title" />
             <ClientOnly>
               <template #fallback>
                 <Placeholder h="24px" w="100px" m="5px 0 0" />
@@ -105,7 +123,7 @@ const resetFilters = () => {
       </HeadingWith>
 
       <div class="category-heading-mobile">
-        <SmallHeading :heading="data[0].title" />
+        <SmallHeading :heading="category.title" />
         <ClientOnly>
           <template #fallback>
             <Placeholder h="24px" w="100px" m="5px 0 0" />
@@ -114,7 +132,10 @@ const resetFilters = () => {
         </ClientOnly>
       </div>
     </div>
-    <div v-if="data[0].show_filter" class="category-page__content-with-filters">
+    <div
+      v-if="category.show_filter"
+      class="category-page__content-with-filters"
+    >
       <div
         class="category-page__content-with-filters__filters"
         :class="{
@@ -133,8 +154,8 @@ const resetFilters = () => {
             <Placeholder h="60px" m="5px 0 0 " />
           </template>
           <Filters
-            :filters="data[0].show_filter.options"
-            :category-id="data[0].id"
+            :filters="category.show_filter.options"
+            :category-id="category.id"
             class="sticky-desktop-filters"
             @apply="applyFilters"
             @reset="resetFilters"
@@ -142,12 +163,22 @@ const resetFilters = () => {
         </ClientOnly>
       </div>
       <div class="category-page__content-with-filters__products">
-        <ProductList :filter :settings @scroll-into="scrollToProductsRef" />
+        <ProductList
+          ref="exposeRef"
+          :option-values="optionValues"
+          :settings
+          @scroll-into="scrollToProductsRef"
+        />
       </div>
     </div>
     <div v-else class="category-page__content">
       <div class="category-page__content__products">
-        <ProductList :filter :settings @scroll-into="scrollToProductsRef" />
+        <ProductList
+          ref="exposeRef"
+          :option-values="optionValues"
+          :settings
+          @scroll-into="scrollToProductsRef"
+        />
       </div>
     </div>
   </section>

@@ -30,6 +30,7 @@ export const getCategory = (
         "show_filter.options.options_id.values.color",
         "show_filter.options.options_id.values.image",
       ],
+      limit:1,
       filter: {
         slug: slug?.toString() || "",
       },

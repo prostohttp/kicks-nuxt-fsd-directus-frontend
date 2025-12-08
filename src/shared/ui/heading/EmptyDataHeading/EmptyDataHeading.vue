@@ -6,10 +6,9 @@ const { variant = "light" } = defineProps<{
 
 <template>
   <section class="empty-data-heading">
+    <NuxtImg src="not-found.png" width="200" />
     <h4 :class="{ 'empty-data-heading__dark': variant === 'dark' }">
-      <slot>
-        Nothing there ...
-      </slot>
+      <slot> Nothing there ... </slot>
     </h4>
   </section>
 </template>
