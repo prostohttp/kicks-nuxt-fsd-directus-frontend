@@ -1,5 +1,7 @@
 import type { DirectusQueryParams } from "nuxt-directus";
 import type { CategoryType, CollectionType } from "~/src/shared/api";
+import { CollectionType as PATH } from "~/src/shared/api";
+import type { ApiPriceMinMaxType } from "./types";
 
 export const getCategory = (
   collection: CollectionType,
@@ -30,12 +32,37 @@ export const getCategory = (
         "show_filter.options.options_id.values.color",
         "show_filter.options.options_id.values.image",
       ],
-      limit:1,
+      limit: 1,
       filter: {
         slug: slug?.toString() || "",
       },
     };
     return useNuxtApp().$api.getAllRaw<CategoryType>(collection, params);
+  } catch (e) {
+    const error = e as Error;
+    throw createError({ message: error.message });
+  }
+};
+
+export const getMinMaxPrice = async (categoryId: number) => {
+  try {
+    const runtimeConfig = useRuntimeConfig();
+    return await $fetch<ApiPriceMinMaxType>(
+      runtimeConfig.public.directus.url + PATH.API_PRODUCTS,
+      {
+        query: {
+          "aggregate[min]": "price",
+          "aggregate[max]": "price",
+          filter: {
+            categories: {
+              product_categories_id: {
+                _eq: categoryId,
+              },
+            },
+          },
+        },
+      },
+    );
   } catch (e) {
     const error = e as Error;
     throw createError({ message: error.message });

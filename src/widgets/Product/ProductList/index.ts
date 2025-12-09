@@ -1,2 +1,1 @@
-export { default as ProductList } from "./ProductList.vue";
-export { type ListSettings } from "./types";
+export { default as ProductList } from "./ui/ProductList.vue";

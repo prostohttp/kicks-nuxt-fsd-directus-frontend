@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { Logo } from "~/src/shared/ui/Logo";
-import type { Copyright, Description, Social } from "../../model/types";
 import { VerticalMenu, type Navigation } from "~/src/shared/ui/navigation";
-import { iconsMapper } from "../../api/iconsMapper";
+import { iconsMapper } from "../../model/iconsMapper";
+import type { Copyright, Description, Social } from "~/src/shared/api";
 
 interface PropTypes {
   copyrights?: Copyright;

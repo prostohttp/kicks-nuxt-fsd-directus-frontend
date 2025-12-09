@@ -5,12 +5,12 @@ import { Banner } from "~/src/shared/ui/Banner";
 import { HeadingWith, SmallHeading } from "~/src/shared/ui/heading";
 import { ProductList } from "~/src/widgets/Product/ProductList";
 import { useProductStore } from "~/src/entities/Product";
-import { Filters } from "~/src/widgets/Filter";
 import { SortProducts } from "~/src/features/sort";
 import { Placeholder } from "~/src/shared/ui/Placeholder";
 import { Preloader } from "~/src/shared/ui/preloader";
 import { IconCloseFlat, IconFilter } from "~/src/shared/ui/icons";
 import { getCategory } from "../api";
+import { Filters } from "./Filter";
 
 const route = useRoute();
 const categorySlug = computed(() =>

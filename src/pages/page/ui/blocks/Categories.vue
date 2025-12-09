@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import { getBlockCategories } from "~/src/shared/api";
+import { CollectionType, getBlockCategories } from "~/src/shared/api";
 import { CarouselNavigation } from "~/src/shared/ui/carousel";
-import { HeadingWith, LargeHeading } from "~/src/shared/ui/heading";
+import { EmptyDataHeading, HeadingWith, LargeHeading } from "~/src/shared/ui/heading";
 import { Preloader } from "~/src/shared/ui/preloader";
-import { Categories } from "~/src/widgets/Categories";
+import { getCategories } from "../../api";
+import { ROUTES } from "~/src/shared/routes";
+import { IconArrowTopRight } from "~/src/shared/ui/icons";
+import { Button } from "~/src/shared/ui/form";
 
 const { itemId } = defineProps<{ itemId: string }>();
 const { data, isLoading } = useQuery({
@@ -11,8 +14,35 @@ const { data, isLoading } = useQuery({
   query: async () => await getBlockCategories(itemId),
 });
 
-const exposeRef = useTemplateRef("exposeRef");
 const activeSlide = ref(0);
+
+const { data: categories, isLoading: catIsLoading } = useQuery({
+  key: () => ["categories-carousel", { limit: data.value?.limit }],
+  query: async () =>
+    await getCategories(CollectionType.CATEGORIES, data.value?.limit),
+});
+
+const categoryCarousel = ref();
+
+const carouselConfig = {
+  gap: 0,
+  breakpointMode: "carousel",
+  wrapAround: false,
+  snapAlign: "start",
+  itemsToShow: 2,
+  breakpoints: {
+    991: {
+      itemsToShow: 2,
+    },
+    300: {
+      itemsToShow: 1,
+    },
+  },
+} as const;
+
+const max = computed(() =>
+  categories.value ? categories.value.length - 1 : 0,
+);
 </script>
 
 <template>
@@ -27,19 +57,43 @@ const activeSlide = ref(0);
           v-model="activeSlide"
           variant="dark"
           :loop="false"
-          :max="exposeRef?.max"
-          @prev="exposeRef?.categoryCarousel.prev()"
-          @next="exposeRef?.categoryCarousel.next()"
+          :max="max"
+          @prev="categoryCarousel.prev()"
+          @next="categoryCarousel.next()"
         />
       </template>
     </HeadingWith>
-    <Categories
-      v-if="data"
-      ref="exposeRef"
-      v-model="activeSlide"
-      :collection="data.collection"
-      :limit="data.limit"
-    />
+    <Preloader v-if="catIsLoading" />
+    <section v-else class="categories-carousel wrapper">
+      <Carousel
+        v-if="categories?.length"
+        v-bind="carouselConfig"
+        ref="categoryCarousel"
+        v-model="activeSlide"
+      >
+        <Slide v-for="category in categories" :key="category.id">
+          <div class="categories-carousel__item">
+            <NuxtImg
+              provider="directus"
+              format="webp"
+              loading="lazy"
+              :src="category.thumbnail"
+            />
+            <div class="categories-carousel__item__info">
+              <h3 class="categories-carousel__item__info__title">
+                {{ category.title }}
+              </h3>
+              <NuxtLink :to="ROUTES.category(category.slug)">
+                <Button variant="fill" size="large" class="btn-square">
+                  <IconArrowTopRight />
+                </Button>
+              </NuxtLink>
+            </div>
+          </div>
+        </Slide>
+      </Carousel>
+      <EmptyDataHeading v-else variant="dark" />
+    </section>
   </section>
 </template>
 
@@ -85,6 +139,60 @@ const activeSlide = ref(0);
 
     &:nth-child(even) {
       background-color: #f6f6f6;
+    }
+  }
+}
+
+.categories-carousel {
+  margin-bottom: 0;
+  padding: 0;
+
+  &__item {
+    width: 100%;
+
+    img {
+      width: 70%;
+      margin: 0 auto;
+      display: flex;
+
+      @media (max-width: 991px) {
+        width: 70%;
+      }
+    }
+
+    .btn {
+      svg {
+        scale: 1.5;
+      }
+    }
+
+    &__info {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+
+      &__title {
+        font-size: 36px;
+        font-weight: 600;
+        text-transform: uppercase;
+        width: 50%;
+        color: #232321;
+
+        @media (max-width: 991px) {
+          font-size: 24px;
+        }
+      }
+
+      a {
+        width: 50%;
+        margin-bottom: 5px;
+        display: flex;
+        justify-content: flex-end;
+
+        @media (max-width: 991px) {
+          margin-bottom: 0;
+        }
+      }
     }
   }
 }

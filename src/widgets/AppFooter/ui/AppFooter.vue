@@ -1,39 +1,38 @@
 <script setup lang="ts">
 import FooterTop from "./FooterTop/FooterTop.vue";
 import FooterBottom from "./FooterBottom/FooterBottom.vue";
+
 import {
-  getCategories,
-  getCompany,
+  getCategoriesMenu,
+  getCompanyMenu,
   getCopyright,
   getDescription,
   getSocial,
-} from "../api";
-import type { Copyright, Description, Social } from "../model/types";
-import type { Navigation } from "~/src/shared/ui/navigation";
+} from "~/src/shared/api";
 
 const { data: copyrights } = useQuery({
   key: ["copyrights"],
-  query: async () => (await getCopyright()) as Copyright,
+  query: async () => await getCopyright(),
 });
 
 const { data: categories } = useQuery({
   key: ["categories-menu"],
-  query: async () => (await getCategories()) as Navigation,
+  query: async () => await getCategoriesMenu(),
 });
 
 const { data: company } = useQuery({
   key: ["company-menu"],
-  query: async () => (await getCompany()) as Navigation,
+  query: async () => await getCompanyMenu(),
 });
 
 const { data: about } = useQuery({
   key: ["app-description"],
-  query: async () => (await getDescription()) as Description,
+  query: async () => await getDescription(),
 });
 
 const { data: social } = useQuery({
   key: ["app-social"],
-  query: async () => (await getSocial()) as Social,
+  query: async () => await getSocial(),
 });
 </script>
 

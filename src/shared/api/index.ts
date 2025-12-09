@@ -24,3 +24,6 @@ export { getBlockCategories } from "./base/blockCategoriesApi";
 export { getBlockReviews } from "./base/blockReviewsApi";
 export { getBlockRichTextEditor } from "./base/blockRichTextEditorApi";
 export { getSlider } from "./base/sliderApi";
+export { getCopyright, getDescription, getSocial } from "./base/appInfoApi";
+export { getCategoriesMenu, getCompanyMenu, getMainMenu } from "./base/menuApi";
+export type { Copyright, Description, Social } from "./types/appInfo";
