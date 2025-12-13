@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { Button } from "~/src/shared/ui/form";
 import { IconCloseFlat } from "~/src/shared/ui/icons";
-import { useWatchFilterQuery } from "../../useWatchFilterQuery";
-import type { ApiFilterType } from "~/src/pages/category/model/types";
+import { useWatchOptionQuery } from "../../model/useWatchOptionQuery";
+import type { PropsOptionType } from "../../model/types";
 
-const { values, queryString } = defineProps<ApiFilterType>();
+const { values, queryString } = defineProps<PropsOptionType>();
 const colors = ref<boolean[]>([]);
 
-useWatchFilterQuery(colors, values, queryString);
+useWatchOptionQuery(colors, values, queryString);
 </script>
 
 <template>

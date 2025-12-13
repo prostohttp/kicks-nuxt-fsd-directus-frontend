@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { FilterType } from "~/src/shared/api";
 import { Dropdown } from "~/src/shared/ui/Dropdown";
 import { Button } from "~/src/shared/ui/form";
 import { filtersMapper } from "../../api/filtersMapper";
+import type { FilterType } from "../../model/types";
 
 const { filters, categoryId } = defineProps<{
   filters: FilterType[];
@@ -12,6 +12,7 @@ const emit = defineEmits<{
   apply: [];
   reset: [];
 }>();
+
 </script>
 
 <template>

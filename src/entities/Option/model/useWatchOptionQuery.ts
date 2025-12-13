@@ -1,10 +1,10 @@
 import type { OptionValueType } from "~/src/shared/api";
-import { toValidQueryString } from "../../model/helpers";
+import { toValidQueryString } from "./helpers";
 
-export const useWatchFilterQuery = (
+export const useWatchOptionQuery = (
   state: globalThis.Ref<boolean[]>,
   values: OptionValueType[],
-  filterQuery: string,
+  queryString: string,
 ) => {
   const route = useRoute();
 
@@ -14,14 +14,14 @@ export const useWatchFilterQuery = (
       navigateTo({
         query: {
           ...route.query,
-          [filterQuery]: toValidQueryString(values, newState),
+          [queryString]: toValidQueryString(values, newState),
         },
       });
     },
     { deep: true },
   );
   watch(
-    () => route.query[filterQuery],
+    () => route.query[queryString],
     (value) => {
       if (value) {
         const filter = value.toString().split(",");

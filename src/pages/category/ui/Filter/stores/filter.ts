@@ -1,4 +1,4 @@
-import { getMinMaxPrice } from "../../api";
+import { getMinMaxPrice } from "../../../api";
 
 export const useFilterStore = defineStore("product-filters", () => {
   const minPrice = ref();

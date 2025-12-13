@@ -20,9 +20,9 @@ const galleryConfig = {
 const thumbnailsConfig = {
   height: 64,
   itemsToShow: 5,
-  wrapAround: false,
+  mouseDrag: false,
   touchDrag: false,
-  gap: 8,
+  gap: 0
 };
 </script>
 
@@ -45,7 +45,7 @@ const thumbnailsConfig = {
       </Slide>
     </Carousel>
 
-    <ClientOnly>
+    <ClientOnly v-if="images.length !==1">
       <template #fallback>
         <Preloader />
       </template>

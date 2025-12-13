@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { ApiFilterType } from "~/src/pages/category/model/types";
+import type { PropsOptionType } from "../../model/types";
 
 // TODO: do it!
-const { values, queryString } = defineProps<ApiFilterType>();
+const { values, queryString } = defineProps<PropsOptionType>();
 </script>
 
 <template>

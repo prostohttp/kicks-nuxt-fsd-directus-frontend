@@ -5,14 +5,14 @@ import "vue-slider-component/theme/default.css";
 
 import { formatUSD } from "~/src/shared/lib";
 import type { ApiFilterType } from "~/src/pages/category/model/types";
-import { useFilterStore } from "~/src/pages/category/model/stores/filter";
+import { useFilterStore } from "../../stores/filter";
 
 const { queryString, categoryId } = defineProps<ApiFilterType>();
 const route = useRoute();
 const queryStringValue = Number(route.query[queryString]);
-const filterStore = useFilterStore();
 
-await callOnce(() => filterStore.minMaxPrice(categoryId), {
+const filterStore = useFilterStore();
+await callOnce(async () => await filterStore.minMaxPrice(categoryId), {
   mode: "navigation",
 });
 const { minPrice, maxPrice } = storeToRefs(filterStore);
