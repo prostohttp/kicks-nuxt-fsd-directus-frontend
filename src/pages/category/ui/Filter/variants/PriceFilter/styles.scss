@@ -1,5 +1,11 @@
 .slider-filter {
   padding-top: 20px;
+  min-height: 68px;
+
+  .vue-slider-rail {
+    width: 92%;
+    margin: auto;
+  }
 
   &__min-max {
     display: flex;

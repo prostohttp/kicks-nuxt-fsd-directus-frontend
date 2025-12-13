@@ -1,3 +1,35 @@
 .product-page {
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
 
+  @media (max-width: 991px) {
+    gap: 25px;
+  }
+
+  .actions {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    &__add-to-cart {
+      flex-grow: 1;
+      width: auto;
+      justify-content: center;
+    }
+
+    &__buy-it-now {
+      justify-content: center;
+      background-color: #4a69e2;
+    }
+
+    &__add-to-favorites {
+
+      @media (max-width: 991px) {
+        width: 50px;
+        height: 50px;
+      }
+    }
+  }
 }

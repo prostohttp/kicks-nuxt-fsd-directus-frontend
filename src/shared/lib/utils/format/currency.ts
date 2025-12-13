@@ -14,7 +14,7 @@ function createCurrencyFormatter(currency: string) {
   return new Intl.NumberFormat('en-EN', {
     style: 'currency',
     currency,
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
   })
 }

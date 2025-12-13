@@ -37,7 +37,7 @@ const { data: social } = useQuery({
 </script>
 
 <template>
-  <footer class="footer wrapper">
+  <footer class="footer">
     <FooterTop />
     <FooterBottom v-bind="{ copyrights, categories, company, about, social }" />
   </footer>

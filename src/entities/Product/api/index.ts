@@ -39,24 +39,33 @@ export const getProducts = (
   }
 };
 
-export const getProduct = (collection: CollectionType, id: number) => {
+export const getProduct = (collection: CollectionType, slug: string | null) => {
   try {
     const params: DirectusQueryParams = {
       fields: [
         "id",
         "title",
-        "slug",
         "image",
+        "seo",
+        "slug",
         "description",
-        "gallery",
+        "related_products.related_products_id.id",
+        "related_products.related_products_id.title",
+        "related_products.related_products_id.slug",
+        "related_products.related_products_id.price",
+        "related_products.related_products_id.image",
+        "related_products.related_products_id.label",
+        "gallery.directus_files_id",
+        "option_values.option_values_id",
         "label",
-        "sort",
         "price",
       ],
+      filter: {
+        slug: slug?.toString() || "",
+      },
     };
-    return useNuxtApp().$api.getById<ProductDetailsType>(
+    return useNuxtApp().$api.getAllBySlug<ProductDetailsType>(
       collection,
-      id.toString(),
       params,
     );
   } catch (e) {

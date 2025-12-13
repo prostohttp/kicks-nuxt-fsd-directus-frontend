@@ -1,0 +1,24 @@
+.related-products {
+  .heading-with {
+    margin-bottom: 10px;
+  }
+
+  .carousel {
+    padding-bottom: 50px;
+
+    &__pagination-button {
+      width: 40px;
+      height: 6px;
+      background-color: #b6b6b2;
+      border-radius: 8px;
+
+      &--active {
+        background-color: #416aea;
+      }
+    }
+
+    &__track {
+      align-items: flex-start;
+    }
+  }
+}

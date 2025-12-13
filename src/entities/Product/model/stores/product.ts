@@ -22,11 +22,14 @@ export const useProductStore = defineStore("products", () => {
 
   const product = ref<ProductDetailsType>();
 
-  const getOneProduct = (
+  const getOneProduct = async (
     collection: CollectionType,
-    id: number,
-  ): Promise<ProductDetailsType> => {
-    return getProduct(collection, id);
+    slug: string | null,
+  ): Promise<ProductDetailsType | undefined> => {
+    const products = await getProduct(collection, slug);
+    if (products[0]) {
+      return products[0];
+    }
   };
 
   return {

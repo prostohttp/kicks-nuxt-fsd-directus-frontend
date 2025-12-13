@@ -11,19 +11,11 @@ const isOpen = ref(true);
       <span>{{ heading }}</span>
       <IconChevronDown :class="{ 'is-open': isOpen }" />
     </div>
-    <div
-      v-show="isOpen"
-      v-gsap.onState-visible.to="{
-        height: 'auto',
-        opacity: 1,
-        y: 0,
-        duration: 0.15,
-      }"
-      class="dropdown__content"
-      :data-visible="isOpen"
-    >
-      <slot />
-    </div>
+    <GSAPTransition :hidden="{ height: 0, alpha: 0 }" :duration="0.15">
+      <div v-if="isOpen" class="dropdown__content">
+        <slot />
+      </div>
+    </GSAPTransition>
   </section>
 </template>
 

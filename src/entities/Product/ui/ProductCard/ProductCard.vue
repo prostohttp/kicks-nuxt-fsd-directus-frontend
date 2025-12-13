@@ -10,16 +10,24 @@ const { image, label, title, price, slug } = defineProps<ProductCardType>();
 <template>
   <section class="product-card">
     <div class="product-card__image">
-      <NuxtImg
-        provider="directus"
-        :src="image"
-        format="webp"
-        loading="lazy"
-        :alt="title"
-      />
+      <NuxtLink :to="ROUTES.product(slug)">
+        <NuxtImg
+          provider="directus"
+          :src="image"
+          format="webp"
+          :width="310"
+          loading="lazy"
+          :alt="title"
+        />
+      </NuxtLink>
+
       <span v-if="label" class="product-card__image__label">{{ label }}</span>
     </div>
-    <h3 class="product-card__title">{{ title }}</h3>
+    <h3 class="product-card__title">
+      <NuxtLink :to="ROUTES.product(slug)">
+        {{ title }}
+      </NuxtLink>
+    </h3>
     <NuxtLink :to="ROUTES.product(slug)">
       <Button
         variant="fill"
@@ -27,7 +35,8 @@ const { image, label, title, price, slug } = defineProps<ProductCardType>();
         class="product-card__button"
         style="justify-content: center"
       >
-        View Product - &nbsp;<strong>{{ formatUSD(price) }}</strong>
+        <span>View Product - </span>
+        <strong>{{ formatUSD(price) }}</strong>
       </Button>
     </NuxtLink>
   </section>
