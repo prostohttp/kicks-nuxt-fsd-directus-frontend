@@ -2,8 +2,13 @@
 import { Button } from "~/src/shared/ui/form";
 import { useWatchOptionQuery } from "../../model/useWatchOptionQuery";
 import type { PropsOptionType } from "../../model/types";
+import { setActiveStateHandler } from "../../model/helpers";
 
-const { values, queryString } = defineProps<PropsOptionType>();
+const {
+  values,
+  queryString,
+  isSingle = false,
+} = defineProps<PropsOptionType>();
 const buttons = ref<boolean[]>([]);
 
 useWatchOptionQuery(buttons, values, queryString);
@@ -17,8 +22,10 @@ useWatchOptionQuery(buttons, values, queryString);
       variant="fill"
       size="normal"
       class="buttons-filter__button"
-      :class="{ 'buttons-filter__button-active': buttons[index] }"
-      @click="buttons[index] = !buttons[index]"
+      :class="{
+        'buttons-filter__button-active': buttons[index],
+      }"
+      @click="setActiveStateHandler(buttons, index, isSingle)"
     >
       {{ button.text }}
     </Button>

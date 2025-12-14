@@ -3,6 +3,7 @@ import { Button } from "~/src/shared/ui/form";
 import { IconCloseFlat } from "~/src/shared/ui/icons";
 import { useWatchOptionQuery } from "../../model/useWatchOptionQuery";
 import type { PropsOptionType } from "../../model/types";
+import { setActiveStateHandler } from "../../model/helpers";
 
 const { values, queryString } = defineProps<PropsOptionType>();
 const colors = ref<boolean[]>([]);
@@ -20,7 +21,7 @@ useWatchOptionQuery(colors, values, queryString);
       class="btn-square color-filter__color"
       :class="{ 'color-filter__color-active': colors[index] }"
       :style="{ 'background-color': color.color }"
-      @click="colors[index] = !colors[index]"
+      @click="setActiveStateHandler(colors, index, isSingle)"
     >
       <IconCloseFlat v-show="colors[index]" />
     </Button>

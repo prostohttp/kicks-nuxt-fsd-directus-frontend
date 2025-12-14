@@ -91,7 +91,8 @@ const showMoreText = computed(() =>
       <div v-if="option_values" class="product-details__options">
         <!-- {{ option_values }} -->
       </div>
-      <slot />
+      <slot name="options" />
+      <slot name="actions" />
       <div
         v-if="description"
         v-gsap.onState-visible.to="{

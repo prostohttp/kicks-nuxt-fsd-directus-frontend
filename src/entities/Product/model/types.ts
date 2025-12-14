@@ -1,4 +1,4 @@
-import type { SeoType } from "~/src/shared/api";
+import type { ApiProductActiveOptionType, SeoType } from "~/src/shared/api";
 
 export interface ProductCardType {
   id: number;
@@ -16,9 +16,7 @@ export interface ProductDetailsType extends ProductCardType {
   gallery: {
     directus_files_id: string;
   }[];
-  option_values: {
-    option_values_id: string;
-  }[];
+  option_values: ApiProductActiveOptionType[];
   related_products: {
     related_products_id: ProductCardType;
   }[];

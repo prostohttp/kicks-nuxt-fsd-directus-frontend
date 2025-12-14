@@ -6,6 +6,7 @@ export enum CollectionType {
   SETTINGS = "globals",
   MENUS = "navigation",
   PRODUCTS = "products",
+  OPTIONS = "options",
   BANNERS = "blocks_banner",
   CATEGORIES = "product_categories",
   FORM_SUBMISSIONS = "form_submissions",

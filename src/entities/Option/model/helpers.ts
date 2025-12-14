@@ -9,3 +9,12 @@ export const toValidQueryString = (
   );
   return titles.filter((value) => value).toString();
 };
+
+export const setActiveStateHandler = (state: boolean[], index: number, isSingle = false) => {
+  if (isSingle) {
+    state[index] = !state[index];
+    state.forEach((_, idx) => (idx !== index ? (state[idx] = false) : null));
+  } else {
+    state[index] = !state[index];
+  }
+};

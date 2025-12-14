@@ -13,7 +13,9 @@ export type {
   FilterType,
   FiltersType,
   OptionType,
+  OptionProductType,
   OptionValueType,
+  ApiProductActiveOptionType,
 } from "./types/option";
 
 export { getPageBlocksAndSeo } from "./base/pageApi";

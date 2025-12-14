@@ -20,10 +20,26 @@ export interface OptionValueType {
   image: string | null;
 }
 
+export interface ApiProductActiveOptionType {
+  option_values_id: {
+    id: string;
+    option: {
+      id: number;
+    };
+  };
+}
+
 export type OptionType =
   | "checkbox"
   | "custom_checkbox"
   | "radio"
   | "color"
   | "slider"
+  | "button";
+
+export type OptionProductType =
+  | "checkbox"
+  | "custom_checkbox"
+  | "radio"
+  | "color"
   | "button";
