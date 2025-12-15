@@ -5,7 +5,12 @@ import { useWatchOptionQuery } from "../../model/useWatchOptionQuery";
 import type { PropsOptionType } from "../../model/types";
 import { setActiveStateHandler } from "../../model/helpers";
 
-const { values, queryString } = defineProps<PropsOptionType>();
+const {
+  values,
+  queryString,
+  isSingle = false,
+  activeValues,
+} = defineProps<PropsOptionType>();
 const colors = ref<boolean[]>([]);
 
 useWatchOptionQuery(colors, values, queryString);
@@ -18,6 +23,7 @@ useWatchOptionQuery(colors, values, queryString);
       :key="color.id"
       variant="fill"
       size="large"
+      :disabled="activeValues ? !activeValues?.includes(color.id) : false"
       class="btn-square color-filter__color"
       :class="{ 'color-filter__color-active': colors[index] }"
       :style="{ 'background-color': color.color }"

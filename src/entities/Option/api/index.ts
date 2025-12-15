@@ -6,7 +6,7 @@ export const getOptionsById = (collection: CollectionType, ids: number[]) => {
   try {
     const params: DirectusQueryParams = {
       fields: [
-        "title,type,for_filter,is_required",
+        "id,title,type,for_filter,is_required",
         "values.id",
         "values.title",
         "values.text",

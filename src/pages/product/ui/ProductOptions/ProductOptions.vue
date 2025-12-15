@@ -7,13 +7,19 @@ const { allOptions, activeOptions } = defineProps<{
   allOptions: ApiProductOptionType[] | undefined;
   activeOptions: ApiProductActiveOptionType[] | undefined;
 }>();
+
+const activeOptionValuesId = (id: number) => {
+  return activeOptions
+    ?.filter(({ option_values_id }) => option_values_id?.option.id === id)
+    .map(({ option_values_id }) => option_values_id.id);
+};
 </script>
 
 <template>
   <section class="product-options">
     <div
       v-for="option in allOptions"
-      :key="option.for_filter"
+      :key="option.id"
       class="product-options__option"
     >
       <h4 class="product-options__option__title">
@@ -30,11 +36,14 @@ const { allOptions, activeOptions } = defineProps<{
         :query-string="option.for_filter"
         :values="option.values"
         :is-single="true"
+        :active-values="activeOptionValuesId(option.id)"
         class="product-options__option__component"
       />
     </div>
-    <pre>{{ activeOptions }}</pre>
   </section>
+  <!-- <pre>{{ allOptions }}</pre>
+  ----------
+  <pre>{{ activeOptions }}</pre> -->
 </template>
 
 <style lang="scss">

@@ -4,7 +4,12 @@ import { useWatchOptionQuery } from "../../model/useWatchOptionQuery";
 import type { PropsOptionType } from "../../model/types";
 import { setActiveStateHandler } from "../../model/helpers";
 
-const { values, queryString, isSingle } = defineProps<PropsOptionType>();
+const {
+  values,
+  queryString,
+  isSingle = false,
+  activeValues,
+} = defineProps<PropsOptionType>();
 const checkboxes = ref<boolean[]>([]);
 
 useWatchOptionQuery(checkboxes, values, queryString);
@@ -18,6 +23,7 @@ useWatchOptionQuery(checkboxes, values, queryString);
       :model-value="checkboxes[index]"
       :label="checkbox.text || ''"
       :name="checkbox.text || ''"
+      :disabled="activeValues ? !activeValues?.includes(checkbox.id) : false"
       class="checkbox-filter__checkbox"
       :class="{ 'checkbox-filter__checkbox-active': checkboxes[index] }"
       @change="setActiveStateHandler(checkboxes, index, isSingle)"

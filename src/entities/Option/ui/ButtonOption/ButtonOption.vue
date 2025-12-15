@@ -8,6 +8,7 @@ const {
   values,
   queryString,
   isSingle = false,
+  activeValues,
 } = defineProps<PropsOptionType>();
 const buttons = ref<boolean[]>([]);
 
@@ -21,6 +22,7 @@ useWatchOptionQuery(buttons, values, queryString);
       :key="button.id"
       variant="fill"
       size="normal"
+      :disabled="activeValues ? !activeValues?.includes(button.id) : false"
       class="buttons-filter__button"
       :class="{
         'buttons-filter__button-active': buttons[index],

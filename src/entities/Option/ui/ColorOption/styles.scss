@@ -6,6 +6,7 @@
   &__color {
     &:disabled {
       opacity: 0.1;
+      border: 1px solid #232321;
     }
 
     &-active {

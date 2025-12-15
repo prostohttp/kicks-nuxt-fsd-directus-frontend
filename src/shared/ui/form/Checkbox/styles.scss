@@ -2,6 +2,19 @@
   display: flex;
   gap: 10px;
 
+  &--disabled {
+    opacity: 0.8;
+
+    .checkbox__label {
+      color: #8e8c91;
+    }
+
+    .checkbox__field {
+      border-color: #8e8c91;
+      background-color: #d4d4d4;
+    }
+  }
+
   input {
     display: none;
   }
