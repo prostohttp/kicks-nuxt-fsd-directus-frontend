@@ -11,12 +11,14 @@ export const useWatchOptionQuery = (
   watch(
     state,
     (newState) => {
-      navigateTo({
-        query: {
-          ...route.query,
-          [queryString]: toValidQueryString(values, newState),
-        },
-      });
+      if (newState.length) {
+        navigateTo({
+          query: {
+            ...route.query,
+            [queryString]: toValidQueryString(values, newState),
+          },
+        });
+      }
     },
     { deep: true },
   );
@@ -35,7 +37,7 @@ export const useWatchOptionQuery = (
       }
     },
     {
-      immediate: true,
+      immediate: !!route.query[queryString],
     },
   );
 };

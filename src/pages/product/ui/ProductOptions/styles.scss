@@ -19,4 +19,18 @@
       }
     }
   }
+
+  &__reset {
+    &__button {
+      background-color: transparent;
+      padding: 0;
+      border-bottom: 1px solid #232321;
+      border-radius: 0;
+      line-height: 1;
+
+      &:hover {
+        border-color: transparent;
+      }
+    }
+  }
 }

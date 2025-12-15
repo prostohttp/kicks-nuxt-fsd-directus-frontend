@@ -1,6 +1,5 @@
 import type { DirectusQueryParams } from "nuxt-directus";
-import type { CollectionType } from "~/src/shared/api";
-import type { ReviewType } from "./types";
+import type { CollectionType, ReviewType } from "~/src/shared/api";
 
 export const getReviews = (collection: CollectionType, limit?: number) => {
   try {

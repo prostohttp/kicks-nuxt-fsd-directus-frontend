@@ -61,6 +61,12 @@ export const getProduct = (collection: CollectionType, slug: string | null) => {
         "option_values.option_values_id",
         "option_values.option_values_id.id",
         "option_values.option_values_id.option.id",
+        "reviews.id",
+        "reviews.user_created",
+        "reviews.review",
+        "reviews.rating",
+        "reviews.title",
+        "reviews.gallery.directus_files_id",
       ],
       filter: {
         slug: slug?.toString() || "",

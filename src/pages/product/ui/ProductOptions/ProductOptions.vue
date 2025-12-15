@@ -13,6 +13,14 @@ const activeOptionValuesId = (id: number) => {
     ?.filter(({ option_values_id }) => option_values_id?.option.id === id)
     .map(({ option_values_id }) => option_values_id.id);
 };
+
+const resetOptions = () => {
+  navigateTo({
+    query: {
+      undefined
+    }
+  })
+}
 </script>
 
 <template>
@@ -40,10 +48,12 @@ const activeOptionValuesId = (id: number) => {
         class="product-options__option__component"
       />
     </div>
+    <div class="product-options__reset">
+      <button class="product-options__reset__button" @click="resetOptions">
+        Reset product variants
+      </button>
+    </div>
   </section>
-  <!-- <pre>{{ allOptions }}</pre>
-  ----------
-  <pre>{{ activeOptions }}</pre> -->
 </template>
 
 <style lang="scss">

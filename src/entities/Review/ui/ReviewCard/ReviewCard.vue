@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { StarRating } from "~/src/shared/ui/StarRating";
-import type { ReviewType } from "../../api/types";
 import { ROUTES } from "~/src/shared/routes";
+import type { ReviewType } from "~/src/shared/api";
 
 const { gallery, product, rating, review, title, user_created } =
   defineProps<ReviewType>();
