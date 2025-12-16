@@ -51,6 +51,7 @@ export const getProduct = (collection: CollectionType, slug: string | null) => {
         "description",
         "label",
         "price",
+        "reviews.user_created.avatar",
         "related_products.related_products_id.id",
         "related_products.related_products_id.title",
         "related_products.related_products_id.slug",

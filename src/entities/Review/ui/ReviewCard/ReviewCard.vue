@@ -2,6 +2,7 @@
 import { StarRating } from "~/src/shared/ui/StarRating";
 import { ROUTES } from "~/src/shared/routes";
 import type { ReviewType } from "~/src/shared/api";
+import { truncateText } from "../../model/helpers";
 
 const { gallery, product, rating, review, title, user_created } =
   defineProps<ReviewType>();
@@ -20,7 +21,7 @@ const ratingModel = ref(rating);
         </h3>
         <p>
           <NuxtLink :to="ROUTES.product(product.slug)">
-            {{ review }}
+            {{ truncateText(review, 100) }}
           </NuxtLink>
         </p>
         <StarRating v-model="ratingModel" />

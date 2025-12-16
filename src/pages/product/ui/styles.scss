@@ -7,6 +7,26 @@
     gap: 25px;
   }
 
+  &__reviews {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    &__trigger {
+      text-transform: none;
+    }
+
+    &__rating {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+
+      svg {
+        scale: 1.6;
+      }
+    }
+  }
+
   .actions {
     display: flex;
     width: 100%;
@@ -25,7 +45,6 @@
     }
 
     &__add-to-favorites {
-
       @media (max-width: 991px) {
         width: 50px;
         height: 50px;

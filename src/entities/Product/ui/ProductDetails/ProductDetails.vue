@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { FullScreenGallery } from "~/src/shared/ui/modal";
 import type { ProductDetailsType } from "../../model/types";
 import { formatUSD } from "~/src/shared/lib";
 import { Gallery } from "~/src/shared/ui/Gallery";
+import { FullScreenModal } from "~/src/shared/ui/modal";
 
-const { description, gallery, image, label, title, price, option_values } =
+const { description, gallery, image, label, title, price } =
   defineProps<ProductDetailsType>();
 
 const isOpen = ref(false);
@@ -61,6 +61,22 @@ const showMoreText = computed(() =>
           />
         </div>
       </div>
+      <Teleport to="#teleports">
+        <FullScreenModal v-model="isOpen">
+          <div
+            v-for="item in images"
+            :key="item"
+            class="full-screen-modal-gallery-image"
+          >
+            <NuxtImg
+              provider="directus"
+              format="webp"
+              :src="item"
+              @click="isOpen = !isOpen"
+            />
+          </div>
+        </FullScreenModal>
+      </Teleport>
       <div class="product-details__mobile-gallery">
         <Gallery :images />
       </div>
@@ -85,12 +101,10 @@ const showMoreText = computed(() =>
       <h1 class="product-details__heading">
         {{ title }}
       </h1>
+      <slot name="reviews" />
       <strong class="product-details__price">
         {{ formatUSD(price) }}
       </strong>
-      <div v-if="option_values" class="product-details__options">
-        <!-- {{ option_values }} -->
-      </div>
       <slot name="options" />
       <slot name="actions" />
       <div
@@ -126,9 +140,6 @@ const showMoreText = computed(() =>
         </div>
       </div>
     </div>
-    <Teleport to="#teleports">
-      <FullScreenGallery v-model="isOpen" :images />
-    </Teleport>
   </section>
 </template>
 

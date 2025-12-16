@@ -228,3 +228,29 @@
     }
   }
 }
+
+.full-screen-modal-gallery-image {
+  justify-content: center;
+  aspect-ratio: 3 / 3;
+  object-position: center;
+  display: flex;
+  align-items: center;
+  max-width: 100%;
+  height: 100%;
+  width: 800px;
+  background-color: #e7e7e3;
+  border-radius: 24px;
+
+  img {
+    width: 100%;
+    mix-blend-mode: darken;
+    object-fit: contain;
+    border-radius: 24px;
+    overflow: hidden;
+    background-color: #e7e7e3;
+
+    &:hover {
+      cursor: zoom-out;
+    }
+  }
+}

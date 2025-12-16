@@ -1,3 +1,5 @@
+import type { ImageType } from "./image";
+
 export interface ReviewType {
   id: number;
   user_created: {
@@ -9,7 +11,5 @@ export interface ReviewType {
   };
   rating: number;
   title: string;
-  gallery: {
-    directus_files_id: string;
-  }[];
+  gallery: ImageType[];
 }

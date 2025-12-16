@@ -20,6 +20,12 @@
     }
   }
 
+  .round-checkbox-filter,
+  .color-filter,
+  .buttons-filter {
+    gap: 6px;
+  }
+
   &__reset {
     &__button {
       background-color: transparent;

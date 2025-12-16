@@ -31,28 +31,24 @@ onClickOutside(menuRef, () => (isOpen.value = false), {
       <span>{{ selected }}</span>
       <IconChevronDown />
     </div>
-    <ul
-      v-if="isOpen"
-      ref="menuRef"
-      v-gsap.onState-visible.to="{
-        height: 'auto',
-        opacity: 1,
-        y: 0,
-        duration: 0.15,
-      }"
-      class="select__list"
-      :data-visible="isOpen"
-    >
-      <template v-for="item in list" :key="item.value">
-        <li
-          class="select__list__item"
-          :class="{ 'select__list__item-selected': item.label === selected }"
-          @click="selectActiveItem(item.label)"
-        >
-          {{ item.label }}
-        </li>
-      </template>
-    </ul>
+    <GSAPTransition :hidden="{ height: 0, alpha: 0 }" :duration="0.15">
+      <ul
+        v-if="isOpen"
+        ref="menuRef"
+        class="select__list"
+        :data-visible="isOpen"
+      >
+        <template v-for="item in list" :key="item.value">
+          <li
+            class="select__list__item"
+            :class="{ 'select__list__item-selected': item.label === selected }"
+            @click="selectActiveItem(item.label)"
+          >
+            {{ item.label }}
+          </li>
+        </template>
+      </ul>
+    </GSAPTransition>
   </section>
 </template>
 

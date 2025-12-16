@@ -2,12 +2,15 @@
 import { getProduct, ProductDetails } from "~/src/entities/Product";
 import { CollectionType } from "~/src/shared/api";
 import { Button } from "~/src/shared/ui/form";
-import { IconHeart } from "~/src/shared/ui/icons";
+import { IconHeart, IconStarFill } from "~/src/shared/ui/icons";
 import { NotFound } from "~/src/shared/ui/NotFound";
 import { Preloader } from "~/src/shared/ui/preloader";
 import RelatedProducts from "./RelatedProducts/RelatedProducts.vue";
 import ProductOptions from "./ProductOptions/ProductOptions.vue";
 import { getOptionsById } from "~/src/entities/Option";
+import ProductReviews from "./ProductReviews/ProductReviews.vue";
+import { FullScreenModal } from "~/src/shared/ui/modal";
+import { getAverage } from "../model/helpers";
 
 const route = useRoute();
 
@@ -56,6 +59,24 @@ const addToFavorites = () => {
 const byItNow = () => {
   console.log("By it Now");
 };
+
+const reviewsCount = computed(() => product.value?.reviews.length);
+
+const productRating = computed(() =>
+  reviewsCount.value
+    ? getAverage(product.value?.reviews.map(({ rating }) => rating))
+    : undefined,
+);
+
+const isOpen = ref(false);
+
+watch(isOpen, (newValue) => {
+  if (newValue) {
+    document.body.classList.add("overflow-hidden");
+  } else {
+    document.body.classList.remove("overflow-hidden");
+  }
+});
 </script>
 
 <template>
@@ -63,6 +84,22 @@ const byItNow = () => {
   <NotFound v-else-if="!product" heading="Product not found!" />
   <section v-else class="product-page">
     <ProductDetails v-bind="product">
+      <template #reviews>
+        <div class="product-page__reviews">
+          <button
+            class="product-page__reviews__trigger"
+            @click="isOpen = !isOpen"
+          >
+            Reviews ({{ reviewsCount }})
+          </button>
+          <div v-if="reviewsCount" class="product-page__reviews__rating">
+            <IconStarFill />
+            <span class="product-page__reviews__rating__number">
+              {{ productRating }}
+            </span>
+          </div>
+        </div>
+      </template>
       <template v-if="product.option_values.length" #options>
         <ProductOptions
           :all-options="options"
@@ -98,6 +135,11 @@ const byItNow = () => {
         </div>
       </template>
     </ProductDetails>
+    <Teleport to="#teleports">
+      <FullScreenModal v-model="isOpen">
+        <ProductReviews :reviews="product.reviews" />
+      </FullScreenModal>
+    </Teleport>
     <RelatedProducts
       v-if="product.related_products.length"
       :products="product.related_products"
