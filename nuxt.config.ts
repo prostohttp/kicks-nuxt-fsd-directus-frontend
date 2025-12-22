@@ -59,9 +59,9 @@ export default defineNuxtConfig({
         },
       },
     },
-      directus: {
-        baseURL: "http://localhost:8055/assets",
-      },
+    directus: {
+      baseURL: "http://localhost:8055/assets",
+    },
   },
   vgsap: {
     presets: [],
@@ -73,6 +73,12 @@ export default defineNuxtConfig({
         "img-src": false,
       },
     },
+  },
+  directus: {
+    cookieMaxAge: 7 * 24 * 60 * 60 * 1000,
+    // autoFetch: true,
+    // autoRefresh: true
+    devtools: true,
   },
   modules: [
     "@nuxt/eslint",

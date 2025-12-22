@@ -11,6 +11,7 @@ export { default as IconChevronDown } from "./IconChevronDown.vue";
 export { default as IconStarFill } from "./IconStarFill.vue";
 export { default as IconCheck } from "./IconCheck.vue";
 export { default as IconFilter } from "./IconFilter.vue";
+export { default as IconUploadFile } from "./IconUploadFile.vue";
 export { default as IconHeart } from "./IconHeart.vue";
 export { default as IconCloseFlat } from "./IconCloseFlat.vue";
 export { default as IconCircleLoading } from "./IconCircleLoading.vue";

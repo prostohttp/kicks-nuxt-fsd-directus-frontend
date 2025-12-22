@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Button, Form, Input } from "~/src/shared/ui/form";
+import { Button, Input } from "~/src/shared/ui/form";
 import { getForm } from "~/src/shared/api";
 import { Subscription } from "../model/subscriptionSchema";
 import { createSubscription } from "../api";
@@ -7,9 +7,10 @@ import { createSubscription } from "../api";
 const email = ref("");
 const message = ref();
 
+const FORM_ID = "1";
 const { data: form } = useQuery({
-  key: ["form-subscription"],
-  query: async () => await getForm("1"),
+  key: () => ["form-subscription", FORM_ID],
+  query: async () => await getForm(FORM_ID),
 });
 
 const {
@@ -52,13 +53,13 @@ watch(error, (newValue) => {
 
 <template>
   <section class="subscription-form">
-    <Form @submit="createSubs(email)">
+    <form @submit.prevent="createSubs(email)">
       <template
         v-for="({ label, type, placeholder, name }, index) in form?.fields"
+        :key="index"
       >
         <Input
           v-if="type === 'text' && label === 'email'"
-          :key="index"
           v-model="email"
           :type="type"
           theme="light"
@@ -74,7 +75,7 @@ watch(error, (newValue) => {
       >
         {{ form?.submit_label }}
       </Button>
-    </Form>
+    </form>
     <div v-if="statusMessage" class="subscription-form__status">
       {{ statusMessage }}
     </div>

@@ -1,7 +1,12 @@
 export { CollectionType } from "./types/collection";
 export type { PageType, BlockType } from "./types/page";
 export type { CategoryType } from "./types/category";
-export type { ReviewType } from "./types/review";
+export type {
+  ReviewType,
+  AddReviewType,
+  AddedReviewType,
+  ReviewFileType,
+} from "./types/review";
 export type { ProductType, ApiFilterType } from "./types/product";
 export type { GlobalType } from "./types/global";
 export type { ImageType } from "./types/image";

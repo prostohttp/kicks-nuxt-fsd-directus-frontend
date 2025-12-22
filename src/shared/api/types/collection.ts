@@ -3,6 +3,7 @@ export enum CollectionType {
   FORMS = "forms",
   SLIDERS = "slider",
   REVIEWS = "reviews",
+  REVIEWS_FILES = "reviews_files",
   SETTINGS = "globals",
   MENUS = "navigation",
   PRODUCTS = "products",
@@ -13,6 +14,8 @@ export enum CollectionType {
   FORM_SUBMISSION_VALUES = "form_submission_values",
 
   API_PRODUCTS = "/items/products",
+  API_REVIEWS = "/items/reviews",
+
 
   PAGE_BLOCKS = "pages_blocks",
   BLOCKS_HERO = "blocks_hero",

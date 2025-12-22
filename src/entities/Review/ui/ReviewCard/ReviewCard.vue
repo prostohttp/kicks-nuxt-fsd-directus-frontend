@@ -28,10 +28,16 @@ const ratingModel = ref(rating);
       </div>
       <div class="review-card__header__avatar">
         <NuxtImg
+          v-if="user_created.avatar"
           provider="directus"
           loading="lazy"
           format="webp"
           :src="user_created.avatar"
+        />
+        <NuxtImg
+          v-else
+          class="review-card__header__avatar--default"
+          src="avatar.svg"
         />
       </div>
     </div>

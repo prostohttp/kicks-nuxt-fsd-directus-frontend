@@ -1,11 +1,17 @@
+import type { DirectusItems } from "nuxt-directus";
 import type { ApiFilterType, CollectionType } from "~/src/shared/api";
 import type { ProductCardType, ProductDetailsType } from "../types";
-import { getProduct, getProducts } from "../../api";
+import {
+  getProduct,
+  getProducts,
+  getProductRating as getRating,
+  getProductReviewsCount as getReviewsCount,
+} from "../../api";
 import type { ApiProductsCount } from "../../api/types";
-import type { DirectusItems } from "nuxt-directus";
 
 export const useProductStore = defineStore("products", () => {
   const products = ref<DirectusItems<ProductCardType>>();
+
   const getAllProducts = (
     collection: CollectionType,
     meta: ApiProductsCount,
@@ -22,14 +28,25 @@ export const useProductStore = defineStore("products", () => {
 
   const product = ref<ProductDetailsType>();
 
+  const saveProduct = (item: ProductDetailsType) => {
+    product.value = item;
+  };
+
   const getOneProduct = async (
     collection: CollectionType,
     slug: string | null,
   ): Promise<ProductDetailsType | undefined> => {
     const products = await getProduct(collection, slug);
     if (products[0]) {
+      saveProduct(products[0]);
       return products[0];
     }
+  };
+
+  const getProductReviewsInfo = async (id: number) => {
+    const rating = (await getRating(id)).data[0]?.avg.rating;
+    const count = (await getReviewsCount(id)).data[0]?.count.rating;
+    return { rating, count };
   };
 
   return {
@@ -37,6 +54,8 @@ export const useProductStore = defineStore("products", () => {
     getAllProducts,
     setProducts,
     product,
+    saveProduct,
     getOneProduct,
+    getProductReviewsInfo,
   };
 });

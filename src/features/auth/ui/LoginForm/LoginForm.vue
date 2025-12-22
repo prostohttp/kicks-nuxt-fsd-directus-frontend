@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Button, Form, Input } from "~/src/shared/ui/form";
+import { Button, Input } from "~/src/shared/ui/form";
 import { IconArrowRight, IconCircleLoading } from "~/src/shared/ui/icons";
 import { Login } from "../../model/loginSchema";
 import { loginUser } from "./api";
@@ -30,11 +30,12 @@ const refresh = () => {
 const isSuccess = ref(false);
 const email = ref();
 const password = ref();
+// TODO: back(-1)
 const redirectToAccount = () => {
   setTimeout(() => {
     navigateTo(ROUTES.account);
     refresh();
-  }, 3000);
+  }, 1000);
 };
 const loading = computed(
   () => asyncStatus.value === "loading" || isSuccess.value,
@@ -73,7 +74,7 @@ const {
 <template>
   <section class="login-form">
     <h3 class="login-form__heading">Login</h3>
-    <Form @submit="loginHandler({ email, password })">
+    <form @submit.prevent="loginHandler({ email, password })">
       <Input
         v-model="email"
         name="login-email"
@@ -96,7 +97,7 @@ const {
           <IconArrowRight v-else />
         </template>
       </Button>
-    </Form>
+    </form>
     <SuccessWithCallbackMessage
       v-if="isSuccess"
       style="margin-top: 15px"

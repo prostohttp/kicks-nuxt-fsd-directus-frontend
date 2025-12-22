@@ -8,7 +8,7 @@ import type {
 import type { CollectionType } from "~/src/shared/api";
 
 export default defineNuxtPlugin(() => {
-  const { getItemById, getSingletonItem, createItems, getItems } =
+  const { getItemById, getSingletonItem, createItems, updateItem, getItems } =
     useDirectusItems();
   const { login, logout, createUser } = useDirectusAuth();
 
@@ -65,7 +65,17 @@ export default defineNuxtPlugin(() => {
   };
 
   const create = <T>(collection: CollectionType, items: T[]) => {
+
     return createItems<T>({ collection, items });
+  };
+
+  const update = <T extends object>(
+    collection: CollectionType,
+    id: string,
+    item: T,
+    params?: DirectusQueryParams,
+  ) => {
+    return updateItem<T>({ collection, id, item, params });
   };
 
   const loginUser = ({ email, password }: DirectusAuthCredentials) => {
@@ -84,6 +94,7 @@ export default defineNuxtPlugin(() => {
     getById,
     getSingleton,
     create,
+    update,
     getAll,
     getAllRaw,
     getAllBySlug,

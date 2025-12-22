@@ -30,7 +30,7 @@ const { data } = useQuery({
       </template>
     </HeadingWith>
   </section>
-  <ReviewsList v-if="data" :limit="data.limit" :column="data.columns" />
+  <ReviewsList v-if="data" :limit="data.limit" :column="data.columns" sort="date_created"/>
 </template>
 
 <style lang="scss">

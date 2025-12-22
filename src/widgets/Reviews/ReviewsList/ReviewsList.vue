@@ -4,13 +4,14 @@ import { EmptyDataHeading } from "~/src/shared/ui/heading";
 import { getReviews, ReviewCard } from "~/src/entities/Review";
 import { Preloader } from "~/src/shared/ui/preloader";
 
-const { limit } = defineProps<{
+const { limit, sort } = defineProps<{
   limit?: number;
+  sort?: string;
 }>();
 
 const { data: reviews, isLoading } = useQuery({
   key: () => ["reviews", limit ? limit : ""],
-  query: async () => await getReviews(CollectionType.REVIEWS, limit),
+  query: async () => await getReviews(CollectionType.REVIEWS, limit, sort),
 });
 </script>
 

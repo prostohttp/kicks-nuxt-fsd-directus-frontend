@@ -1,4 +1,5 @@
-import type { ApiFilterType, CollectionType } from "~/src/shared/api";
+import type { ApiFilterType } from "~/src/shared/api";
+import { CollectionType } from "~/src/shared/api";
 import type {
   DirectusMetaQueryParams,
   DirectusQueryParams,
@@ -51,7 +52,7 @@ export const getProduct = (collection: CollectionType, slug: string | null) => {
         "description",
         "label",
         "price",
-        "reviews.user_created.avatar",
+        "reviews",
         "related_products.related_products_id.id",
         "related_products.related_products_id.title",
         "related_products.related_products_id.slug",
@@ -62,12 +63,6 @@ export const getProduct = (collection: CollectionType, slug: string | null) => {
         "option_values.option_values_id",
         "option_values.option_values_id.id",
         "option_values.option_values_id.option.id",
-        "reviews.id",
-        "reviews.user_created",
-        "reviews.review",
-        "reviews.rating",
-        "reviews.title",
-        "reviews.gallery.directus_files_id",
       ],
       filter: {
         slug: slug?.toString() || "",
@@ -76,6 +71,50 @@ export const getProduct = (collection: CollectionType, slug: string | null) => {
     return useNuxtApp().$api.getAllBySlug<ProductDetailsType>(
       collection,
       params,
+    );
+  } catch (e) {
+    const error = e as Error;
+    throw createError({ message: error.message });
+  }
+};
+
+export const getProductReviewsCount = async (productId: number) => {
+  try {
+    const runtimeConfig = useRuntimeConfig();
+    return await $fetch<{ data: { count: { rating: string } }[] }>(
+      runtimeConfig.public.directus.url + CollectionType.API_REVIEWS,
+      {
+        query: {
+          "aggregate[count]": "rating",
+          filter: {
+            product: {
+              _eq: productId,
+            },
+          },
+        },
+      },
+    );
+  } catch (e) {
+    const error = e as Error;
+    throw createError({ message: error.message });
+  }
+};
+
+export const getProductRating = async (productId: number) => {
+  try {
+    const runtimeConfig = useRuntimeConfig();
+    return await $fetch<{ data: { avg: { rating: string } }[] }>(
+      runtimeConfig.public.directus.url + CollectionType.API_REVIEWS,
+      {
+        query: {
+          "aggregate[avg]": "rating",
+          filter: {
+            product: {
+              _eq: productId,
+            },
+          },
+        },
+      },
     );
   } catch (e) {
     const error = e as Error;

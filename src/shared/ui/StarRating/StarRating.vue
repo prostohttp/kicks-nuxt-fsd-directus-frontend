@@ -3,11 +3,17 @@ import IconStarFill from "../icons/IconStarFill.vue";
 import IconStarOutline from "../icons/IconStarOutline.vue";
 
 const value = defineModel<number>({ required: true });
-const { change = false } = defineProps<{ change?: boolean }>();
+const { change = false, size = "small" } = defineProps<{
+  change?: boolean;
+  size?: "small" | "large";
+}>();
 </script>
 
 <template>
-  <section class="star-rating">
+  <section
+    class="star-rating"
+    :class="{ 'star-rating--large': size === 'large' }"
+  >
     <span
       v-for="num in 5"
       :key="num"

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Button, Checkbox, Form, Input } from "~/src/shared/ui/form";
+import { Button, Checkbox, Input } from "~/src/shared/ui/form";
 import { IconArrowRight, IconCircleLoading } from "~/src/shared/ui/icons";
 import { registerUser } from "./api";
 import { Register } from "../../model/registerSchema";
@@ -65,7 +65,7 @@ const {
 <template>
   <section class="register-form">
     <h3 class="register-form__heading">Register</h3>
-    <Form @submit="registerHandler({ email, password })">
+    <form @submit.prevent="registerHandler({ email, password })">
       <Input
         v-model="email"
         name="register-email"
@@ -93,7 +93,7 @@ const {
           <IconArrowRight v-else />
         </template>
       </Button>
-    </Form>
+    </form>
     <SuccessMessage
       v-if="isSuccess"
       style="margin-top: 15px"

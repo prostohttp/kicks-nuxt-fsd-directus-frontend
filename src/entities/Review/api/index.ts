@@ -1,7 +1,12 @@
 import type { DirectusQueryParams } from "nuxt-directus";
 import type { CollectionType, ReviewType } from "~/src/shared/api";
 
-export const getReviews = (collection: CollectionType, limit?: number) => {
+export const getReviews = (
+  collection: CollectionType,
+  limit?: number,
+  sort: string = "date_created",
+  filter?: Record<string, unknown>
+) => {
   try {
     const params: DirectusQueryParams = {
       fields: [
@@ -14,6 +19,8 @@ export const getReviews = (collection: CollectionType, limit?: number) => {
         "product.slug",
       ],
       limit,
+      sort,
+      filter,
     };
     return useNuxtApp().$api.getAllRaw<ReviewType>(collection, params);
   } catch (e) {

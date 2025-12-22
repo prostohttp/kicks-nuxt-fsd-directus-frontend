@@ -10,7 +10,7 @@ useSeoMeta({
 <template>
   <section class="reviews-page">
     <LargeHeading heading="Reviews" />
-    <ReviewsList style="padding: 0" />
+    <ReviewsList style="padding: 0" sort="-date_created" />
   </section>
 </template>
 

@@ -13,4 +13,16 @@
       scale: 2;
     }
   }
+
+  &--large {
+    .star-rating__icon {
+      width: 22px;
+      height: 22px;
+      font-size: 12px;
+
+      svg {
+        scale: 4;
+      }
+    }
+  }
 }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getProduct, ProductDetails } from "~/src/entities/Product";
+import { ProductDetails, useProductStore } from "~/src/entities/Product";
 import { CollectionType } from "~/src/shared/api";
 import { Button } from "~/src/shared/ui/form";
 import { IconHeart, IconStarFill } from "~/src/shared/ui/icons";
@@ -10,19 +10,24 @@ import ProductOptions from "./ProductOptions/ProductOptions.vue";
 import { getOptionsById } from "~/src/entities/Option";
 import ProductReviews from "./ProductReviews/ProductReviews.vue";
 import { FullScreenModal } from "~/src/shared/ui/modal";
-import { getAverage } from "../model/helpers";
+import { Placeholder } from "~/src/shared/ui/Placeholder";
 
 const route = useRoute();
 
 const productSlug = computed(() =>
   "product" in route.params ? (route.params.product as string) : null,
 );
-const { data, isLoading } = useQuery({
-  key: () => ["product", productSlug.value],
-  query: async () => getProduct(CollectionType.PRODUCTS, productSlug.value),
-});
 
-const product = computed(() => (data.value ? data.value[0] : null));
+const productStore = useProductStore();
+
+const { data: product, isLoading } = useQuery({
+  key: () => ["product", productSlug.value],
+  query: async () =>
+    await productStore.getOneProduct(
+      CollectionType.PRODUCTS,
+      productSlug.value,
+    ),
+});
 
 const productOptionIds = computed(() => {
   const optionIds = new Set<number>();
@@ -35,6 +40,23 @@ const productOptionIds = computed(() => {
   }
 
   return Array.from(optionIds);
+});
+
+const {
+  data: productReviewsInfo,
+  isPending,
+  refetch,
+} = useQuery({
+  key: () => [
+    "product-reviews-info",
+    {
+      product: product.value ? product.value.id : null,
+    },
+  ],
+  query: async () =>
+    product.value
+      ? await productStore.getProductReviewsInfo(product.value.id)
+      : null,
 });
 
 const { data: options } = useQuery({
@@ -60,14 +82,6 @@ const byItNow = () => {
   console.log("By it Now");
 };
 
-const reviewsCount = computed(() => product.value?.reviews.length);
-
-const productRating = computed(() =>
-  reviewsCount.value
-    ? getAverage(product.value?.reviews.map(({ rating }) => rating))
-    : undefined,
-);
-
 const isOpen = ref(false);
 
 watch(isOpen, (newValue) => {
@@ -77,22 +91,26 @@ watch(isOpen, (newValue) => {
     document.body.classList.remove("overflow-hidden");
   }
 });
+
+const productRating = computed(
+  () => Math.round(Number(productReviewsInfo.value?.rating) * 10) / 10,
+);
 </script>
 
 <template>
   <Preloader v-if="isLoading" />
-  <NotFound v-else-if="!product" heading="Product not found!" />
-  <section v-else class="product-page">
+  <section v-else-if="product" class="product-page">
     <ProductDetails v-bind="product">
       <template #reviews>
-        <div class="product-page__reviews">
+        <Placeholder v-if="isPending" h="32px" w="200px" />
+        <div v-else class="product-page__reviews">
           <button
             class="product-page__reviews__trigger"
             @click="isOpen = !isOpen"
           >
-            Reviews ({{ reviewsCount }})
+            Reviews ({{ productReviewsInfo?.count }})
           </button>
-          <div v-if="reviewsCount" class="product-page__reviews__rating">
+          <div class="product-page__reviews__rating">
             <IconStarFill />
             <span class="product-page__reviews__rating__number">
               {{ productRating }}
@@ -137,7 +155,11 @@ watch(isOpen, (newValue) => {
     </ProductDetails>
     <Teleport to="#teleports">
       <FullScreenModal v-model="isOpen">
-        <ProductReviews :reviews="product.reviews" />
+        <ProductReviews
+          :review-ids="product.reviews"
+          :product-id="product.id"
+          @refetch="refetch"
+        />
       </FullScreenModal>
     </Teleport>
     <RelatedProducts
@@ -145,6 +167,7 @@ watch(isOpen, (newValue) => {
       :products="product.related_products"
     />
   </section>
+  <NotFound v-else heading="Product not found!" />
 </template>
 
 <style lang="scss">

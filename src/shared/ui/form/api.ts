@@ -7,6 +7,7 @@ export const getForm = (formId: string) => {
     const params: DirectusQueryParams = {
       fields: [
         "id",
+        "title",
         "submit_label",
         "success_message",
         "fields.id",
@@ -15,6 +16,8 @@ export const getForm = (formId: string) => {
         "fields.type",
         "fields.name",
         "fields.validation",
+        "fields.help",
+        "fields.required",
       ],
     };
 

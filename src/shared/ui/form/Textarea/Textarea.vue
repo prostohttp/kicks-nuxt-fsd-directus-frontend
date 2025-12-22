@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { InputType } from "./types";
+import type { TextareaType } from "./types";
 import { IconFieldError } from "~/src/shared/ui/icons";
 
 defineOptions({
@@ -12,40 +12,37 @@ const {
   error,
   disabled = false,
   theme = "dark",
-  type = "text",
-  required,
-} = defineProps<InputType>();
+  required
+} = defineProps<TextareaType>();
 const model = defineModel<string>();
 </script>
 
 <template>
   <div
     :class="[
-      'input',
-      { 'input-disabled': disabled, 'input-light': theme === 'light' },
-      { 'input-hidden': type === 'hidden' },
+      'textarea',
+      { 'textarea-disabled': disabled, 'textarea-light': theme === 'light' },
     ]"
   >
-    <label v-if="label" :for="name" class="input-label">
-      <span v-if="required" class="input-label__required">*</span>
+    <label v-if="label" :for="name" class="textarea-label">
+      <span v-if="required" class="textarea-label__required">*</span>
       {{ label }}
     </label>
     <span
-      :class="['input-field', { 'input-field-error': !!error }]"
+      :class="['textarea-field', { 'textarea-field-error': !!error }]"
       v-bind="$attrs"
     >
-      <input
+      <textarea
         :id="name"
         v-model="model"
         :name="name"
-        :type
         :placeholder
         autocomplete="off"
         :disabled
       />
-      <IconFieldError v-if="error" class="input-field-icon" />
+      <IconFieldError v-if="error" class="textarea-field-icon" />
     </span>
-    <span v-if="error" class="input-message-error">
+    <span v-if="error" class="textarea-message-error">
       {{ error }}
     </span>
   </div>

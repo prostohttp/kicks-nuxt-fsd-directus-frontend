@@ -5,4 +5,9 @@ export { type ApiProductType } from "./api/types";
 export { type ProductCardType, type ProductDetailsType } from "./model/types";
 
 export { useProductStore } from "./model/stores/product";
-export { getProduct } from "./api/index";
+export {
+  getProduct,
+  getProducts,
+  getProductRating,
+  getProductReviewsCount,
+} from "./api/index";

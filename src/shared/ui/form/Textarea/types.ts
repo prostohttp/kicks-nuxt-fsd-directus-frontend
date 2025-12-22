@@ -1,10 +1,9 @@
-export interface InputType {
+export interface TextareaType {
   name: string;
   placeholder: string;
   label?: string;
   error?: string;
   disabled?: boolean;
-  required?: boolean;
   theme?: "dark" | "light";
-  type?: "text" | "password" | "email" | "hidden";
+  required?: boolean;
 }
