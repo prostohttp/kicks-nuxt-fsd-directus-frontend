@@ -16,7 +16,7 @@ const isOpenForm = defineModel<boolean>({ required: true });
 
 const emit = defineEmits<{
   refetch: [];
-  refetchInfo: []
+  refetchInfo: [];
 }>();
 
 interface ErrorMessages {
@@ -152,12 +152,6 @@ const statusMessage = computed(() =>
       ? error.value
       : undefined,
 );
-
-watch(error, (newValue) => {
-  if (newValue) {
-    console.log(newValue);
-  }
-});
 </script>
 
 <template>

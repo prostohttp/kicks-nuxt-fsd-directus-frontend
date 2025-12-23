@@ -17,12 +17,12 @@ const { data: reviews, isLoading } = useQuery({
 
 <template>
   <Preloader v-if="isLoading" />
-  <section v-else class="reviews-list">
-    <div v-if="reviews?.length" class="reviews-list__cards">
+  <section v-else-if="!isLoading && reviews" class="reviews-list">
+    <div class="reviews-list__cards">
       <ReviewCard v-for="review in reviews" v-bind="review" :key="review.id" />
     </div>
-    <EmptyDataHeading v-else />
   </section>
+  <EmptyDataHeading v-else />
 </template>
 
 <style lang="scss">

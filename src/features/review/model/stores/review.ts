@@ -10,7 +10,6 @@ export const useReviewStore = defineStore("reviews", () => {
 
   const editReview = async (review: ReviewType) => {
     console.log(review);
-
   };
 
   return {

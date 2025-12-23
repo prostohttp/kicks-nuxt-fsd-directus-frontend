@@ -76,9 +76,9 @@ export default defineNuxtConfig({
   },
   directus: {
     cookieMaxAge: 7 * 24 * 60 * 60 * 1000,
-    // autoFetch: true,
-    // autoRefresh: true
-    devtools: true,
+    autoFetch: true,
+    autoRefresh: true,
+    cookieSecure: true,
   },
   modules: [
     "@nuxt/eslint",

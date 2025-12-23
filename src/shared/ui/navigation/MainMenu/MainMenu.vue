@@ -102,34 +102,31 @@ watch(
           v-if="parent.children.length"
           class="horizontal-menu__item-link-icon"
         />
-        <ul
-          v-if="parent.children.length"
-          v-gsap.onState-visible.delay-100.desktop.to="{
-            height: 'auto',
+        <GSAPTransition
+          :hidden="{
+            height: 0,
+            'min-height': 0,
             opacity: 1,
-            y: 0,
-            duration: 0.15,
           }"
-          v-gsap.onState-visible.mobile.to="{
-            height: 'auto',
-            opacity: 1,
-            y: 0,
-            duration: 0.15,
-          }"
-          class="horizontal-menu__item-children"
-          :data-visible="isVisibleMenu[parent_index]"
+          :duration="0.20"
+          :delay="200"
         >
-          <li
-            v-for="(
-              { related_navigation_items_id: child }, child_index
-            ) in parent.children"
-            :key="child_index"
-            class="horizontal-menu__item"
-            @click="resetMenu"
+          <ul
+            v-if="isVisibleMenu[parent_index]"
+            class="horizontal-menu__item-children"
           >
-            <LinkVariant v-bind="child" class="horizontal-menu__item-link" />
-          </li>
-        </ul>
+            <li
+              v-for="(
+                { related_navigation_items_id: child }, child_index
+              ) in parent.children"
+              :key="child_index"
+              class="horizontal-menu__item"
+              @click="resetMenu"
+            >
+              <LinkVariant v-bind="child" class="horizontal-menu__item-link" />
+            </li>
+          </ul>
+        </GSAPTransition>
       </li>
     </ul>
   </nav>

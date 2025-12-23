@@ -2,7 +2,7 @@
 import { Button, Input } from "~/src/shared/ui/form";
 import { getForm } from "~/src/shared/api";
 import { Subscription } from "../model/subscriptionSchema";
-import { createSubscription } from "../api";
+import { createSubscriptionSubmission } from "../api";
 
 const email = ref("");
 const message = ref();
@@ -32,7 +32,7 @@ const {
       message.value = result.error.issues[0]?.message;
     } else {
       message.value = form.value?.success_message;
-      await createSubscription([result.data]);
+      await createSubscriptionSubmission([result.data]);
       email.value = "";
     }
   },

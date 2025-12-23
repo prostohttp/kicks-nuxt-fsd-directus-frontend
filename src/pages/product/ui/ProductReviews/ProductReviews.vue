@@ -19,7 +19,6 @@ const FORM_ID = "2";
 const { data: formBlock } = useQuery({
   key: () => ["form-add-review"],
   query: async () => await getForm(FORM_ID),
-  gcTime: 3_000_000,
 });
 
 const emit = defineEmits<{
@@ -85,7 +84,7 @@ const buttonText = computed(() =>
       />
     </div>
     <Preloader v-if="isLoading" />
-    <template v-else>
+    <template v-else-if="!isLoading && reviews">
       <ReviewDetails v-for="review in reviews" :key="review.id" :review />
     </template>
   </section>

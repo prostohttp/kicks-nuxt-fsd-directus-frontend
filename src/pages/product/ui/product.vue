@@ -59,7 +59,7 @@ const {
       : null,
 });
 
-const { data: options } = useQuery({
+const { data: options, isPending: optionsIsPending } = useQuery({
   key: () => ["product-options", productOptionIds.value],
   query: async () =>
     await getOptionsById(CollectionType.OPTIONS, productOptionIds.value),
@@ -119,7 +119,9 @@ const productRating = computed(
         </div>
       </template>
       <template v-if="product.option_values.length" #options>
+        <Placeholder v-if="optionsIsPending" h="50px" w="300px" />
         <ProductOptions
+          v-else
           :all-options="options"
           :active-options="product.option_values"
         />
