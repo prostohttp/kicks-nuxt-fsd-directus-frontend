@@ -11,6 +11,7 @@ import { StarRating } from "~/src/shared/ui/StarRating";
 import { AddReview } from "../../model/addReviewSchema";
 import { useProductStore } from "~/src/entities/Product";
 import { useReviewStore } from "../../model/stores/review";
+import { IconFieldError } from "~/src/shared/ui/icons";
 
 const isOpenForm = defineModel<boolean>({ required: true });
 
@@ -224,9 +225,11 @@ const statusMessage = computed(() =>
         </Button>
       </form>
       <div v-if="statusMessage" class="add-review__status">
+        <IconFieldError />
         {{ statusMessage }}
       </div>
       <div v-else-if="successMessage" class="add-review__success">
+        <IconFieldError />
         {{ successMessage }}
       </div>
     </section>

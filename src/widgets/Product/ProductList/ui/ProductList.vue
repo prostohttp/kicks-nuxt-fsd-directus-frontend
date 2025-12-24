@@ -14,11 +14,13 @@ const { settings, optionValues } = defineProps<{
   settings: BlockProductType;
   optionValues?: string[];
 }>();
+
 const emit = defineEmits<{
   scrollInto: [];
 }>();
 
 const productCarousel = ref();
+
 const carouselConfig = {
   gap: 16,
   breakpointMode: "carousel",
@@ -35,7 +37,9 @@ const carouselConfig = {
 } as const;
 
 const route = useRoute();
+
 const currentPage = ref((Number(route.query.page) as number) || 1);
+
 const pagesCount = computed(() =>
   products.value?.meta?.filter_count
     ? Math.ceil(products.value?.meta?.filter_count / settings.limit)
@@ -48,6 +52,7 @@ watch(currentPage, (newValue) => {
     emit("scrollInto");
   }
 });
+
 watch(
   () => route.query.page,
   (newValue) => {
@@ -59,6 +64,7 @@ watch(
 );
 
 const productStore = useProductStore();
+
 const sortStore = useSortStore();
 
 const filter = ref(makeQueryFilter(settings, optionValues));

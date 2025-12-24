@@ -9,10 +9,22 @@
 
   &__status {
     margin-top: 20px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
   }
 
   &__success {
     margin-top: 20px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    path {
+      stroke: #008b28;
+    }
   }
 
   &__heading {

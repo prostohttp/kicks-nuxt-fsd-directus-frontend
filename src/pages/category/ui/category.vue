@@ -13,6 +13,7 @@ import { getCategory } from "../api";
 import { Filters } from "./Filter";
 
 const route = useRoute();
+
 const categorySlug = computed(() =>
   "category" in route.params ? (route.params.category as string) : null,
 );
@@ -60,6 +61,7 @@ watch(isActiveFilter, (newValue) => {
 });
 
 const exposeRef = ref();
+
 const applyFilters = () => {
   navigateTo({
     query: { ...route.query, page: 1 },
