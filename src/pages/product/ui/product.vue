@@ -9,7 +9,7 @@ import RelatedProducts from "./RelatedProducts/RelatedProducts.vue";
 import ProductOptions from "./ProductOptions/ProductOptions.vue";
 import { getOptionsById } from "~/src/entities/Option";
 import ProductReviews from "./ProductReviews/ProductReviews.vue";
-import { FullScreenModal } from "~/src/shared/ui/modal";
+import { FullScreenModal, Modal } from "~/src/shared/ui/modal";
 import { Placeholder } from "~/src/shared/ui/Placeholder";
 
 const route = useRoute();
@@ -70,7 +70,19 @@ useSeoMeta({
   description: () => product.value?.seo.meta_description,
 });
 
+const isOpenReviews = ref(false);
+
+const isOpenByItNow = ref(false);
+
+const byItNow = () => {
+  isOpenByItNow.value = true;
+  console.log("By it Now");
+};
+
+const isOpenAddToCart = ref(false);
+
 const addToCart = () => {
+  isOpenAddToCart.value = true;
   console.log("Add to cart");
 };
 
@@ -78,19 +90,16 @@ const addToFavorites = () => {
   console.log("Add to favorites");
 };
 
-const byItNow = () => {
-  console.log("By it Now");
-};
-
-const isOpen = ref(false);
-
-watch(isOpen, (newValue) => {
-  if (newValue) {
-    document.body.classList.add("overflow-hidden");
-  } else {
-    document.body.classList.remove("overflow-hidden");
-  }
-});
+watch(
+  [isOpenReviews, isOpenAddToCart, isOpenByItNow],
+  ([newValue1, newValue2, newValue3]) => {
+    if (newValue1 || newValue2 || newValue3) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+  },
+);
 
 const productRating = computed(
   () => Math.round(Number(productReviewsInfo.value?.rating) * 10) / 10,
@@ -106,7 +115,7 @@ const productRating = computed(
         <div v-else class="product-page__reviews">
           <button
             class="product-page__reviews__trigger"
-            @click="isOpen = !isOpen"
+            @click="isOpenReviews = !isOpenReviews"
           >
             Reviews ({{ productReviewsInfo?.count }})
           </button>
@@ -156,13 +165,18 @@ const productRating = computed(
       </template>
     </ProductDetails>
     <Teleport to="#teleports">
-      <FullScreenModal v-model="isOpen">
+      <FullScreenModal v-model="isOpenReviews">
         <ProductReviews
           :review-ids="product.reviews"
           :product-id="product.id"
           @refetch="refetch"
         />
       </FullScreenModal>
+    </Teleport>
+    <Teleport to="#teleports">
+      <Modal v-model="isOpenByItNow" title="By It Now">
+
+      </Modal>
     </Teleport>
     <RelatedProducts
       v-if="product.related_products.length"

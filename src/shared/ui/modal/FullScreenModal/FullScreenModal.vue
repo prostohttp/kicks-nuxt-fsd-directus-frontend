@@ -6,7 +6,7 @@ const isOpen = defineModel<boolean>({ required: true });
 
 <template>
   <div>
-    <GSAPTransition :hidden="{ top: '-50px', opacity: 1 }" :duration="0.15">
+    <GSAPTransition :hidden="{ top: -50, opacity: 1 }" :duration="0.15">
       <section v-if="isOpen" class="full-screen-modal">
         <IconCloseFlat
           class="full-screen-modal__close"
