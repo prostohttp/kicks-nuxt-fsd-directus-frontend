@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { CollectionType, getBlockCategories } from "~/src/shared/api";
 import { CarouselNavigation } from "~/src/shared/ui/carousel";
-import { EmptyDataHeading, HeadingWith, LargeHeading } from "~/src/shared/ui/heading";
+import {
+  EmptyDataHeading,
+  HeadingWith,
+  LargeHeading,
+} from "~/src/shared/ui/heading";
 import { Preloader } from "~/src/shared/ui/preloader";
 import { getCategories } from "../../api";
 import { ROUTES } from "~/src/shared/routes";
@@ -64,7 +68,7 @@ const max = computed(() =>
       </template>
     </HeadingWith>
     <Preloader v-if="catIsLoading" />
-    <section v-else class="categories-carousel wrapper">
+    <section v-else-if="categories" class="categories-carousel wrapper">
       <Carousel
         v-if="categories?.length"
         v-bind="carouselConfig"
@@ -73,17 +77,25 @@ const max = computed(() =>
       >
         <Slide v-for="category in categories" :key="category.id">
           <div class="categories-carousel__item">
-            <NuxtImg
-              provider="directus"
-              format="webp"
-              loading="lazy"
-              :src="category.thumbnail"
-            />
+            <NuxtLink :to="ROUTES.category(category.slug)">
+              <NuxtImg
+                provider="directus"
+                format="webp"
+                loading="lazy"
+                :src="category.thumbnail"
+              />
+            </NuxtLink>
+
             <div class="categories-carousel__item__info">
               <h3 class="categories-carousel__item__info__title">
-                {{ category.title }}
+                <NuxtLink :to="ROUTES.category(category.slug)">
+                  {{ category.title }}
+                </NuxtLink>
               </h3>
-              <NuxtLink :to="ROUTES.category(category.slug)">
+              <NuxtLink
+                :to="ROUTES.category(category.slug)"
+                class="categories-carousel__item__info__icon-link"
+              >
                 <Button variant="fill" size="large" class="btn-square">
                   <IconArrowTopRight />
                 </Button>
@@ -178,12 +190,17 @@ const max = computed(() =>
         width: 50%;
         color: #232321;
 
+        a {
+          text-decoration: none;
+          color: #232321;
+        }
+
         @media (max-width: 991px) {
           font-size: 24px;
         }
       }
 
-      a {
+      &__icon-link {
         width: 50%;
         margin-bottom: 5px;
         display: flex;
