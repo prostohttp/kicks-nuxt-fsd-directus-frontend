@@ -14,11 +14,8 @@ const { title } = defineProps<{
       <section v-if="isOpen" class="modal">
         <div class="modal__header">
           <h4>{{ title }}</h4>
-          <IconCloseFlat
-            class="modal__header__close"
-            @click="isOpen = !isOpen"
-          />
         </div>
+        <IconCloseFlat class="modal__close" @click="isOpen = !isOpen" />
         <div class="modal__content">
           <slot />
         </div>
