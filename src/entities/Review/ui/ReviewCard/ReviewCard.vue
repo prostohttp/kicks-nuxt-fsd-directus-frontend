@@ -3,6 +3,7 @@ import { StarRating } from "~/src/shared/ui/StarRating";
 import { ROUTES } from "~/src/shared/routes";
 import type { ReviewType } from "~/src/shared/api";
 import { truncateText } from "../../model/helpers";
+import { UserAvatar } from "~/src/entities/User/@x/Review";
 
 const { gallery, product, rating, review, title, user_created } =
   defineProps<ReviewType>();
@@ -26,20 +27,7 @@ const ratingModel = ref(rating);
         </p>
         <StarRating v-model="ratingModel" />
       </div>
-      <div class="review-card__header__avatar">
-        <NuxtImg
-          v-if="user_created.avatar"
-          provider="directus"
-          loading="lazy"
-          format="webp"
-          :src="user_created.avatar"
-        />
-        <NuxtImg
-          v-else
-          class="review-card__header__avatar--default"
-          src="avatar.svg"
-        />
-      </div>
+      <UserAvatar :avatar="user_created.avatar" />
     </div>
     <div class="review-card__image">
       <NuxtImg

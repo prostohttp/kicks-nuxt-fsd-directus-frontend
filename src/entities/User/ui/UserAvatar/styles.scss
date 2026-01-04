@@ -1,0 +1,27 @@
+.user-avatar {
+  border-radius: 50%;
+  overflow: hidden;
+  width: 64px;
+  height: 64px;
+  min-width: 64px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background-color: #ababab;
+
+  @media (max-width: 230px) {
+    width: 48px;
+    min-width: 48px;
+    height: 48px;
+  }
+
+  &--default {
+    scale: 0.7;
+  }
+
+  img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+}

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { UserAvatar } from "~/src/entities/User/@x/Review";
 import type { ImageType, ReviewType } from "~/src/shared/api";
 import { FullScreenModal } from "~/src/shared/ui/modal";
 import { StarRating } from "~/src/shared/ui/StarRating";
@@ -24,19 +25,7 @@ const openPreviewHandler = (gallery: ImageType[]) => {
         <h3>{{ review.title }}</h3>
         <StarRating v-model="rating" />
       </div>
-      <div class="review-details__head__right">
-        <NuxtImg
-          v-if="review.user_created"
-          provider="directus"
-          :src="review.user_created.avatar"
-          :width="64"
-        />
-        <NuxtImg
-          v-else
-          class="review-details__head__right__avatar--default"
-          src="avatar.svg"
-        />
-      </div>
+      <UserAvatar :avatar="review.user_created.avatar" />
     </div>
     <div class="review-details__text">
       <p>{{ review.review }}</p>
