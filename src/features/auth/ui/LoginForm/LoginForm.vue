@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Button, Input } from "~/src/shared/ui/form";
 import { IconArrowRight, IconCircleLoading } from "~/src/shared/ui/icons";
-import { Login } from "../../model/loginSchema";
+import { Login, type LoginType } from "../../model/loginSchema";
 import { loginUser } from "./api";
 import { ROUTES } from "~/src/shared/routes";
 import {
@@ -9,18 +9,16 @@ import {
   SuccessWithCallbackMessage,
 } from "~/src/shared/ui/message";
 
-interface ErrorsType {
-  email: string;
-  password: string;
-}
-const errors = ref<ErrorsType>({
+const errors = ref<LoginType>({
   email: "",
   password: "",
 });
+
 const clearErrors = () => {
   errors.value.email = "";
   errors.value.password = "";
 };
+
 const refresh = () => {
   email.value = "";
   password.value = "";
@@ -28,8 +26,11 @@ const refresh = () => {
 };
 
 const isSuccess = ref(false);
+
 const email = ref();
+
 const password = ref();
+
 // TODO: back(-1)
 const redirectToAccount = () => {
   setTimeout(() => {
@@ -37,6 +38,7 @@ const redirectToAccount = () => {
     refresh();
   }, 1000);
 };
+
 const loading = computed(
   () => asyncStatus.value === "loading" || isSuccess.value,
 );
@@ -47,11 +49,8 @@ const {
   reset,
   asyncStatus,
 } = useMutation({
-  mutation: async (data: { email: string; password: string }) => {
-    const result = Login.safeParse({
-      email: data.email,
-      password: data.password,
-    });
+  mutation: async (data: LoginType) => {
+    const result = Login.safeParse(data);
     clearErrors();
 
     if (!result.success) {
@@ -63,7 +62,7 @@ const {
         }
       });
     } else {
-      await loginUser(email.value, password.value);
+      await loginUser(result.data.email, result.data.password);
       isSuccess.value = true;
       clearErrors();
     }
@@ -80,7 +79,6 @@ const {
         name="login-email"
         placeholder="Email"
         :error="errors.email"
-        success=""
       />
       <Input
         v-model="password"
@@ -88,7 +86,6 @@ const {
         type="password"
         placeholder="Password"
         :error="errors.password"
-        success=""
       />
       <Button variant="fill" size="large" type="submit" :disabled="loading">
         <template #default>Email login</template>

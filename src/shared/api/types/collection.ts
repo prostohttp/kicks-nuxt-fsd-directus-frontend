@@ -8,14 +8,15 @@ export enum CollectionType {
   MENUS = "navigation",
   PRODUCTS = "products",
   OPTIONS = "options",
+  USERS = "directus_users",
   BANNERS = "blocks_banner",
   CATEGORIES = "product_categories",
   FORM_SUBMISSIONS = "form_submissions",
+  FAST_ORDERS = "fast_orders",
   FORM_SUBMISSION_VALUES = "form_submission_values",
 
   API_PRODUCTS = "/items/products",
   API_REVIEWS = "/items/reviews",
-
 
   PAGE_BLOCKS = "pages_blocks",
   BLOCKS_HERO = "blocks_hero",

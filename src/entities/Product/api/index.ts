@@ -62,7 +62,10 @@ export const getProduct = (collection: CollectionType, slug: string | null) => {
         "gallery.directus_files_id",
         "option_values.option_values_id",
         "option_values.option_values_id.id",
+        "option_values.option_values_id.title",
+        "option_values.option_values_id.option.for_filter",
         "option_values.option_values_id.option.id",
+        "option_values.option_values_id.option.is_required",
       ],
       filter: {
         slug: slug?.toString() || "",

@@ -23,8 +23,11 @@ export interface OptionValueType {
 export interface ApiProductActiveOptionType {
   option_values_id: {
     id: string;
+    title: string;
     option: {
       id: number;
+      for_filter: string;
+      is_required: boolean;
     };
   };
 }
@@ -32,7 +35,6 @@ export interface ApiProductActiveOptionType {
 export type OptionType =
   | "checkbox"
   | "custom_checkbox"
-  | "radio"
   | "color"
   | "slider"
   | "button";
@@ -40,6 +42,5 @@ export type OptionType =
 export type OptionProductType =
   | "checkbox"
   | "custom_checkbox"
-  | "radio"
   | "color"
   | "button";

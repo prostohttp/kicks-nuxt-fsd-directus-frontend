@@ -17,10 +17,10 @@ const activeOptionValuesId = (id: number) => {
 const resetOptions = () => {
   navigateTo({
     query: {
-      undefined
-    }
-  })
-}
+      undefined,
+    },
+  });
+};
 </script>
 
 <template>
@@ -31,13 +31,13 @@ const resetOptions = () => {
       class="product-options__option"
     >
       <h4 class="product-options__option__title">
-        {{ option.title }}
         <span
           v-if="option.is_required"
           class="product-options__option__title--required"
         >
           *
         </span>
+        {{ option.title }}
       </h4>
       <component
         :is="optionsMapper[option.type]"

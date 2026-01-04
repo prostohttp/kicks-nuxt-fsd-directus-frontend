@@ -3,7 +3,7 @@ import { IconChevronDown } from "../../icons";
 import type { SelectItemType } from "./types";
 
 const { list } = defineProps<{ list: SelectItemType[] }>();
-const selected = defineModel<string>({ required: true });
+const selected = defineModel<string | number>({ required: true });
 
 const isOpen = ref(false);
 const toggleVisibilityMenuHandler = () => {

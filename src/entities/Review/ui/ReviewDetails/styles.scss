@@ -30,29 +30,6 @@
         }
       }
     }
-
-    &__right {
-      overflow: hidden;
-      border-radius: 50%;
-      width: 64px;
-      height: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: #ababab;
-
-      @media (max-width: 1199px) {
-        display: none;
-      }
-
-      &__avatar--default {
-        scale: 2;
-      }
-
-      img {
-        object-fit: cover;
-      }
-    }
   }
 
   &__text {

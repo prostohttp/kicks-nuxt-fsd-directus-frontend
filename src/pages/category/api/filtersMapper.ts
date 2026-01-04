@@ -4,7 +4,6 @@ import {
   RoundCheckboxOption,
   ColorOption,
   ButtonOption,
-  RadioOption,
 } from "~/src/entities/Option";
 import PriceFilter from "../ui/Filter/variants/PriceFilter/PriceFilter.vue";
 import type { OptionType } from "~/src/shared/api";
@@ -15,5 +14,4 @@ export const filtersMapper: Record<OptionType, Component> = {
   color: ColorOption,
   button: ButtonOption,
   slider: PriceFilter,
-  radio: RadioOption,
 };

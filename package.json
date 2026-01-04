@@ -31,12 +31,13 @@
     "vue-router": "^4.6.4",
     "vue-slider-component": "^4.1.0-beta.7",
     "vue3-carousel-nuxt": "^1.1.6",
-    "zod": "^4.2.1"
+    "zod": "^4.3.4"
   },
   "devDependencies": {
     "@feature-sliced/steiger-plugin": "^0.5.7",
     "@pinia/colada-devtools": "^0.4.0",
     "sass": "^1.97.1",
-    "steiger": "^0.5.11"
+    "steiger": "^0.5.11",
+    "typescript": "~5.9.3"
   }
 }

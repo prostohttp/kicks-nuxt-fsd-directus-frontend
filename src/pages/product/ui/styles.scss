@@ -33,6 +33,11 @@
     flex-wrap: wrap;
     gap: 8px;
 
+    &__error-message {
+      width: 100%;
+      padding: 10px 20px;
+    }
+
     &__add-to-cart {
       flex-grow: 1;
       width: auto;

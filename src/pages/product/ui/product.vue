@@ -1,16 +1,27 @@
 <script setup lang="ts">
-import { ProductDetails, useProductStore } from "~/src/entities/Product";
+import {
+  FastOrderProductCard,
+  ProductDetails,
+  useProductStore,
+} from "~/src/entities/Product";
 import { CollectionType } from "~/src/shared/api";
 import { Button } from "~/src/shared/ui/form";
-import { IconHeart, IconStarFill } from "~/src/shared/ui/icons";
+import { IconStarFill } from "~/src/shared/ui/icons";
 import { NotFound } from "~/src/shared/ui/NotFound";
 import { Preloader } from "~/src/shared/ui/preloader";
 import RelatedProducts from "./RelatedProducts/RelatedProducts.vue";
 import ProductOptions from "./ProductOptions/ProductOptions.vue";
-import { getOptionsById } from "~/src/entities/Option";
+import {
+  getOptionsById,
+  type ProductOptionWithValues,
+} from "~/src/entities/Option";
 import ProductReviews from "./ProductReviews/ProductReviews.vue";
 import { FullScreenModal, Modal } from "~/src/shared/ui/modal";
 import { Placeholder } from "~/src/shared/ui/Placeholder";
+import { AddToCart } from "~/src/features/cart";
+import { AddToFavorites } from "~/src/features/favorites";
+import { FastOrderForm } from "~/src/features/order";
+import { ErrorMessage } from "~/src/shared/ui/message";
 
 const route = useRoute();
 
@@ -70,25 +81,103 @@ useSeoMeta({
   description: () => product.value?.seo.meta_description,
 });
 
+const productOptionObjectWithValues = ref<ProductOptionWithValues>({});
+
+const makeProductOptionObjectWithValues = () => {
+  const result: ProductOptionWithValues = {};
+
+  product.value?.option_values.forEach((value) => {
+    if (value.option_values_id.option.for_filter in result) {
+      result[value.option_values_id.option.for_filter]!.values[
+        value.option_values_id.title
+      ] = value.option_values_id.id;
+    } else {
+      result[value.option_values_id.option.for_filter] = {
+        isRequired: value.option_values_id.option.is_required,
+        isChecked: false,
+        checkedValue: undefined,
+        checkedId: undefined,
+        values: {
+          [value.option_values_id.title]: value.option_values_id.id,
+        },
+      };
+    }
+  });
+
+  productOptionObjectWithValues.value = result;
+};
+
+const checkedOptionIds = computed(() =>
+  Object.values(productOptionObjectWithValues.value)
+    .filter((val) => val.isChecked && val.checkedId)
+    .map((val) => ({ option_values_id: val.checkedId! })),
+);
+
+const checkedOptionObject = computed(() =>
+  Object.keys(productOptionObjectWithValues.value)
+    .filter((key) => productOptionObjectWithValues.value[key]?.isChecked)
+    .map((key) => ({
+      [key]: productOptionObjectWithValues.value[key]?.checkedValue,
+    })),
+);
+
+const checkRequiredOptions = () => {
+  for (const key of Object.keys(productOptionObjectWithValues.value)) {
+    if (
+      key in route.query &&
+      productOptionObjectWithValues.value[key] &&
+      (route.query[key] as string) in
+        productOptionObjectWithValues.value[key].values
+    ) {
+      productOptionObjectWithValues.value[key].isChecked = true;
+      productOptionObjectWithValues.value[key].checkedId =
+        productOptionObjectWithValues.value[key].values[
+          route.query[key] as string
+        ];
+      productOptionObjectWithValues.value[key].checkedValue = route.query[
+        key
+      ] as string;
+    } else if (
+      key in route.query &&
+      productOptionObjectWithValues.value[key] &&
+      !(
+        (route.query[key] as string) in
+        productOptionObjectWithValues.value[key].values
+      )
+    ) {
+      productOptionObjectWithValues.value[key]!.checkedId = undefined;
+      productOptionObjectWithValues.value[key]!.checkedValue = undefined;
+      productOptionObjectWithValues.value[key]!.isChecked = false;
+    }
+  }
+};
+
 const isOpenReviews = ref(false);
 
 const isOpenByItNow = ref(false);
 
+const isValidForOrder = computed(() =>
+  Object.values(productOptionObjectWithValues.value)
+    .filter((val) => val.isRequired)
+    .every((val) => val.isChecked),
+);
+
+const validForOrderErrorMessage = ref("");
+
 const byItNow = () => {
-  isOpenByItNow.value = true;
-  console.log("By it Now");
+  makeProductOptionObjectWithValues();
+  checkRequiredOptions();
+
+  if (isValidForOrder.value) {
+    validForOrderErrorMessage.value = "";
+    isOpenByItNow.value = !isOpenByItNow.value;
+  } else {
+    validForOrderErrorMessage.value =
+      "* Please select all required options for this product.";
+  }
 };
 
 const isOpenAddToCart = ref(false);
-
-const addToCart = () => {
-  isOpenAddToCart.value = true;
-  console.log("Add to cart");
-};
-
-const addToFavorites = () => {
-  console.log("Add to favorites");
-};
 
 watch(
   [isOpenReviews, isOpenAddToCart, isOpenByItNow],
@@ -104,6 +193,8 @@ watch(
 const productRating = computed(
   () => Math.round(Number(productReviewsInfo.value?.rating) * 10) / 10,
 );
+
+const productCount = ref(1);
 </script>
 
 <template>
@@ -137,30 +228,32 @@ const productRating = computed(
       </template>
       <template #actions>
         <div class="actions">
-          <Button
-            variant="fill"
-            size="large"
+          <AddToCart
+            v-model="isOpenAddToCart"
+            :is-valid="isValidForOrder"
             class="actions__add-to-cart"
-            @click="addToCart"
-          >
-            Add to cart
-          </Button>
-          <Button
-            variant="fill"
-            size="large"
-            class="actions__add-to-favorites btn-square"
-            @click="addToFavorites"
-          >
-            <IconHeart />
-          </Button>
+            :disabled="optionsIsPending"
+          />
+          <AddToFavorites class="actions__add-to-favorites btn-square" />
           <Button
             variant="fill"
             size="large"
             class="actions__buy-it-now"
+            :disabled="optionsIsPending"
             @click="byItNow"
           >
             Buy it now
           </Button>
+          <GSAPTransition :hidden="{ alpha: 0 }" :duration="0.15">
+            <ErrorMessage
+              v-if="validForOrderErrorMessage"
+              :is-closable="false"
+              class="actions__error-message"
+              :data-visible="validForOrderErrorMessage"
+            >
+              {{ validForOrderErrorMessage }}
+            </ErrorMessage>
+          </GSAPTransition>
         </div>
       </template>
     </ProductDetails>
@@ -175,7 +268,19 @@ const productRating = computed(
     </Teleport>
     <Teleport to="#teleports">
       <Modal v-model="isOpenByItNow" title="By It Now">
-
+        <FastOrderProductCard
+          :id="product.id"
+          v-model.number="productCount"
+          :title="product.title"
+          :image="product.image"
+          :price="product.price"
+          :options="checkedOptionObject"
+        />
+        <FastOrderForm
+          :option-ids="checkedOptionIds"
+          :count="productCount"
+          :product-id="product.id"
+        />
       </Modal>
     </Teleport>
     <RelatedProducts

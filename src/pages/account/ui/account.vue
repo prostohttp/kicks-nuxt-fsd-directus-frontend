@@ -2,15 +2,15 @@
 import { LogoutButton } from "~/src/features/auth";
 
 useSeoMeta({
-  title: "Account page"
-})
+  title: "Account page",
+});
 
-const user = useDirectusUser();
+const directusUser = useDirectusUser();
 </script>
 
 <template>
   <section class="account-page">
-    <pre>{{ user }}</pre>
+    <pre>{{ directusUser }}</pre>
     <LogoutButton> Log Out </LogoutButton>
   </section>
 </template>

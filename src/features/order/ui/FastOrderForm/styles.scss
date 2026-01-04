@@ -1,0 +1,30 @@
+.fast-order-form {
+  form {
+    width: 100%;
+
+    .row {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: 1fr 1fr;
+
+      @media (max-width: 1199px) {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .textarea {
+      padding-top: 20px;
+      padding-bottom: 20px;
+
+      textarea {
+        padding-top: 10px;
+        height: 100px;
+      }
+    }
+
+    .btn {
+      justify-content: center;
+      width: 150px;
+    }
+  }
+}
