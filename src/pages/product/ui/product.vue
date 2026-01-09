@@ -11,17 +11,16 @@ import { NotFound } from "~/src/shared/ui/NotFound";
 import { Preloader } from "~/src/shared/ui/preloader";
 import RelatedProducts from "./RelatedProducts/RelatedProducts.vue";
 import ProductOptions from "./ProductOptions/ProductOptions.vue";
-import {
-  getOptionsById,
-  type ProductOptionWithValues,
-} from "~/src/entities/Option";
+import { getOptionsById } from "~/src/entities/Option";
 import ProductReviews from "./ProductReviews/ProductReviews.vue";
 import { FullScreenModal, Modal } from "~/src/shared/ui/modal";
 import { Placeholder } from "~/src/shared/ui/Placeholder";
 import { AddToCart } from "~/src/features/cart";
 import { AddToFavorites } from "~/src/features/favorites";
 import { FastOrderForm } from "~/src/features/order";
-import { ErrorMessage } from "~/src/shared/ui/message";
+import { ErrorMessage, SuccessMessage } from "~/src/shared/ui/message";
+import type { CartProductType } from "~/src/entities/Cart";
+import { useProductOptions } from "../model/helpers";
 
 const route = useRoute();
 
@@ -38,19 +37,6 @@ const { data: product, isLoading } = useQuery({
       CollectionType.PRODUCTS,
       productSlug.value,
     ),
-});
-
-const productOptionIds = computed(() => {
-  const optionIds = new Set<number>();
-  if (product.value?.option_values.length) {
-    product.value?.option_values.forEach((option) =>
-      option.option_values_id
-        ? optionIds.add(option.option_values_id.option.id)
-        : null,
-    );
-  }
-
-  return Array.from(optionIds);
 });
 
 const {
@@ -70,87 +56,20 @@ const {
       : null,
 });
 
+const {
+  checkRequiredOptions,
+  checkedOptionIds,
+  checkedOptionObject,
+  makeProductOptionObjectWithValues,
+  productOptionIds,
+  productOptionObjectWithValues,
+} = useProductOptions(product);
+
 const { data: options, isPending: optionsIsPending } = useQuery({
   key: () => ["product-options", productOptionIds.value],
   query: async () =>
     await getOptionsById(CollectionType.OPTIONS, productOptionIds.value),
 });
-
-useSeoMeta({
-  title: () => product.value?.seo.title,
-  description: () => product.value?.seo.meta_description,
-});
-
-const productOptionObjectWithValues = ref<ProductOptionWithValues>({});
-
-const makeProductOptionObjectWithValues = () => {
-  const result: ProductOptionWithValues = {};
-
-  product.value?.option_values.forEach((value) => {
-    if (value.option_values_id.option.for_filter in result) {
-      result[value.option_values_id.option.for_filter]!.values[
-        value.option_values_id.title
-      ] = value.option_values_id.id;
-    } else {
-      result[value.option_values_id.option.for_filter] = {
-        isRequired: value.option_values_id.option.is_required,
-        isChecked: false,
-        checkedValue: undefined,
-        checkedId: undefined,
-        values: {
-          [value.option_values_id.title]: value.option_values_id.id,
-        },
-      };
-    }
-  });
-
-  productOptionObjectWithValues.value = result;
-};
-
-const checkedOptionIds = computed(() =>
-  Object.values(productOptionObjectWithValues.value)
-    .filter((val) => val.isChecked && val.checkedId)
-    .map((val) => ({ option_values_id: val.checkedId! })),
-);
-
-const checkedOptionObject = computed(() =>
-  Object.keys(productOptionObjectWithValues.value)
-    .filter((key) => productOptionObjectWithValues.value[key]?.isChecked)
-    .map((key) => ({
-      [key]: productOptionObjectWithValues.value[key]?.checkedValue,
-    })),
-);
-
-const checkRequiredOptions = () => {
-  for (const key of Object.keys(productOptionObjectWithValues.value)) {
-    if (
-      key in route.query &&
-      productOptionObjectWithValues.value[key] &&
-      (route.query[key] as string) in
-        productOptionObjectWithValues.value[key].values
-    ) {
-      productOptionObjectWithValues.value[key].isChecked = true;
-      productOptionObjectWithValues.value[key].checkedId =
-        productOptionObjectWithValues.value[key].values[
-          route.query[key] as string
-        ];
-      productOptionObjectWithValues.value[key].checkedValue = route.query[
-        key
-      ] as string;
-    } else if (
-      key in route.query &&
-      productOptionObjectWithValues.value[key] &&
-      !(
-        (route.query[key] as string) in
-        productOptionObjectWithValues.value[key].values
-      )
-    ) {
-      productOptionObjectWithValues.value[key]!.checkedId = undefined;
-      productOptionObjectWithValues.value[key]!.checkedValue = undefined;
-      productOptionObjectWithValues.value[key]!.isChecked = false;
-    }
-  }
-};
 
 const isOpenReviews = ref(false);
 
@@ -162,11 +81,15 @@ const isValidForOrder = computed(() =>
     .every((val) => val.isChecked),
 );
 
+const addToCartRef = useTemplateRef("addToCartRef");
+
 const validForOrderErrorMessage = ref("");
 
-const byItNow = () => {
+const validForOrderSuccessMessage = ref("");
+
+const byItNowHandler = () => {
   makeProductOptionObjectWithValues();
-  checkRequiredOptions();
+  checkRequiredOptions(route.query);
 
   if (isValidForOrder.value) {
     validForOrderErrorMessage.value = "";
@@ -177,24 +100,42 @@ const byItNow = () => {
   }
 };
 
-const isOpenAddToCart = ref(false);
+const productsForCart = ref<CartProductType[]>();
 
-watch(
-  [isOpenReviews, isOpenAddToCart, isOpenByItNow],
-  ([newValue1, newValue2, newValue3]) => {
-    if (newValue1 || newValue2 || newValue3) {
-      document.body.classList.add("overflow-hidden");
-    } else {
-      document.body.classList.remove("overflow-hidden");
-    }
-  },
-);
+const addToCartHandler = async () => {
+  makeProductOptionObjectWithValues();
+  checkRequiredOptions(route.query);
+
+  if (isValidForOrder.value) {
+    console.log(productsForCart.value);
+
+    // await addToCartRef.value?.addToCart();
+    validForOrderErrorMessage.value = "";
+    validForOrderSuccessMessage.value = "Product was successful added to cart";
+  } else {
+    validForOrderErrorMessage.value =
+      "* Please select all required options for this product.";
+  }
+};
+
+watch([isOpenReviews, isOpenByItNow], ([newValue1, newValue2]) => {
+  if (newValue1 || newValue2) {
+    document.body.classList.add("overflow-hidden");
+  } else {
+    document.body.classList.remove("overflow-hidden");
+  }
+});
 
 const productRating = computed(
   () => Math.round(Number(productReviewsInfo.value?.rating) * 10) / 10,
 );
 
 const productCount = ref(1);
+
+useSeoMeta({
+  title: () => product.value?.seo.title,
+  description: () => product.value?.seo.meta_description,
+});
 </script>
 
 <template>
@@ -229,10 +170,10 @@ const productCount = ref(1);
       <template #actions>
         <div class="actions">
           <AddToCart
-            v-model="isOpenAddToCart"
-            :is-valid="isValidForOrder"
+            ref="addToCartRef"
             class="actions__add-to-cart"
             :disabled="optionsIsPending"
+            @click="addToCartHandler"
           />
           <AddToFavorites class="actions__add-to-favorites btn-square" />
           <Button
@@ -240,20 +181,30 @@ const productCount = ref(1);
             size="large"
             class="actions__buy-it-now"
             :disabled="optionsIsPending"
-            @click="byItNow"
+            @click="byItNowHandler"
           >
             Buy it now
           </Button>
-          <GSAPTransition :hidden="{ alpha: 0 }" :duration="0.15">
-            <ErrorMessage
-              v-if="validForOrderErrorMessage"
-              :is-closable="false"
-              class="actions__error-message"
-              :data-visible="validForOrderErrorMessage"
-            >
-              {{ validForOrderErrorMessage }}
-            </ErrorMessage>
-          </GSAPTransition>
+          <div class="actions__messages">
+            <GSAPTransition :hidden="{ top: -20 }" :duration="0.15">
+              <ErrorMessage
+                v-if="validForOrderErrorMessage"
+                :is-closable="false"
+                class="actions__messages__message"
+                :data-visible="validForOrderErrorMessage"
+              >
+                {{ validForOrderErrorMessage }}
+              </ErrorMessage>
+              <SuccessMessage
+                v-if="!validForOrderErrorMessage && validForOrderSuccessMessage"
+                class="actions__messages__message"
+                :data-visible="validForOrderSuccessMessage"
+                @close="validForOrderSuccessMessage = ''"
+              >
+                {{ validForOrderSuccessMessage }}
+              </SuccessMessage>
+            </GSAPTransition>
+          </div>
         </div>
       </template>
     </ProductDetails>
