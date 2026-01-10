@@ -13,6 +13,9 @@ export enum CollectionType {
   CATEGORIES = "product_categories",
   FORM_SUBMISSIONS = "form_submissions",
   FAST_ORDERS = "fast_orders",
+  CART = "cart",
+  CART_ITEMS = "cart_item",
+  CART_CART_ITEM = "cart_cart_item",
   FORM_SUBMISSION_VALUES = "form_submission_values",
 
   API_PRODUCTS = "/items/products",

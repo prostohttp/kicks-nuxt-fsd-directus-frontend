@@ -5,6 +5,7 @@ import { Subscription } from "../model/subscriptionSchema";
 import { createSubscriptionSubmission } from "../api";
 
 const email = ref("");
+
 const message = ref();
 
 const FORM_ID = "1";
@@ -37,6 +38,7 @@ const {
     }
   },
 });
+
 const statusMessage = computed(() =>
   asyncStatus.value === "loading"
     ? "Please wait"
@@ -44,6 +46,7 @@ const statusMessage = computed(() =>
       ? "Something went wrong"
       : message.value,
 );
+
 watch(error, (newValue) => {
   if (newValue) {
     console.log(newValue);

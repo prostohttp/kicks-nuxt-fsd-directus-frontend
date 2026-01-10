@@ -5,12 +5,12 @@ useSeoMeta({
   title: "Account page",
 });
 
-const directusUser = useDirectusUser();
+const user = useDirectusUser();
 </script>
 
 <template>
   <section class="account-page">
-    <pre>{{ directusUser }}</pre>
+    <pre>{{ user }}</pre>
     <LogoutButton> Log Out </LogoutButton>
   </section>
 </template>

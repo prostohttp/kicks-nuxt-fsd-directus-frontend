@@ -7,11 +7,11 @@ import {
 } from "~/src/shared/api";
 
 export const addReview = async (item: AddReviewType, images: File[]) => {
-  const directusUser = useDirectusUser();
-  const directusFiles = useDirectusFiles();
+  const user = useDirectusUser();
+  const files = useDirectusFiles();
 
   try {
-    if (!directusUser.value) {
+    if (!user.value) {
       throw createError({ message: "Please log in to write a review" });
     }
 
@@ -20,7 +20,7 @@ export const addReview = async (item: AddReviewType, images: File[]) => {
       [
         {
           ...item,
-          user_created: directusUser.value.id,
+          user_created: user.value.id,
         },
       ],
     )) as AddedReviewType[];
@@ -32,7 +32,7 @@ export const addReview = async (item: AddReviewType, images: File[]) => {
     }
 
     const uploadedFiles: DirectusFile | DirectusFile[] =
-      await directusFiles.uploadFiles(images);
+      await files.uploadFiles(images);
 
     let gallery: Array<number | undefined> = [];
 

@@ -62,8 +62,6 @@ const {
         }
       });
     } else {
-      console.log("order", result);
-
       await orderStore.createFastOrder(result.data);
       clearErrors();
       isCreatedOrder.value = true;

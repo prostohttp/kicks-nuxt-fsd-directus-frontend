@@ -114,14 +114,14 @@ const {
 
       errorMessages.value = errorsObject;
     } else {
-      const directusUser = useDirectusUser();
+      const user = useDirectusUser();
       // TODO: review was added when user login on other tab and leave review another tab
-      if (!directusUser.value) {
+      if (!user.value) {
         return createError({ message: "Please log in to write a review" });
       }
       await reviewStore.addReview(
         {
-          user_created: directusUser.value.id,
+          user_created: user.value.id,
           title: form.title,
           review: form.review,
           rating: form.rating,

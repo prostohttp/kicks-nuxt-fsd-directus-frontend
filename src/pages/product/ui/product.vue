@@ -6,7 +6,7 @@ import {
 } from "~/src/entities/Product";
 import { CollectionType } from "~/src/shared/api";
 import { Button } from "~/src/shared/ui/form";
-import { IconStarFill } from "~/src/shared/ui/icons";
+import { IconCircleLoading, IconStarFill } from "~/src/shared/ui/icons";
 import { NotFound } from "~/src/shared/ui/NotFound";
 import { Preloader } from "~/src/shared/ui/preloader";
 import RelatedProducts from "./RelatedProducts/RelatedProducts.vue";
@@ -19,7 +19,6 @@ import { AddToCart } from "~/src/features/cart";
 import { AddToFavorites } from "~/src/features/favorites";
 import { FastOrderForm } from "~/src/features/order";
 import { ErrorMessage, SuccessMessage } from "~/src/shared/ui/message";
-import type { CartProductType } from "~/src/entities/Cart";
 import { useProductOptions } from "../model/helpers";
 
 const route = useRoute();
@@ -83,38 +82,52 @@ const isValidForOrder = computed(() =>
 
 const addToCartRef = useTemplateRef("addToCartRef");
 
-const validForOrderErrorMessage = ref("");
+const {
+  mutate: addToCartHandler,
+  error,
+  asyncStatus,
+} = useMutation({
+  mutation: async () => {
+    makeProductOptionObjectWithValues();
+    checkRequiredOptions(route.query);
 
-const validForOrderSuccessMessage = ref("");
+    if (!product.value) {
+      return;
+    }
+    if (isValidForOrder.value) {
+      const savedCart = await addToCartRef.value?.addToCart([
+        {
+          count: 1,
+          product: product.value.id,
+          options: checkedOptionIds.value,
+        },
+      ]);
+
+      if (savedCart) {
+        successMessage.value = "Product was successful added to cart";
+      }
+    }
+  },
+});
+
+const errorMessage = computed(() => {
+  if (!isValidForOrder.value) {
+    return "* Please select all required options for this product.";
+  } else if (error.value) {
+    return error.value.message;
+  } else {
+    return "";
+  }
+});
+
+const successMessage = ref("");
 
 const byItNowHandler = () => {
   makeProductOptionObjectWithValues();
   checkRequiredOptions(route.query);
 
   if (isValidForOrder.value) {
-    validForOrderErrorMessage.value = "";
     isOpenByItNow.value = !isOpenByItNow.value;
-  } else {
-    validForOrderErrorMessage.value =
-      "* Please select all required options for this product.";
-  }
-};
-
-const productsForCart = ref<CartProductType[]>();
-
-const addToCartHandler = async () => {
-  makeProductOptionObjectWithValues();
-  checkRequiredOptions(route.query);
-
-  if (isValidForOrder.value) {
-    console.log(productsForCart.value);
-
-    // await addToCartRef.value?.addToCart();
-    validForOrderErrorMessage.value = "";
-    validForOrderSuccessMessage.value = "Product was successful added to cart";
-  } else {
-    validForOrderErrorMessage.value =
-      "* Please select all required options for this product.";
   }
 };
 
@@ -172,7 +185,7 @@ useSeoMeta({
           <AddToCart
             ref="addToCartRef"
             class="actions__add-to-cart"
-            :disabled="optionsIsPending"
+            :loading="optionsIsPending || asyncStatus === 'loading'"
             @click="addToCartHandler"
           />
           <AddToFavorites class="actions__add-to-favorites btn-square" />
@@ -183,25 +196,28 @@ useSeoMeta({
             :disabled="optionsIsPending"
             @click="byItNowHandler"
           >
-            Buy it now
+            <template #default>Buy it now</template>
+            <template #right-icon>
+              <IconCircleLoading v-if="optionsIsPending" />
+            </template>
           </Button>
           <div class="actions__messages">
             <GSAPTransition :hidden="{ top: -20 }" :duration="0.15">
               <ErrorMessage
-                v-if="validForOrderErrorMessage"
+                v-if="errorMessage"
                 :is-closable="false"
                 class="actions__messages__message"
-                :data-visible="validForOrderErrorMessage"
+                :data-visible="errorMessage"
               >
-                {{ validForOrderErrorMessage }}
+                {{ errorMessage }}
               </ErrorMessage>
               <SuccessMessage
-                v-if="!validForOrderErrorMessage && validForOrderSuccessMessage"
+                v-if="!errorMessage && successMessage"
                 class="actions__messages__message"
-                :data-visible="validForOrderSuccessMessage"
-                @close="validForOrderSuccessMessage = ''"
+                :data-visible="successMessage"
+                @close="successMessage = ''"
               >
-                {{ validForOrderSuccessMessage }}
+                {{ successMessage }}
               </SuccessMessage>
             </GSAPTransition>
           </div>
