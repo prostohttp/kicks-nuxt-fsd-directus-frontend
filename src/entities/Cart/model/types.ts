@@ -9,5 +9,15 @@ export type CartProductType = Omit<
 };
 
 export type CartType = Omit<CartApiType, "user_created" | "id"> & {
+  id?: string;
   user_created?: string;
+};
+
+export type RawSavedCartType = Omit<
+  CartApiType,
+  "user_created" | "id" | "product"
+> & {
+  id?: string;
+  user_created?: string;
+  product: string[];
 };

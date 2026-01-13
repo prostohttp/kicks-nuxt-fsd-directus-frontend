@@ -13,7 +13,16 @@ export const useOrderStore = defineStore("order", () => {
   });
 
   const createFastOrder = async (order: FastOrderType) => {
-    return await createFastOrderApi(order);
+    try {
+      return await createFastOrderApi(order);
+    } catch (e) {
+      const error = e as Error;
+      console.log(error.message);
+      throw createError({
+        message:
+          "Invalid response from server, please send this information to us",
+      });
+    }
   };
 
   return { fastOrder, createFastOrder };

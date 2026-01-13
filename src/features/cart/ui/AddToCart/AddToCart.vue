@@ -14,17 +14,14 @@ const saveCartToLocal = async () => {
   console.log("local storage");
 };
 
-const addToCart = async (products: CartProductType[]) => {
+const addToCart = async (product: CartProductType) => {
   if (user.value) {
     const userId = user.value.id;
 
-    await actionsCartStore.saveCartToServer(
-      user.value.id,
-      products.map((item) => ({
-        user_created: userId,
-        ...item,
-      })),
-    );
+    await actionsCartStore.saveCartToServer(user.value.id, {
+      user_created: userId,
+      ...product,
+    });
   } else {
     await saveCartToLocal();
   }

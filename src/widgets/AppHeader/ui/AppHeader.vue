@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { CartCount } from "~/src/shared/ui/CartCount";
 import { Logo } from "~/src/shared/ui/Logo";
 import { MainMenu } from "~/src/shared/ui/navigation";
 import { IconAccount, IconSearch } from "~/src/shared/ui/icons";
 import { ROUTES } from "~/src/shared/routes";
 import { getMainMenu } from "~/src/shared/api";
+import { CartCount } from "~/src/entities/Cart";
 
 const { data: menu } = useQuery({
   key: ["main-menu"],

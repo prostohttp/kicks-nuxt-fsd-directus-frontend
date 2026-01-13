@@ -14,7 +14,7 @@ const {
 } = useMutation({
   mutation: async () => {
     await logOutUser();
-    navigateTo(ROUTES.auth);
+    window.location.href = ROUTES.main;
   },
 });
 </script>

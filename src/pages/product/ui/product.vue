@@ -95,17 +95,13 @@ const {
       return;
     }
     if (isValidForOrder.value) {
-      const savedCart = await addToCartRef.value?.addToCart([
-        {
-          count: 1,
-          product: product.value.id,
-          options: checkedOptionIds.value,
-        },
-      ]);
+      await addToCartRef.value?.addToCart({
+        count: 1,
+        product: product.value.id,
+        options: checkedOptionIds.value,
+      });
 
-      if (savedCart) {
-        successMessage.value = "Product was successful added to cart";
-      }
+      successMessage.value = "Product was successful added to cart";
     }
   },
 });

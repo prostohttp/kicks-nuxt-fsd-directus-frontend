@@ -10,7 +10,7 @@ const user = useDirectusUser();
 
 <template>
   <section class="account-page">
-    <pre>{{ user }}</pre>
+    <!-- <pre>{{ user }}</pre> -->
     <LogoutButton> Log Out </LogoutButton>
   </section>
 </template>

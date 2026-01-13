@@ -11,5 +11,5 @@ export interface CartProductApiType {
 export interface CartApiType {
   id: string;
   user_created: string;
-  product: string[];
+  product: CartProductApiType[];
 }

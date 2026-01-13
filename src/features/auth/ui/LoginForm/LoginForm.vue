@@ -31,10 +31,9 @@ const email = ref();
 
 const password = ref();
 
-// TODO: back(-1)
 const redirectToAccount = () => {
   setTimeout(() => {
-    navigateTo(ROUTES.account);
+    window.location.href = ROUTES.account;
     refresh();
   }, 1000);
 };

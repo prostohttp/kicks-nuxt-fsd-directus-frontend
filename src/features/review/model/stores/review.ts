@@ -5,7 +5,16 @@ export const useReviewStore = defineStore("reviews", () => {
   const reviews = ref<ReviewType[]>([]);
 
   const addReview = async (review: AddReviewType, files: File[]) => {
-    return await apiAddReview(review, files);
+    try {
+      return await apiAddReview(review, files);
+    } catch (e) {
+      const error = e as Error;
+      console.log(error.message);
+      throw createError({
+        message:
+          "Invalid response from server, please send this information to us",
+      });
+    }
   };
 
   const editReview = async (review: ReviewType) => {
