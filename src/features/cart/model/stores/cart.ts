@@ -4,7 +4,6 @@ import {
   useCartStore,
   type CartProductApiType,
   type CartProductType,
-  type CartType,
 } from "~/src/entities/Cart";
 import { updateCartApi, saveCartApi } from "../../api";
 import { productOptionsHash } from "../helpers";
@@ -31,48 +30,34 @@ export const useActionsCartStore = defineStore("actions-cart", () => {
 
       const productSortedOptionsHash = productOptionsHash(savedProduct);
 
-      const productInCart = cart.value?.product.filter(
+      const productInCart = cart.value.product.filter(
         (el) => productOptionsHash(el) === productSortedOptionsHash,
       )[0];
-
-      let newCart: CartType | undefined;
 
       const newProduct = savedProduct as CartProductApiType;
 
       if (!productInCart) {
-        if (!user_created) {
-          cart.value.product.push(newProduct);
-        } else {
-          newCart = await saveCartApi(user_created, [savedProduct]);
-          cart.value = newCart;
-        }
-
-        updataLocalStorageByKey(LOCAL_CART_KEY, cart.value);
-        return;
-      }
-
-      const productInCartSortedOptionsHash = productOptionsHash(productInCart);
-
-      if (productSortedOptionsHash !== productInCartSortedOptionsHash) {
         if (user_created) {
-          newCart = await saveCartApi(user_created, [savedProduct]);
+          cart.value = await saveCartApi(user_created, [savedProduct]);
+        } else {
+          cart.value.product.push(newProduct);
+          updataLocalStorageByKey(LOCAL_CART_KEY, cart.value);
         }
-        cart.value = newCart;
       } else {
-        const productIndex = cart.value?.product.findIndex(
+        const productIndex = cart.value.product.findIndex(
           (el) => productOptionsHash(el) === productSortedOptionsHash,
         );
 
-        if (productIndex !== -1 && cart.value?.product[productIndex]) {
+        if (productIndex !== -1 && cart.value.product[productIndex]) {
           ++cart.value.product[productIndex].count;
         }
 
         if (user_created) {
           await updateCartApi(cart.value);
+        } else {
+          updataLocalStorageByKey(LOCAL_CART_KEY, cart.value);
         }
       }
-
-      updataLocalStorageByKey(LOCAL_CART_KEY, cart.value);
     } catch (e) {
       const error = e as Error;
       console.log(error.message);

@@ -1,9 +1,5 @@
 <script setup lang="ts">
-import {
-  LOCAL_CART_KEY,
-  updataLocalStorageByKey,
-  useCartStore,
-} from "~/src/entities/Cart";
+import { LOCAL_CART_KEY, useCartStore } from "~/src/entities/Cart";
 import { OrderSummary } from "~/src/entities/Order";
 import { EmptyDataHeading } from "~/src/shared/ui/heading";
 import { Preloader } from "~/src/shared/ui/preloader";
@@ -26,7 +22,8 @@ onMounted(() => {
   const localCart = localStorage.getItem(LOCAL_CART_KEY);
   if (data.value) {
     cart.value = data.value;
-    updataLocalStorageByKey(LOCAL_CART_KEY, data.value);
+    // TODO: use if need sync local and server cart
+    // updataLocalStorageByKey(LOCAL_CART_KEY, data.value);
   } else if (!data.value && localCart) {
     cart.value = JSON.parse(localCart);
   }

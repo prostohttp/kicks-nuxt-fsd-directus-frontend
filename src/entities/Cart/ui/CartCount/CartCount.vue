@@ -2,7 +2,6 @@
 import { ROUTES } from "~/src/shared/routes/routes";
 import { useCartStore } from "../../model/stores/cart";
 import { LOCAL_CART_KEY } from "../../model/types";
-import { updataLocalStorageByKey } from "../../model/helpers";
 
 const cartStore = useCartStore();
 const { cart } = storeToRefs(cartStore);
@@ -21,7 +20,8 @@ onMounted(() => {
   const localCart = localStorage.getItem(LOCAL_CART_KEY);
   if (data.value) {
     cart.value = data.value;
-    updataLocalStorageByKey(LOCAL_CART_KEY, data.value);
+    // TODO: use if need sync local and server cart
+    // updataLocalStorageByKey(LOCAL_CART_KEY, data.value);
   } else if (!data.value && localCart) {
     cart.value = JSON.parse(localCart);
   }
