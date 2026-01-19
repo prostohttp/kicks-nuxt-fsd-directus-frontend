@@ -1,9 +1,11 @@
-<script setup lang='ts'>
-import { Cart } from '~/src/pages/cart';
+<script setup lang="ts">
+import { Cart } from "~/src/pages/cart";
 
-
+useSeoMeta({
+  title: "Cart page",
+});
 </script>
 
 <template>
-    <Cart />
+  <Cart />
 </template>

@@ -1,5 +1,6 @@
+import { useStorage } from "@vueuse/core";
 import { getUserCartApi } from "../../api";
-import type { CartType } from "../types";
+import { LOCAL_CART_KEY, type CartType } from "../types";
 
 export const useCartStore = defineStore("cart", () => {
   const user = useDirectusUser();
@@ -7,9 +8,10 @@ export const useCartStore = defineStore("cart", () => {
 
   const getUserCart = async () => {
     if (user.value) {
-      return await getUserCartApi(user.value.id);
-    } else {
-      console.log("local user set user cart");
+      const userCart = await getUserCartApi(user.value.id);
+      cart.value = userCart;
+      useStorage(LOCAL_CART_KEY, cart.value);
+      return cart.value;
     }
   };
 

@@ -10,21 +10,16 @@ const user = useDirectusUser();
 
 const actionsCartStore = useActionsCartStore();
 
-const saveCartToLocal = async () => {
-  console.log("local storage");
-};
-
 const addToCart = async (product: CartProductType) => {
-  if (user.value) {
-    const userId = user.value.id;
+  const userId = user.value?.id;
 
-    await actionsCartStore.saveCartToServer(user.value.id, {
+  await actionsCartStore.saveCart(
+    {
       user_created: userId,
       ...product,
-    });
-  } else {
-    await saveCartToLocal();
-  }
+    },
+    userId,
+  );
 };
 
 defineExpose({

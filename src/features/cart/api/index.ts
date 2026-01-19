@@ -44,7 +44,7 @@ export const saveCartApi = async (
 
 export const updateCartApi = async (cart: CartType) => {
   try {
-    await useNuxtApp().$api.update(CollectionType.CART, cart.id!, cart);
+    return await useNuxtApp().$api.update(CollectionType.CART, cart.id!, cart);
   } catch (e) {
     const error = e as Error;
     throw createError({ message: error.message });

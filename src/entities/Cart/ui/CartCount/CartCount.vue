@@ -1,18 +1,31 @@
 <script setup lang="ts">
 import { ROUTES } from "~/src/shared/routes/routes";
 import { useCartStore } from "../../model/stores/cart";
+import { LOCAL_CART_KEY } from "../../model/types";
+import { updataLocalStorageByKey } from "../../model/helpers";
 
 const cartStore = useCartStore();
 const { cart } = storeToRefs(cartStore);
 
-const { isLoading } = useQuery({
+const { data } = useQuery({
   key: () => ["cart-count"],
   query: async () => {
-    const userCart = await cartStore.getUserCart();
-    cart.value = userCart;
-    return userCart;
+    return await cartStore.getUserCart();
   },
   placeholderData: (previousData) => previousData,
+});
+
+const isLoading = ref(true);
+
+onMounted(() => {
+  const localCart = localStorage.getItem(LOCAL_CART_KEY);
+  if (data.value) {
+    cart.value = data.value;
+    updataLocalStorageByKey(LOCAL_CART_KEY, data.value);
+  } else if (!data.value && localCart) {
+    cart.value = JSON.parse(localCart);
+  }
+  isLoading.value = false;
 });
 
 const count = computed(() => (cart.value ? cart.value.product.length : 0));

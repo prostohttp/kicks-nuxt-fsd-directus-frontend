@@ -1,5 +1,8 @@
 import {
+  LOCAL_CART_KEY,
+  updataLocalStorageByKey,
   useCartStore,
+  type CartProductApiType,
   type CartProductType,
   type CartType,
 } from "~/src/entities/Cart";
@@ -11,13 +14,19 @@ export const useActionsCartStore = defineStore("actions-cart", () => {
 
   const { cart } = storeToRefs(cartStore);
 
-  const saveCartToServer = async (
-    user_created: string,
+  const saveCart = async (
     savedProduct: CartProductType,
+    user_created?: string,
   ) => {
     try {
       if (!savedProduct) {
         return;
+      }
+
+      if (!cart.value) {
+        cart.value = {
+          product: [],
+        };
       }
 
       const productSortedOptionsHash = productOptionsHash(savedProduct);
@@ -26,28 +35,44 @@ export const useActionsCartStore = defineStore("actions-cart", () => {
         (el) => productOptionsHash(el) === productSortedOptionsHash,
       )[0];
 
-      if (!productInCart || !cart.value) {
-        const newCart = await saveCartApi(user_created, [savedProduct]);
-        cart.value = newCart;
+      let newCart: CartType | undefined;
+
+      const newProduct = savedProduct as CartProductApiType;
+
+      if (!productInCart) {
+        if (!user_created) {
+          cart.value.product.push(newProduct);
+        } else {
+          newCart = await saveCartApi(user_created, [savedProduct]);
+          cart.value = newCart;
+        }
+
+        updataLocalStorageByKey(LOCAL_CART_KEY, cart.value);
         return;
       }
 
       const productInCartSortedOptionsHash = productOptionsHash(productInCart);
 
       if (productSortedOptionsHash !== productInCartSortedOptionsHash) {
-        const newCart = await saveCartApi(user_created, [savedProduct]);
+        if (user_created) {
+          newCart = await saveCartApi(user_created, [savedProduct]);
+        }
         cart.value = newCart;
       } else {
-        const productIndex = cart.value.product.findIndex(
+        const productIndex = cart.value?.product.findIndex(
           (el) => productOptionsHash(el) === productSortedOptionsHash,
         );
 
-        if (productIndex !== -1 && cart.value.product[productIndex]) {
+        if (productIndex !== -1 && cart.value?.product[productIndex]) {
           ++cart.value.product[productIndex].count;
         }
 
-        await updateCartApi(cart.value);
+        if (user_created) {
+          await updateCartApi(cart.value);
+        }
       }
+
+      updataLocalStorageByKey(LOCAL_CART_KEY, cart.value);
     } catch (e) {
       const error = e as Error;
       console.log(error.message);
@@ -58,9 +83,5 @@ export const useActionsCartStore = defineStore("actions-cart", () => {
     }
   };
 
-  const saveCartToClient = (data: CartType) => {
-    cart.value = data;
-  };
-
-  return { saveCartToServer, saveCartToClient };
+  return { saveCart };
 });

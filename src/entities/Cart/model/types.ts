@@ -21,3 +21,5 @@ export type RawSavedCartType = Omit<
   user_created?: string;
   product: string[];
 };
+
+export const LOCAL_CART_KEY = "kicks-cart";

@@ -15,7 +15,7 @@ const {
   type = "text",
   required,
 } = defineProps<InputType>();
-const model = defineModel<string>({ required: true });
+const model = defineModel<string>();
 </script>
 
 <template>
