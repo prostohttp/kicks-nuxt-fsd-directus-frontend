@@ -4,10 +4,14 @@ import type {
   DirectusMetaQueryParams,
   DirectusQueryParams,
 } from "nuxt-directus";
-import type { ProductCardType, ProductDetailsType } from "../model/types";
+import type {
+  ProductCardType,
+  ProductDetailsType,
+  ProductOptionsType,
+} from "../model/types";
 import type { ApiProductsCount } from "./types";
 
-export const getProducts = (
+export const getProductsApi = (
   collection: CollectionType,
   meta: ApiProductsCount,
   limit?: number,
@@ -40,7 +44,10 @@ export const getProducts = (
   }
 };
 
-export const getProduct = (collection: CollectionType, slug: string | null) => {
+export const getProductApi = (
+  collection: CollectionType,
+  slug: string | null,
+) => {
   try {
     const params: DirectusQueryParams = {
       fields: [
@@ -81,7 +88,7 @@ export const getProduct = (collection: CollectionType, slug: string | null) => {
   }
 };
 
-export const getProductReviewsCount = async (productId: number) => {
+export const getProductReviewsCountApi = async (productId: number) => {
   try {
     const runtimeConfig = useRuntimeConfig();
     return await $fetch<{ data: { count: { rating: string } }[] }>(
@@ -103,7 +110,7 @@ export const getProductReviewsCount = async (productId: number) => {
   }
 };
 
-export const getProductRating = async (productId: number) => {
+export const getProductRatingApi = async (productId: number) => {
   try {
     const runtimeConfig = useRuntimeConfig();
     return await $fetch<{ data: { avg: { rating: string } }[] }>(
@@ -118,6 +125,26 @@ export const getProductRating = async (productId: number) => {
           },
         },
       },
+    );
+  } catch (e) {
+    const error = e as Error;
+    throw createError({ message: error.message });
+  }
+};
+
+export const getProductOptionsApi = async (optionIds: string[]) => {
+  try {
+    const params: DirectusQueryParams = {
+      fields: ["id", "title", "option.title"],
+      filter: {
+        id: {
+          _in: optionIds,
+        },
+      },
+    };
+    return useNuxtApp().$api.getAllRaw<ProductOptionsType>(
+      CollectionType.OPTION_VALUES,
+      params,
     );
   } catch (e) {
     const error = e as Error;

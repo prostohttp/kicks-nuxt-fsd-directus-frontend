@@ -1,21 +1,23 @@
 import {
   getUserCartApi,
-  type CartProductType,
-  type CartType,
+  getUserCartApiWithProductAndOptions,
+  type CartProductWithoutPopulatedProductApi,
+  type CartWithoutPopulatedProductApi,
 } from "~/src/entities/Cart";
 import { CollectionType } from "~/src/shared/api";
 
 export const saveCartApi = async (
   user_created: string,
-  products: CartProductType[],
+  products: CartProductWithoutPopulatedProductApi[],
 ) => {
   try {
     const savedCart = await getUserCartApi(user_created);
 
-    const savedProducts = await useNuxtApp().$api.create<CartProductType>(
-      CollectionType.CART_ITEMS,
-      products,
-    );
+    const savedProducts =
+      await useNuxtApp().$api.create<CartProductWithoutPopulatedProductApi>(
+        CollectionType.CART_ITEMS,
+        products,
+      );
 
     if (!savedProducts[0]) {
       throw createError({ message: "Failed create product for cart" });
@@ -35,16 +37,21 @@ export const saveCartApi = async (
       });
     }
 
-    return await getUserCartApi(user_created);
+    return await getUserCartApiWithProductAndOptions(user_created);
   } catch (e) {
     const error = e as Error;
     throw createError({ message: error.message });
   }
 };
 
-export const updateCartApi = async (cart: CartType) => {
+export const updateCartApi = async (cart: CartWithoutPopulatedProductApi) => {
   try {
-    return await useNuxtApp().$api.update(CollectionType.CART, cart.id!, cart);
+    const updatedCart = await useNuxtApp().$api.update(
+      CollectionType.CART,
+      cart.id!,
+      cart,
+    );
+    return await getUserCartApiWithProductAndOptions(updatedCart.user_created);
   } catch (e) {
     const error = e as Error;
     throw createError({ message: error.message });

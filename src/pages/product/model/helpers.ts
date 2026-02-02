@@ -51,14 +51,7 @@ export const useProductOptions = (
       .map((val) => ({ option_values_id: val.checkedId! })),
   );
 
-  const checkedOptionObject = computed(() =>
-    Object.keys(productOptionObjectWithValues.value)
-      .filter((key) => productOptionObjectWithValues.value[key]?.isChecked)
-      .map((key) => ({
-        [key]: productOptionObjectWithValues.value[key]?.checkedValue,
-      })),
-  );
-
+  // TODO: delete this shit
   const checkRequiredOptions = (query: LocationQuery) => {
     for (const key of Object.keys(productOptionObjectWithValues.value)) {
       if (
@@ -92,7 +85,6 @@ export const useProductOptions = (
     productOptionObjectWithValues,
     productOptionIds,
     checkedOptionIds,
-    checkedOptionObject,
     makeProductOptionObjectWithValues,
     checkRequiredOptions,
   };

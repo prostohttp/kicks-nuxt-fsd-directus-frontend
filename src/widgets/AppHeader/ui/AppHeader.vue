@@ -10,6 +10,8 @@ const { data: menu } = useQuery({
   key: ["main-menu"],
   query: async () => await getMainMenu(),
 });
+
+const user = useDirectusUser();
 </script>
 
 <template>
@@ -26,6 +28,7 @@ const { data: menu } = useQuery({
       </NuxtLink>
       <NuxtLink :to="ROUTES.account" class="icon-wrapper">
         <IconAccount class="icon" />
+        <span v-if="user" class="icon-wrapper__status-accent"></span>
       </NuxtLink>
       <CartCount />
     </div>

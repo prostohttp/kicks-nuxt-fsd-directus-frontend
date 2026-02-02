@@ -1,0 +1,16 @@
+.app-cart {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  background-color: #fff;
+  padding: 24px;
+  border-radius: 16px;
+
+  &__item {
+
+    &:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+  }
+}

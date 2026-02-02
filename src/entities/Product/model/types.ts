@@ -22,3 +22,10 @@ export interface ProductDetailsType extends ProductCardType {
     related_products_id: ProductCardType;
   }[];
 }
+
+export interface ProductOptionsType {
+  title: string;
+  option: {
+    title: string;
+  };
+}

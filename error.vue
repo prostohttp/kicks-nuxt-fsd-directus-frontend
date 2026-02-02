@@ -6,12 +6,13 @@ useHead({
   title: "Error",
 });
 const { error } = defineProps({
-  // eslint-disable-next-line vue/require-default-prop
   error: Object as () => NuxtError,
 });
 
 const handleError = () => clearError({ redirect: "/" });
-const isServerError = computed(() => error && error.statusCode >= 500);
+const isServerError = computed(
+  () => error && error.status && error.status >= 500,
+);
 </script>
 
 <template>
@@ -24,7 +25,7 @@ const isServerError = computed(() => error && error.statusCode >= 500);
     <NuxtLayout name="default">
       <div class="error">
         <NuxtImg src="not-found.png" width="200" />
-        <p class="error__text">{{ error?.statusMessage }}</p>
+        <p v-if="error" class="error__text">{{ error.message }}</p>
         <Button
           variant="fill"
           size="large"

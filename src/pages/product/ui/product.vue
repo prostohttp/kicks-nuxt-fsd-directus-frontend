@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {
-  FastOrderProductCard,
+  CompactProductCard,
   ProductDetails,
   useProductStore,
 } from "~/src/entities/Product";
@@ -11,7 +11,8 @@ import { NotFound } from "~/src/shared/ui/NotFound";
 import { Preloader } from "~/src/shared/ui/preloader";
 import RelatedProducts from "./RelatedProducts/RelatedProducts.vue";
 import ProductOptions from "./ProductOptions/ProductOptions.vue";
-import { getOptionsById } from "~/src/entities/Option";
+import { getOptionsById, type OptionValueApi } from "~/src/entities/Option";
+import { useOptionStore } from "~/src/entities/Option/@x/Product";
 import ProductReviews from "./ProductReviews/ProductReviews.vue";
 import { FullScreenModal, Modal } from "~/src/shared/ui/modal";
 import { Placeholder } from "~/src/shared/ui/Placeholder";
@@ -32,10 +33,7 @@ const productStore = useProductStore();
 const { data: product, isLoading } = useQuery({
   key: () => ["product", productSlug.value],
   query: async () =>
-    await productStore.getOneProduct(
-      CollectionType.PRODUCTS,
-      productSlug.value,
-    ),
+    await productStore.getProduct(CollectionType.PRODUCTS, productSlug.value),
 });
 
 const {
@@ -58,7 +56,6 @@ const {
 const {
   checkRequiredOptions,
   checkedOptionIds,
-  checkedOptionObject,
   makeProductOptionObjectWithValues,
   productOptionIds,
   productOptionObjectWithValues,
@@ -97,7 +94,13 @@ const {
     if (isValidForOrder.value) {
       await addToCartRef.value?.addToCart({
         count: 1,
-        product: product.value.id,
+        product: {
+          title: product.value.title,
+          id: product.value.id,
+          slug: product.value.slug,
+          price: product.value.price,
+          image: product.value.image,
+        },
         options: checkedOptionIds.value,
       });
 
@@ -118,12 +121,20 @@ const errorMessage = computed(() => {
 
 const successMessage = ref("");
 
-const byItNowHandler = () => {
+const optionValues = ref<OptionValueApi[]>();
+
+const optionStore = useOptionStore();
+
+const byItNowHandler = async () => {
   makeProductOptionObjectWithValues();
   checkRequiredOptions(route.query);
 
   if (isValidForOrder.value) {
     isOpenByItNow.value = !isOpenByItNow.value;
+    const opt = checkedOptionIds.value.map((el) => el.option_values_id);
+
+    const options = await optionStore.getOptionValues(opt);
+    optionValues.value = options;
   }
 };
 
@@ -231,13 +242,15 @@ useSeoMeta({
     </Teleport>
     <Teleport to="#teleports">
       <Modal v-model="isOpenByItNow" title="By It Now">
-        <FastOrderProductCard
-          :id="product.id"
+        <CompactProductCard
+          :id="product.id.toString()"
           v-model.number="productCount"
           :title="product.title"
           :image="product.image"
           :price="product.price"
-          :options="checkedOptionObject"
+          :option-values="optionValues"
+          :slug="product.slug"
+          type="select"
         />
         <FastOrderForm
           :option-ids="checkedOptionIds"

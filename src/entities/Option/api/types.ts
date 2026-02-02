@@ -8,3 +8,11 @@ export interface ApiProductOptionType {
   is_required: boolean;
   values: OptionValueType[];
 }
+
+export interface OptionValueApi {
+  id: string;
+  title: string;
+  option: {
+    title: string;
+  };
+}

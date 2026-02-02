@@ -1,15 +1,35 @@
-export interface CartProductApiType {
-  id: string;
+export interface CartTypeApi {
+  id?: string;
   user_created: string;
+  product: CartProductApi[];
+}
+
+export interface CartProductApi {
+  id?: string;
+  product: {
+    id: number;
+    title: string;
+    slug: string;
+    image: string;
+    price: number;
+  };
   count: number;
-  product: number;
   options: {
     option_values_id: string;
   }[];
 }
 
-export interface CartApiType {
-  id: string;
+export interface CartWithoutPopulatedProductApi {
+  id?: string;
   user_created: string;
-  product: CartProductApiType[];
+  product: CartProductWithoutPopulatedProductApi[];
+}
+
+export interface CartProductWithoutPopulatedProductApi {
+  id?: string;
+  product: number;
+  count: number;
+  options: {
+    option_values_id: string;
+  }[];
 }

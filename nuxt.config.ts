@@ -44,6 +44,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
+      userRole: "04d691ca-806d-4180-8cbd-bede772d62c7",
       directus: {
         // url: process.env.NUXT_PUBLIC_API_BASE,
         url: "http://localhost:8055",

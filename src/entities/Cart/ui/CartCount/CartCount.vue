@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ROUTES } from "~/src/shared/routes/routes";
+import { ROUTES } from "~/src/shared/routes/";
 import { useCartStore } from "../../model/stores/cart";
 import { LOCAL_CART_KEY } from "../../model/types";
 

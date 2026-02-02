@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { Button, Input, Textarea } from "~/src/shared/ui/form";
 import { FastOrder, type FastOrderType } from "../../model/fastOrderSchema";
-import { useOrderStore } from "../../model/stores/order";
 import { ErrorMessage, SuccessMessage } from "~/src/shared/ui/message";
 import { IconArrowRight, IconCircleLoading } from "~/src/shared/ui/icons";
+import { useOrderStore } from "../../model/stores/order";
 
 const { optionIds, count, productId } = defineProps<{
   optionIds: {
@@ -13,10 +13,9 @@ const { optionIds, count, productId } = defineProps<{
   productId: number;
 }>();
 
-const orderStore = useOrderStore();
-
 const user = useDirectusUser();
 
+const orderStore = useOrderStore();
 const { fastOrder } = storeToRefs(orderStore);
 
 const isUserAndName = computed(() =>

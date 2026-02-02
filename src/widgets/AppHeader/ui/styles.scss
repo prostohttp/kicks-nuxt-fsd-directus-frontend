@@ -40,5 +40,20 @@
         transform: scale(0.9);
       }
     }
+
+    .icon-wrapper {
+      position: relative;
+
+      &__status-accent {
+        background-color: #da1e28;
+        border-radius: 50%;
+        width: 10px;
+        height: 10px;
+        position: absolute;
+        top: -4px;
+        right: -7px;
+        z-index: 100;
+      }
+    }
   }
 }

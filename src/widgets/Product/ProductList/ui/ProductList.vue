@@ -80,7 +80,7 @@ const { data: products, isLoading } = useQuery({
     },
   ],
   query: async () => {
-    const products = await productStore.getAllProducts(
+    const products = await productStore.getProducts(
       CollectionType.PRODUCTS,
       "*",
       settings.limit,

@@ -3,7 +3,7 @@ import { LOCAL_CART_KEY, useCartStore } from "~/src/entities/Cart";
 import { OrderSummary } from "~/src/entities/Order";
 import { EmptyDataHeading } from "~/src/shared/ui/heading";
 import { Preloader } from "~/src/shared/ui/preloader";
-import { AppCart } from "~/src/widgets/AppCart";
+import { CartList } from "~/src/widgets/CartList";
 
 const cartStore = useCartStore();
 
@@ -34,9 +34,12 @@ onMounted(() => {
 <template>
   <section class="cart-page">
     <Preloader v-if="isLoading" />
-    <div v-else-if="!isLoading && cart" class="cart-page__content">
-      <AppCart class="cart-page__content__products" />
-      <OrderSummary class="cart-page__content__order" />
+    <div v-else-if="!isLoading && cart?.product.length" class="cart-page__content">
+
+      <div class="cart-page__content__wrapper">
+        <CartList class="cart-page__content__wrapper__products" />
+        <OrderSummary class="cart-page__content__wrapper__order" />
+      </div>
     </div>
     <EmptyDataHeading v-else> Empty cart </EmptyDataHeading>
   </section>

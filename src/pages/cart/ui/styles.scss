@@ -1,16 +1,16 @@
 .cart-page {
-
   &__content {
-    display: flex;
-    gap: 47px;
+    &__wrapper {
+      display: flex;
+      gap: 47px;
 
-    &__products {
-      width: 70%;
-    }
+      &__products {
+        width: 70%;
+      }
 
-    &__order {
-      width: 30%;
+      &__order {
+        width: 30%;
+      }
     }
   }
-
 }

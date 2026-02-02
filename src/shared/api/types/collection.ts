@@ -8,6 +8,7 @@ export enum CollectionType {
   MENUS = "navigation",
   PRODUCTS = "products",
   OPTIONS = "options",
+  OPTION_VALUES = "option_values",
   USERS = "directus_users",
   BANNERS = "blocks_banner",
   CATEGORIES = "product_categories",

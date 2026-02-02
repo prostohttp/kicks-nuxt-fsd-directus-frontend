@@ -2,19 +2,35 @@ import {
   LOCAL_CART_KEY,
   updataLocalStorageByKey,
   useCartStore,
-  type CartProductApiType,
-  type CartProductType,
+  type CartProductApi,
 } from "~/src/entities/Cart";
 import { updateCartApi, saveCartApi } from "../../api";
-import { productOptionsHash } from "../helpers";
+import {
+  productOptionsHash,
+  productOptionsHashFromCart,
+  cartWithUnfilledOptions,
+  transformOptions,
+} from "../helpers";
+import { useOptionStore } from "~/src/entities/Option";
 
 export const useActionsCartStore = defineStore("actions-cart", () => {
   const cartStore = useCartStore();
 
   const { cart } = storeToRefs(cartStore);
 
+  const optionStore = useOptionStore();
+  const addLocalProductToCart = async (product: CartProductApi) => {
+    const options = product.options.map((el) => el.option_values_id);
+    const optionsApi = await optionStore.getOptionValues(options);
+
+    cart.value?.product.push({
+      ...product,
+      options: optionsApi ? transformOptions(optionsApi) : [],
+    });
+  };
+
   const saveCart = async (
-    savedProduct: CartProductType,
+    savedProduct: CartProductApi,
     user_created?: string,
   ) => {
     try {
@@ -22,38 +38,43 @@ export const useActionsCartStore = defineStore("actions-cart", () => {
         return;
       }
 
-      if (!cart.value) {
-        cart.value = {
-          product: [],
-        };
-      }
-
       const productSortedOptionsHash = productOptionsHash(savedProduct);
 
-      const productInCart = cart.value.product.filter(
-        (el) => productOptionsHash(el) === productSortedOptionsHash,
+      const productInCart = cart.value?.product.filter(
+        (el) => productOptionsHashFromCart(el) === productSortedOptionsHash,
       )[0];
 
-      const newProduct = savedProduct as CartProductApiType;
+      const savedProductWithoutPopulatedProduct = {...savedProduct, product: savedProduct.product.id}
 
       if (!productInCart) {
         if (user_created) {
-          cart.value = await saveCartApi(user_created, [savedProduct]);
+          console.log(savedProduct);
+
+          cart.value = await saveCartApi(user_created, [savedProductWithoutPopulatedProduct]);
         } else {
-          cart.value.product.push(newProduct);
+          if (!cart.value) {
+            cart.value = {
+              product: [],
+            };
+          }
+          await addLocalProductToCart(savedProduct);
           updataLocalStorageByKey(LOCAL_CART_KEY, cart.value);
         }
       } else {
-        const productIndex = cart.value.product.findIndex(
-          (el) => productOptionsHash(el) === productSortedOptionsHash,
+        const productIndex = cart.value!.product.findIndex(
+          (el) => productOptionsHashFromCart(el) === productSortedOptionsHash,
         );
 
-        if (productIndex !== -1 && cart.value.product[productIndex]) {
+        if (productIndex !== -1 && cart.value?.product[productIndex]) {
           ++cart.value.product[productIndex].count;
         }
 
         if (user_created) {
-          await updateCartApi(cart.value);
+          if (cart.value) {
+            console.log(cart.value);
+
+            await updateCartApi(cartWithUnfilledOptions(cart.value));
+          }
         } else {
           updataLocalStorageByKey(LOCAL_CART_KEY, cart.value);
         }
@@ -68,5 +89,5 @@ export const useActionsCartStore = defineStore("actions-cart", () => {
     }
   };
 
-  return { saveCart };
+  return { saveCart, addLocalProductToCart };
 });
