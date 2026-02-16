@@ -3,6 +3,7 @@ import type { OptionValueApi } from "~/src/entities/Option/@x/Product";
 import { formatUSD } from "~/src/shared/lib";
 import { Select, type SelectItemType } from "~/src/shared/ui/form";
 import { ROUTES } from "~/src/shared/routes";
+import { CartCount } from "~/src/features/cart";
 
 const { title, image, price, type, slug, optionValues } = defineProps<{
   title: string;
@@ -94,7 +95,9 @@ const queryParams = computed(() => {
       :list
       class="fast-order-product-card__qty"
     />
-    <div v-if="type === 'counter'">{{ count }}</div>
+    <div v-if="type === 'counter'">
+      <CartCount v-model="count" />
+    </div>
   </section>
 </template>
 

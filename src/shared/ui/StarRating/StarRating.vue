@@ -18,8 +18,8 @@ const { change = false, size = "small" } = defineProps<{
       v-for="num in 5"
       :key="num"
       class="star-rating__icon"
-      :style="change ? 'cursor: pointer;' : null"
-      @click="change ? (value = num) : null"
+      :style="change && 'cursor: pointer;'"
+      @click="change && (value = num)"
     >
       <IconStarFill v-if="value >= num" />
       <IconStarOutline v-else />

@@ -51,7 +51,7 @@ const form = reactive({
   product: product.value?.id,
 });
 
-const exposeRef = ref();
+const exposeRef = useTemplateRef("exposeRef");
 
 const resetForm = () => {
   form.title = "";
@@ -59,7 +59,9 @@ const resetForm = () => {
   form.rating = 1;
   form.images = [];
 
-  exposeRef.value[0].clearInputFiles();
+  if (exposeRef.value) {
+    exposeRef.value[0]?.clearInputFiles();
+  }
 };
 
 const { formBlock } = defineProps<{

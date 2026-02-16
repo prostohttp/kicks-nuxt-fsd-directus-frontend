@@ -48,8 +48,6 @@ export const useActionsCartStore = defineStore("actions-cart", () => {
 
       if (!productInCart) {
         if (user_created) {
-          console.log(savedProduct);
-
           cart.value = await saveCartApi(user_created, [savedProductWithoutPopulatedProduct]);
         } else {
           if (!cart.value) {
@@ -71,8 +69,6 @@ export const useActionsCartStore = defineStore("actions-cart", () => {
 
         if (user_created) {
           if (cart.value) {
-            console.log(cart.value);
-
             await updateCartApi(cartWithUnfilledOptions(cart.value));
           }
         } else {

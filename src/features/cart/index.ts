@@ -1,4 +1,5 @@
 export { default as AddToCart } from "./ui/AddToCart/AddToCart.vue";
+export { default as CartCount } from "./ui/CartCount/CartCount.vue";
 
 export { saveCartApi, updateCartApi } from "./api/index";
 

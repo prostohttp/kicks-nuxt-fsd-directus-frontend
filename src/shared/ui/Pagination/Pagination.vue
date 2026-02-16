@@ -7,10 +7,7 @@ const currentPage = defineModel<number>({ required: true });
 
 <template>
   <section class="pagination">
-    <button
-      class="pagination__page"
-      @click="currentPage > 1 ? currentPage-- : null"
-    >
+    <button class="pagination__page" @click="currentPage > 1 && currentPage--">
       <IconChevronRight style="rotate: 180deg" />
       <span class="pagination__page-prev">PREVIOUS</span>
     </button>
@@ -19,13 +16,13 @@ const currentPage = defineModel<number>({ required: true });
       :key="page"
       class="pagination__page"
       :class="{ 'pagination__page-active': page === currentPage }"
-      @click="currentPage !== page ? (currentPage = page) : null"
+      @click="currentPage !== page && (currentPage = page)"
     >
       {{ page }}
     </button>
     <button
       class="pagination__page"
-      @click="currentPage < pagesCount ? currentPage++ : null"
+      @click="currentPage < pagesCount && currentPage++"
     >
       <span class="pagination__page-next">NEXT</span>
       <IconChevronRight />

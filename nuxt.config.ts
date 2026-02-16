@@ -22,7 +22,7 @@ export default defineNuxtConfig({
     plugins: "./src/shared/lib/plugins",
     middleware: "./src/app/middleware",
   },
-  css: ["@/app/styles/global.scss"],
+  css: ["~/src/app/styles/global.scss"],
   fonts: {
     families: [
       {
@@ -84,7 +84,6 @@ export default defineNuxtConfig({
     "@nuxt/eslint",
     "@nuxt/fonts",
     "@nuxt/image",
-    "@nuxt/test-utils",
     "@pinia/nuxt",
     "@pinia/colada-nuxt",
     "@vueuse/nuxt",
