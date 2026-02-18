@@ -1,12 +1,9 @@
 import type { DirectusQueryParams } from "nuxt-directus";
-import type { CategoryType, CollectionType } from "~/src/shared/api";
+import type { CategoryType } from "~/src/shared/api";
 import { CollectionType as PATH } from "~/src/shared/api";
 import type { ApiPriceMinMaxType } from "./types";
 
-export const getCategory = (
-  collection: CollectionType,
-  slug: string | null,
-) => {
+export const getCategoryApi = async (slug: string | null) => {
   try {
     const params: DirectusQueryParams = {
       fields: [
@@ -37,7 +34,13 @@ export const getCategory = (
         slug: slug?.toString() || "",
       },
     };
-    return useNuxtApp().$api.getAllRaw<CategoryType>(collection, params);
+
+    const categories = await useNuxtApp().$api.getAllRaw<CategoryType>(
+      PATH.CATEGORIES,
+      params,
+    );
+
+    return categories[0];
   } catch (e) {
     const error = e as Error;
     throw createError({ message: error.message });

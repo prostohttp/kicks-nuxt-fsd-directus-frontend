@@ -1,5 +1,5 @@
 import type { DirectusItems } from "nuxt-directus";
-import type { ApiFilterType, CollectionType } from "~/src/shared/api";
+import { CollectionType, type ApiFilterType } from "~/src/shared/api";
 import type { ProductCardType, ProductDetailsType } from "../types";
 import {
   getProductApi,
@@ -34,14 +34,10 @@ export const useProductStore = defineStore("products", () => {
   };
 
   const getProduct = async (
-    collection: CollectionType,
     slug: string | null,
   ): Promise<ProductDetailsType | undefined> => {
-    const products = await getProductApi(collection, slug);
-    if (products[0]) {
-      saveProduct(products[0]);
-      return products[0];
-    }
+    const products = await getProductApi(CollectionType.PRODUCTS, slug);
+    return products[0];
   };
 
   const getProductReviewsInfo = async (id: number) => {

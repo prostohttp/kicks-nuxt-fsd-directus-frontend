@@ -1,11 +1,12 @@
 import type { DirectusQueryParams } from "nuxt-directus";
-import type { ApiFilterType, CollectionType, PageType } from "~/src/shared/api";
+import {
+  CollectionType,
+  type ApiFilterType,
+  type PageType,
+} from "~/src/shared/api";
 import type { CategoryType } from "./types";
 
-export const getPage = (
-  collection: CollectionType,
-  permalink: string | null,
-) => {
+export const getPage = async (permalink: string | null) => {
   try {
     const params: DirectusQueryParams = {
       fields: [
@@ -20,7 +21,11 @@ export const getPage = (
         permalink: permalink?.toString() || "",
       },
     };
-    return useNuxtApp().$api.getAllRaw<PageType>(collection, params);
+    const pages = await useNuxtApp().$api.getAllRaw<PageType>(
+      CollectionType.PAGES,
+      params,
+    );
+    return pages[0];
   } catch (e) {
     const error = e as Error;
     throw createError({ message: error.message });

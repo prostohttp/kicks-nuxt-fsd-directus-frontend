@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { CollectionType } from "~/src/shared/api";
 import { getPage } from "../api";
 import { Preloader } from "~/src/shared/ui/preloader";
-import { NotFound } from "~/src/shared/ui/NotFound";
 import { pageBlocksMapper } from "../api/blocksMapper";
 
 const route = useRoute();
@@ -15,11 +13,19 @@ const pageSlug = computed(() =>
       ? route.path
       : null,
 );
-const { data, isLoading } = useQuery({
+const { data: page, isLoading } = useQuery({
   key: () => ["pages", { page: pageSlug.value }],
-  query: async () => await getPage(CollectionType.PAGES, pageSlug.value),
+  query: async () => {
+    const page = await getPage(pageSlug.value);
+    if (!page) {
+      throw createError({
+        status: 404,
+        message: "Page not found",
+      });
+    }
+    return page;
+  },
 });
-const page = computed(() => (data.value ? data.value[0] : null));
 useSeoMeta({
   title: () => page.value?.seo_data.title,
   description: () => page.value?.seo_data.meta_description,
@@ -28,11 +34,10 @@ useSeoMeta({
 
 <template>
   <Preloader v-if="isLoading" />
-  <NotFound v-else-if="!page" heading="Page not found!" />
-  <section v-else-if="data && data[0]" class="page-page">
+  <section v-else-if="page" class="page-page">
     <component
       :is="pageBlocksMapper[block.collection]"
-      v-for="block in data[0].blocks"
+      v-for="block in page.blocks"
       :key="block.id"
       :item-id="block.item"
     />

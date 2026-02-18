@@ -7,7 +7,6 @@ import {
 import { CollectionType } from "~/src/shared/api";
 import { Button } from "~/src/shared/ui/form";
 import { IconCircleLoading, IconStarFill } from "~/src/shared/ui/icons";
-import { NotFound } from "~/src/shared/ui/NotFound";
 import { Preloader } from "~/src/shared/ui/preloader";
 import RelatedProducts from "./RelatedProducts/RelatedProducts.vue";
 import ProductOptions from "./ProductOptions/ProductOptions.vue";
@@ -32,8 +31,16 @@ const productStore = useProductStore();
 
 const { data: product, isLoading } = useQuery({
   key: () => ["product", productSlug.value],
-  query: async () =>
-    await productStore.getProduct(CollectionType.PRODUCTS, productSlug.value),
+  query: async () => {
+    const product = await productStore.getProduct(productSlug.value);
+    if (!product) {
+      throw createError({
+        status: 404,
+        message: "Product not found",
+      });
+    }
+    return product;
+  },
 });
 
 const {
@@ -264,7 +271,6 @@ useSeoMeta({
       :products="product.related_products"
     />
   </section>
-  <NotFound v-else heading="Product not found!" />
 </template>
 
 <style lang="scss">

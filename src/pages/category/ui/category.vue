@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { CollectionType, type BlockProductType } from "~/src/shared/api";
-import { NotFound } from "~/src/shared/ui/NotFound";
 import { Banner } from "~/src/shared/ui/Banner";
 import { HeadingWith, SmallHeading } from "~/src/shared/ui/heading";
 import { ProductList } from "~/src/widgets/Product/ProductList";
@@ -9,8 +8,8 @@ import { SortProducts } from "~/src/features/sort";
 import { Placeholder } from "~/src/shared/ui/Placeholder";
 import { Preloader } from "~/src/shared/ui/preloader";
 import { IconCloseFlat, IconFilter } from "~/src/shared/ui/icons";
-import { getCategory } from "../api";
 import { Filters } from "./Filter";
+import { useCategoryStore } from "../model/stores/category";
 
 const route = useRoute();
 
@@ -18,14 +17,19 @@ const categorySlug = computed(() =>
   "category" in route.params ? (route.params.category as string) : null,
 );
 
+const categoryStore = useCategoryStore();
+
 const { data: category, isLoading } = useQuery({
   key: () => ["category", categorySlug.value],
   query: async () => {
-    const categories = await getCategory(
-      CollectionType.CATEGORIES,
-      categorySlug.value,
-    );
-    return categories[0];
+    const category = await categoryStore.getCategory(categorySlug.value);
+    if (!category) {
+      throw createError({
+        status: 404,
+        message: "Category not found",
+      });
+    }
+    return category;
   },
 });
 
@@ -184,7 +188,6 @@ const optionValues = computed(() =>
       </div>
     </div>
   </section>
-  <NotFound v-else heading="Category not found!" />
 </template>
 
 <style lang="scss">
