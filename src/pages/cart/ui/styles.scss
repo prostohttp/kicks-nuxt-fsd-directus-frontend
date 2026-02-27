@@ -1,5 +1,10 @@
 .cart-page {
   &__content {
+
+    &__heading {
+      margin-bottom: 32px;
+    }
+
     &__wrapper {
       display: flex;
       gap: 47px;

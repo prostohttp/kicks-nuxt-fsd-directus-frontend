@@ -13,7 +13,7 @@ const actionsCartStore = useActionsCartStore();
 const addToCart = async (product: CartProductApi) => {
   const userId = user.value?.id;
 
-  await actionsCartStore.saveCart(product, userId);
+  await actionsCartStore.saveProductToCart(product, userId);
 };
 
 defineExpose({

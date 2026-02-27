@@ -1,8 +1,25 @@
 .small-heading {
-  font-size: 36px;
-  font-weight: 600;
+  &__title {
+    font-size: 36px;
+    font-weight: 600;
 
-  @media (max-width: 991px) {
-    font-size: 24px;
+    @media (max-width: 991px) {
+      font-size: 24px;
+    }
+  }
+
+  &__subtitle {
+    font-size: 14px;
+    margin-top: 15px;
+  }
+
+  &__links {
+    font-size: 16px;
+    color: #000;
+    margin-top: 10px;
+
+    a {
+      color: #000;
+    }
   }
 }

@@ -29,7 +29,7 @@ export const useActionsCartStore = defineStore("actions-cart", () => {
     });
   };
 
-  const saveCart = async (
+  const saveProductToCart = async (
     savedProduct: CartProductApi,
     user_created?: string,
   ) => {
@@ -44,11 +44,16 @@ export const useActionsCartStore = defineStore("actions-cart", () => {
         (el) => productOptionsHashFromCart(el) === productSortedOptionsHash,
       )[0];
 
-      const savedProductWithoutPopulatedProduct = {...savedProduct, product: savedProduct.product.id}
+      const savedProductWithoutPopulatedProduct = {
+        ...savedProduct,
+        product: savedProduct.product.id,
+      };
 
       if (!productInCart) {
         if (user_created) {
-          cart.value = await saveCartApi(user_created, [savedProductWithoutPopulatedProduct]);
+          cart.value = await saveCartApi(user_created, [
+            savedProductWithoutPopulatedProduct,
+          ]);
         } else {
           if (!cart.value) {
             cart.value = {
@@ -85,5 +90,24 @@ export const useActionsCartStore = defineStore("actions-cart", () => {
     }
   };
 
-  return { saveCart, addLocalProductToCart };
+  const saveCart = async () => {
+    try {
+      const user = useDirectusUser();
+
+      if (user.value && cart.value) {
+        await updateCartApi(cartWithUnfilledOptions(cart.value));
+      } else if (!user.value && cart.value) {
+        updataLocalStorageByKey(LOCAL_CART_KEY, cart.value);
+      }
+    } catch (e) {
+      const error = e as Error;
+      console.log(error.message);
+      throw createError({
+        message:
+          "Invalid response from server, please send this information to us",
+      });
+    }
+  };
+
+  return { saveCart, saveProductToCart, addLocalProductToCart };
 });

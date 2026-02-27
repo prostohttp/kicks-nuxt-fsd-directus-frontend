@@ -21,4 +21,4 @@ export {
 
 export { updataLocalStorageByKey } from "./model/helpers";
 
-export { default as CartCount } from "./ui/CartCount/CartCount.vue";
+export { default as CartCounterLabel } from "./ui/CartCounterLabel/CartCounterLabel.vue";

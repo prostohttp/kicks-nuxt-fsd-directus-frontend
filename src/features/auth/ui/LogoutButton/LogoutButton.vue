@@ -6,6 +6,7 @@ import { ROUTES } from "~/src/shared/routes";
 import { Button } from "~/src/shared/ui/form";
 
 const loading = computed(() => asyncStatus.value === "loading");
+
 const {
   mutate: logOutHandler,
   error,

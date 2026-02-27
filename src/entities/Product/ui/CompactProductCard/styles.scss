@@ -1,4 +1,4 @@
-.fast-order-product-card {
+.compact-product-card {
   display: flex;
   gap: 15px;
   width: 100%;
@@ -79,6 +79,7 @@
     font-size: 22px;
     font-weight: 600;
     min-width: 100px;
+    color: #4a69e2;
   }
 
   &__qty {
@@ -93,6 +94,34 @@
     li {
       text-align: center;
       padding: 7px 10px;
+    }
+  }
+}
+
+.cart-count {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  &__value {
+    display: flex;
+    gap: 10px;
+    font-size: 16px;
+
+    strong {
+      font-weight: 600;
+    }
+  }
+
+  &__actions {
+    button {
+      background-color: transparent;
+      padding: 0;
+
+      &:disabled {
+        cursor: default;
+        opacity: 0.5;
+      }
     }
   }
 }

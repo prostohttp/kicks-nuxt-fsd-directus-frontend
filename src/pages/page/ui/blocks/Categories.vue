@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CollectionType, getBlockCategories } from "~/src/shared/api";
+import { getBlockCategories } from "~/src/shared/api";
 import { CarouselNavigation } from "~/src/shared/ui/carousel";
 import {
   EmptyDataHeading,
@@ -22,8 +22,7 @@ const activeSlide = ref(0);
 
 const { data: categories, isLoading: catIsLoading } = useQuery({
   key: () => ["categories-carousel", { limit: data.value?.limit }],
-  query: async () =>
-    await getCategories(CollectionType.CATEGORIES, data.value?.limit),
+  query: async () => await getCategories(data.value?.limit),
 });
 
 const categoryCarousel = ref();

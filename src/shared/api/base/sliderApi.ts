@@ -23,11 +23,11 @@ export const getSlider = async (blockId: string) => {
       ],
     };
 
-    const sliderBLock = (await nuxtApp.$api.getById(
+    const sliderBLock = await nuxtApp.$api.getById<BlockSliderType>(
       CollectionType.BLOCKS_HERO,
       blockId,
       blockParams,
-    )) as BlockSliderType;
+    );
 
     return nuxtApp.runWithContext(
       async () =>

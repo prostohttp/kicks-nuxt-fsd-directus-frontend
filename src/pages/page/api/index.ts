@@ -32,18 +32,17 @@ export const getPage = async (permalink: string | null) => {
   }
 };
 
-export const getCategories = (
-  collection: CollectionType,
-  limit?: number,
-  filter?: ApiFilterType,
-) => {
+export const getCategories = (limit?: number, filter?: ApiFilterType) => {
   try {
     const params: DirectusQueryParams = {
       fields: ["id", "title", "slug", "thumbnail"],
       filter,
       limit,
     };
-    return useNuxtApp().$api.getAllRaw<CategoryType>(collection, params);
+    return useNuxtApp().$api.getAllRaw<CategoryType>(
+      CollectionType.CATEGORIES,
+      params,
+    );
   } catch (e) {
     const error = e as Error;
     throw createError({ message: error.message });

@@ -3,16 +3,43 @@ import type { OptionValueApi } from "~/src/entities/Option/@x/Product";
 import { formatUSD } from "~/src/shared/lib";
 import { Select, type SelectItemType } from "~/src/shared/ui/form";
 import { ROUTES } from "~/src/shared/routes";
-import { CartCount } from "~/src/features/cart";
+import { IconChevronDown } from "~/src/shared/ui/icons";
 
-const { title, image, price, type, slug, optionValues } = defineProps<{
+const {
+  title,
+  image,
+  price,
+  type,
+  slug,
+  optionValues,
+  isUpdated,
+  isDeletable = false,
+} = defineProps<{
   title: string;
   image: string;
   price: number;
   slug: string;
   type: "select" | "counter";
   optionValues?: OptionValueApi[];
+  isUpdated?: boolean;
+  isDeletable?: boolean;
 }>();
+
+const emit = defineEmits<{
+  changeCount: [];
+}>();
+
+const increaseCount = () => {
+  count.value++;
+  emit("changeCount");
+};
+
+const decreaseCount = () => {
+  if (count.value > 1) {
+    count.value--;
+    emit("changeCount");
+  }
+};
 
 const count = defineModel<number>({ required: true });
 
@@ -48,11 +75,15 @@ const queryParams = computed(() => {
 
   return queryObject ? Object.assign({}, ...queryObject) : undefined;
 });
+
+const isDisableButton = computed(
+  () => count.value <= 1 && "opacity: 0.3;cursor:default",
+);
 </script>
 
 <template>
-  <section class="fast-order-product-card">
-    <div class="fast-order-product-card__image">
+  <section class="compact-product-card">
+    <div class="compact-product-card__image">
       <NuxtLink
         :to="{
           path: ROUTES.product(slug),
@@ -68,7 +99,7 @@ const queryParams = computed(() => {
         />
       </NuxtLink>
     </div>
-    <div class="fast-order-product-card__info">
+    <div class="compact-product-card__info">
       <p>
         <NuxtLink
           :to="{
@@ -86,18 +117,39 @@ const queryParams = computed(() => {
         </li>
       </ul>
     </div>
-    <div class="fast-order-product-card__price">
+    <div class="compact-product-card__price">
       {{ formatUSD(priceXCount) }}
     </div>
     <Select
       v-if="type === 'select'"
       v-model="count"
       :list
-      class="fast-order-product-card__qty"
+      class="compact-product-card__qty"
     />
-    <div v-if="type === 'counter'">
-      <CartCount v-model="count" />
+    <div v-if="type === 'counter'" class="cart-count">
+      <div class="cart-count__value">
+        <span>Quantity</span>
+        <strong>{{ count }}</strong>
+      </div>
+      <div class="cart-count__actions">
+        <button
+          class="cart-count__actions__increase"
+          :disabled="isUpdated"
+          @click="increaseCount"
+        >
+          <IconChevronDown :style="{ rotate: '180deg' }" />
+        </button>
+        <button
+          class="cart-count__actions__decrease"
+          :disabled="isUpdated"
+          :style="isDisableButton"
+          @click="decreaseCount"
+        >
+          <IconChevronDown />
+        </button>
+      </div>
     </div>
+    <div v-if="isDeletable"></div>
   </section>
 </template>
 

@@ -4,7 +4,7 @@ import { MainMenu } from "~/src/shared/ui/navigation";
 import { IconAccount, IconSearch } from "~/src/shared/ui/icons";
 import { ROUTES } from "~/src/shared/routes";
 import { getMainMenu } from "~/src/shared/api";
-import { CartCount } from "~/src/entities/Cart";
+import { CartCounterLabel } from "~/src/entities/Cart";
 
 const { data: menu } = useQuery({
   key: ["main-menu"],
@@ -30,7 +30,7 @@ const user = useDirectusUser();
         <IconAccount class="icon" />
         <span v-if="user" class="icon-wrapper__status-accent"></span>
       </NuxtLink>
-      <CartCount />
+      <CartCounterLabel />
     </div>
   </header>
 </template>
