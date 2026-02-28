@@ -19,11 +19,13 @@ export const useActionsCartStore = defineStore("actions-cart", () => {
   const { cart } = storeToRefs(cartStore);
 
   const optionStore = useOptionStore();
+
   const addLocalProductToCart = async (product: CartProductApi) => {
     const options = product.options.map((el) => el.option_values_id);
     const optionsApi = await optionStore.getOptionValues(options);
 
     cart.value?.product.push({
+      id: crypto.randomUUID(),
       ...product,
       options: optionsApi ? transformOptions(optionsApi) : [],
     });

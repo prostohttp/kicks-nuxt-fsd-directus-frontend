@@ -13,6 +13,7 @@ export { default as IconCheck } from "./IconCheck.vue";
 export { default as IconFilter } from "./IconFilter.vue";
 export { default as IconUploadFile } from "./IconUploadFile.vue";
 export { default as IconHeart } from "./IconHeart.vue";
+export { default as IconTrash } from "./IconTrash.vue";
 export { default as IconCloseFlat } from "./IconCloseFlat.vue";
 export { default as IconCircleLoading } from "./IconCircleLoading.vue";
 export { default as IconArrowRight } from "./IconArrowRight.vue";

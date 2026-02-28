@@ -25,6 +25,13 @@ const {
     await actionCartStore.saveCart();
   },
 });
+
+const deleteItem = async (id: string) => {
+  if (cart.value?.product) {
+    cart.value.product = cart.value.product.filter((el) => el.id !== id);
+  }
+  await actionCartStore.saveCart();
+};
 </script>
 
 <template>
@@ -48,7 +55,8 @@ const {
       type="counter"
       :is-deletable="true"
       class="app-cart__item"
-      @change-count="updateCart(product.id)"
+      @update-cart="updateCart(product.id)"
+      @delete-item="deleteItem"
     />
     <ErrorMessage v-if="error" :is-closable="false">
       Something went wrong — your cart wasn’t updated. <br />Please try again

@@ -3,9 +3,10 @@ import type { OptionValueApi } from "~/src/entities/Option/@x/Product";
 import { formatUSD } from "~/src/shared/lib";
 import { Select, type SelectItemType } from "~/src/shared/ui/form";
 import { ROUTES } from "~/src/shared/routes";
-import { IconChevronDown } from "~/src/shared/ui/icons";
+import { IconChevronDown, IconTrash } from "~/src/shared/ui/icons";
 
 const {
+  id,
   title,
   image,
   price,
@@ -15,6 +16,7 @@ const {
   isUpdated,
   isDeletable = false,
 } = defineProps<{
+  id?: string;
   title: string;
   image: string;
   price: number;
@@ -26,18 +28,19 @@ const {
 }>();
 
 const emit = defineEmits<{
-  changeCount: [];
+  updateCart: [];
+  deleteItem: [id: string];
 }>();
 
 const increaseCount = () => {
   count.value++;
-  emit("changeCount");
+  emit("updateCart");
 };
 
 const decreaseCount = () => {
   if (count.value > 1) {
     count.value--;
-    emit("changeCount");
+    emit("updateCart");
   }
 };
 
@@ -149,7 +152,13 @@ const isDisableButton = computed(
         </button>
       </div>
     </div>
-    <div v-if="isDeletable"></div>
+    <div
+      v-if="isDeletable && id"
+      class="cart-delete"
+      @click="emit('deleteItem', id)"
+    >
+      <IconTrash />
+    </div>
   </section>
 </template>
 
