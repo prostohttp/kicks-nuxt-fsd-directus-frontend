@@ -1,10 +1,13 @@
-<script setup lang='ts'>
+<script setup lang="ts">
+import { useCartStore } from "~/src/entities/Cart";
 
+const cartStore = useCartStore();
+const { cart } = storeToRefs(cartStore);
 </script>
 
 <template>
   <section class="create-order-form">
-    form
+    <pre>{{ cart }}</pre>
   </section>
 </template>
 

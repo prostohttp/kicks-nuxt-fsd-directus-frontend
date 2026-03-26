@@ -2,6 +2,7 @@ import {
   LOCAL_CART_KEY,
   updataLocalStorageByKey,
   useCartStore,
+  type CartInStoreType,
   type CartProductApi,
 } from "~/src/entities/Cart";
 import { updateCartApi, saveCartApi } from "../../api";
@@ -111,5 +112,18 @@ export const useActionsCartStore = defineStore("actions-cart", () => {
     }
   };
 
-  return { saveCart, saveProductToCart, addLocalProductToCart };
+  const replaceCart = async (cart: CartInStoreType) => {
+    try {
+      await updateCartApi(cartWithUnfilledOptions(cart));
+    } catch (e) {
+      const error = e as Error;
+      console.log(error.message);
+      throw createError({
+        message:
+          "Invalid response from server, please send this information to us",
+      });
+    }
+  };
+
+  return { saveCart, replaceCart, saveProductToCart, addLocalProductToCart };
 });

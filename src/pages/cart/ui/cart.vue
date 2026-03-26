@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { LOCAL_CART_KEY, useCartStore } from "~/src/entities/Cart";
+import { useCartStore } from "~/src/entities/Cart";
 import { EmptyDataHeading, SmallHeading } from "~/src/shared/ui/heading";
 import { Preloader } from "~/src/shared/ui/preloader";
 import { CartList } from "~/src/widgets/CartList";
@@ -11,24 +11,9 @@ const cartStore = useCartStore();
 
 const { cart } = storeToRefs(cartStore);
 
-const { data, isLoading } = useQuery({
-  key: () => ["app-cart"],
-  query: async () => {
-    return await cartStore.getUserCart();
-  },
-});
-
 const isLocalLoading = ref(true);
 
 onMounted(() => {
-  const localCart = localStorage.getItem(LOCAL_CART_KEY);
-  if (data.value) {
-    cart.value = data.value;
-    // TODO: use if need delete local cart when server card not empty
-    // updataLocalStorageByKey(LOCAL_CART_KEY, data.value);
-  } else if (!data.value && localCart) {
-    cart.value = JSON.parse(localCart);
-  }
   isLocalLoading.value = false;
 });
 
@@ -37,11 +22,8 @@ const user = useDirectusUser();
 
 <template>
   <section class="cart-page">
-    <Preloader v-if="isLoading || isLocalLoading" />
-    <div
-      v-else-if="!isLoading && cart?.product.length"
-      class="cart-page__content"
-    >
+    <Preloader v-if="isLocalLoading" />
+    <div v-else-if="cart?.product.length" class="cart-page__content">
       <SmallHeading
         heading="Saving to celebrate"
         class="cart-page__content__heading"
@@ -61,10 +43,11 @@ const user = useDirectusUser();
         <div class="cart-page__content__wrapper__order">
           <div class="sticky-order">
             <OrderSummary />
-            <NuxtLink :to="ROUTES.checkout">
-              <Button variant="fill" size="large">
-                Checkout
-              </Button>
+            <NuxtLink v-if="user" :to="ROUTES.checkout">
+              <Button variant="fill" size="large"> Checkout </Button>
+            </NuxtLink>
+            <NuxtLink v-else :to="ROUTES.auth">
+              <Button variant="fill" size="large"> Sign In </Button>
             </NuxtLink>
           </div>
         </div>

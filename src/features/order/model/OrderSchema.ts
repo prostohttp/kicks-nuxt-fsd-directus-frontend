@@ -9,7 +9,7 @@ export const Order = z.object({
   address: z.string().optional(),
   payment: z.string("Required").min(1, "Min 1 symbols"),
   delivery: z.string("Required").min(1, "Min 1 symbols"),
-  status: z.enum(["created", "paid", "canceled", "done"]),
+  status: z.literal("created"),
 });
 
 export type OrderSchemaType = z.infer<typeof Order>;

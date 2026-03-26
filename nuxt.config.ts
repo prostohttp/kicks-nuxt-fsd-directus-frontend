@@ -6,18 +6,6 @@ export default defineNuxtConfig({
       link: [{ rel: "icon", type: "image/png", href: "/favicon.png" }],
     },
   },
-  // nitro: {
-  //   storage: {
-  //     cache: { driver: "fs", base: "./.data/cache" },
-  //   },
-  //   preset: "node-server",
-  // },
-  // routeRules: {
-  //   "/category": { swr: true },
-  //   "/category/**": { swr: 3600 },
-  //   "/product": { swr: true },
-  //   "/product/**": { swr: 3600 },
-  // },
   experimental: {
     viewTransition: true,
   },
@@ -56,8 +44,9 @@ export default defineNuxtConfig({
     public: {
       userRole: "04d691ca-806d-4180-8cbd-bede772d62c7",
       directus: {
-        // url: process.env.NUXT_PUBLIC_API_BASE,
-        url: "http://localhost:8055",
+        url: import.meta.dev
+          ? import.meta.env.NUXT_PUBLIC_DIRECTUS_URL
+          : "http://localhost:8055",
       },
     },
   },
@@ -71,7 +60,9 @@ export default defineNuxtConfig({
       },
     },
     directus: {
-      baseURL: "http://localhost:8055/assets",
+      baseURL: import.meta.dev
+        ? import.meta.env.NUXT_PUBLIC_DIRECTUS_URL
+        : "http://localhost:8055/assets",
     },
   },
   vgsap: {
