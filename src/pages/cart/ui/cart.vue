@@ -1,23 +1,24 @@
 <script setup lang="ts">
 import { LOCAL_CART_KEY, useCartStore } from "~/src/entities/Cart";
-import { OrderSummary } from "~/src/entities/Order";
 import { EmptyDataHeading, SmallHeading } from "~/src/shared/ui/heading";
 import { Preloader } from "~/src/shared/ui/preloader";
 import { CartList } from "~/src/widgets/CartList";
 import { ROUTES } from "~/src/shared/routes";
+import OrderSummary from "~/src/widgets/Order/ui/OrderSummary/OrderSummary.vue";
+import { Button } from "~/src/shared/ui/form";
 
 const cartStore = useCartStore();
 
 const { cart } = storeToRefs(cartStore);
 
-const { data } = useQuery({
+const { data, isLoading } = useQuery({
   key: () => ["app-cart"],
   query: async () => {
     return await cartStore.getUserCart();
   },
 });
 
-const isLoading = ref(true);
+const isLocalLoading = ref(true);
 
 onMounted(() => {
   const localCart = localStorage.getItem(LOCAL_CART_KEY);
@@ -28,7 +29,7 @@ onMounted(() => {
   } else if (!data.value && localCart) {
     cart.value = JSON.parse(localCart);
   }
-  isLoading.value = false;
+  isLocalLoading.value = false;
 });
 
 const user = useDirectusUser();
@@ -36,7 +37,7 @@ const user = useDirectusUser();
 
 <template>
   <section class="cart-page">
-    <Preloader v-if="isLoading" />
+    <Preloader v-if="isLoading || isLocalLoading" />
     <div
       v-else-if="!isLoading && cart?.product.length"
       class="cart-page__content"
@@ -54,8 +55,19 @@ const user = useDirectusUser();
         </template>
       </SmallHeading>
       <div class="cart-page__content__wrapper">
-        <CartList class="cart-page__content__wrapper__products" />
-        <OrderSummary class="cart-page__content__wrapper__order" />
+        <div class="cart-page__content__wrapper__products">
+          <CartList />
+        </div>
+        <div class="cart-page__content__wrapper__order">
+          <div class="sticky-order">
+            <OrderSummary />
+            <NuxtLink :to="ROUTES.checkout">
+              <Button variant="fill" size="large">
+                Checkout
+              </Button>
+            </NuxtLink>
+          </div>
+        </div>
       </div>
     </div>
     <EmptyDataHeading v-else> Empty cart </EmptyDataHeading>

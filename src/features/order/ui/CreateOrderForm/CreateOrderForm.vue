@@ -3,8 +3,8 @@
 </script>
 
 <template>
-  <section class="order-summary">
-    Order summary
+  <section class="create-order-form">
+    form
   </section>
 </template>
 

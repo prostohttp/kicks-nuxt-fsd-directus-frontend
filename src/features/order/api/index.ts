@@ -1,7 +1,7 @@
 import { CollectionType } from "~/src/shared/api";
-import type { FastOrderType } from "../model/fastOrderSchema";
+import type { FastOrderSchemaType } from "../model/fastOrderSchema";
 
-export const createFastOrderApi = (order: FastOrderType) => {
+export const createFastOrderApi = (order: FastOrderSchemaType) => {
   try {
     return useNuxtApp().$api.create(CollectionType.FAST_ORDERS, [order]);
   } catch (e) {

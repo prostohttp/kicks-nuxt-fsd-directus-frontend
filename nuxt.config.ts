@@ -1,13 +1,23 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  // ssr: false, for simple deploy only!
-  // ssr: false,
   app: {
     head: {
       title: "Kicks marketplace",
       link: [{ rel: "icon", type: "image/png", href: "/favicon.png" }],
     },
   },
+  // nitro: {
+  //   storage: {
+  //     cache: { driver: "fs", base: "./.data/cache" },
+  //   },
+  //   preset: "node-server",
+  // },
+  // routeRules: {
+  //   "/category": { swr: true },
+  //   "/category/**": { swr: 3600 },
+  //   "/product": { swr: true },
+  //   "/product/**": { swr: 3600 },
+  // },
   experimental: {
     viewTransition: true,
   },

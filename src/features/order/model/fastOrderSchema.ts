@@ -10,4 +10,4 @@ export const FastOrder = z.object({
   options: z.array(z.object({ option_values_id: z.string() })),
 });
 
-export type FastOrderType = z.infer<typeof FastOrder>;
+export type FastOrderSchemaType = z.infer<typeof FastOrder>;

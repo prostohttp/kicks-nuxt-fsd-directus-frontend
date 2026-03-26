@@ -1,0 +1,31 @@
+.order-summary {
+  @media (max-width: 991px) {
+    padding-top: 0;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 24px 0 0;
+
+    @media (max-width: 991px) {
+      gap: 14px;
+    }
+
+    &__item {
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      align-items: center;
+      font-weight: 500;
+      font-size: 20px;
+
+      &--last {
+        font-family: "Rubik";
+        font-size: 24px;
+        font-weight: 600;
+      }
+    }
+  }
+}

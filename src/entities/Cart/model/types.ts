@@ -6,16 +6,18 @@ export interface CartInStoreType {
   product: ProductCartInStoreType[];
 }
 
+export interface ProductInStoreType {
+  id: number;
+  title: string;
+  slug: string;
+  image: string;
+  price: number;
+}
+
 export interface ProductCartInStoreType {
   id?: string;
   count: number;
-  product: {
-    id: number;
-    title: string;
-    slug: string;
-    image: string;
-    price: number;
-  };
+  product: ProductInStoreType;
   options: OptionsProductCartInStoreType[];
 }
 

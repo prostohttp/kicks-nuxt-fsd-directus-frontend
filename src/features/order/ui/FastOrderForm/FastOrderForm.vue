@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { Button, Input, Textarea } from "~/src/shared/ui/form";
-import { FastOrder, type FastOrderType } from "../../model/fastOrderSchema";
+import {
+  FastOrder,
+  type FastOrderSchemaType,
+} from "../../model/fastOrderSchema";
 import { ErrorMessage, SuccessMessage } from "~/src/shared/ui/message";
 import { IconArrowRight, IconCircleLoading } from "~/src/shared/ui/icons";
-import { useOrderStore } from "../../model/stores/order";
+import { useFeatureOrderStore } from "../../model/stores/order";
 
 const { optionIds, count, productId } = defineProps<{
   optionIds: {
@@ -15,7 +18,7 @@ const { optionIds, count, productId } = defineProps<{
 
 const user = useDirectusUser();
 
-const orderStore = useOrderStore();
+const orderStore = useFeatureOrderStore();
 const { fastOrder } = storeToRefs(orderStore);
 
 const isUserAndName = computed(() =>
@@ -30,7 +33,7 @@ const isUserAndEmail = computed(() =>
 
 fastOrder.value.email = isUserAndEmail.value;
 
-const errors = ref<Partial<FastOrderType>>({
+const errors = ref<Partial<FastOrderSchemaType>>({
   name: "",
   email: "",
 });
@@ -48,7 +51,7 @@ const {
   reset,
   asyncStatus,
 } = useMutation({
-  mutation: async (data: FastOrderType) => {
+  mutation: async (data: FastOrderSchemaType) => {
     const result = FastOrder.safeParse(data);
     clearErrors();
 

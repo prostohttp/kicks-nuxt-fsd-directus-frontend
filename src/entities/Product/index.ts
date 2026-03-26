@@ -1,6 +1,7 @@
 export { default as ProductCard } from "./ui/ProductCard/ProductCard.vue";
 export { default as ProductDetails } from "./ui/ProductDetails/ProductDetails.vue";
 export { default as CompactProductCard } from "./ui/CompactProductCard/CompactProductCard.vue";
+export { default as MicroProductCard } from "./ui/MicroProductCard/MicroProductCard.vue";
 
 export type { ApiProductType } from "./api/types";
 export type {

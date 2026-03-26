@@ -34,6 +34,7 @@ const ratingModel = ref(rating);
         v-if="gallery[0]?.directus_files_id"
         provider="directus"
         format="webp"
+        loading="lazy"
         :src="gallery[0].directus_files_id"
       />
     </div>

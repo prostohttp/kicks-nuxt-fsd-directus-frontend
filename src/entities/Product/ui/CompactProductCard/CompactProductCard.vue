@@ -129,35 +129,37 @@ const isDisableButton = computed(
       :list
       class="compact-product-card__qty"
     />
-    <div v-if="type === 'counter'" class="cart-count">
-      <div class="cart-count__value">
-        <span>Quantity</span>
-        <strong>{{ count }}</strong>
+    <div class="cart-actions">
+      <div v-if="type === 'counter'" class="cart-count">
+        <div class="cart-count__value">
+          <span>Quantity</span>
+          <strong>{{ count }}</strong>
+        </div>
+        <div class="cart-count__actions">
+          <button
+            class="cart-count__actions__increase"
+            :disabled="isUpdated"
+            @click="increaseCount"
+          >
+            <IconChevronDown :style="{ rotate: '180deg' }" />
+          </button>
+          <button
+            class="cart-count__actions__decrease"
+            :disabled="isUpdated"
+            :style="isDisableButton"
+            @click="decreaseCount"
+          >
+            <IconChevronDown />
+          </button>
+        </div>
       </div>
-      <div class="cart-count__actions">
-        <button
-          class="cart-count__actions__increase"
-          :disabled="isUpdated"
-          @click="increaseCount"
-        >
-          <IconChevronDown :style="{ rotate: '180deg' }" />
-        </button>
-        <button
-          class="cart-count__actions__decrease"
-          :disabled="isUpdated"
-          :style="isDisableButton"
-          @click="decreaseCount"
-        >
-          <IconChevronDown />
-        </button>
+      <div
+        v-if="isDeletable && id"
+        class="cart-delete"
+        @click="emit('deleteItem', id)"
+      >
+        <IconTrash />
       </div>
-    </div>
-    <div
-      v-if="isDeletable && id"
-      class="cart-delete"
-      @click="emit('deleteItem', id)"
-    >
-      <IconTrash />
     </div>
   </section>
 </template>

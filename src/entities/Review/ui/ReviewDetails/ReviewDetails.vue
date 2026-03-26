@@ -38,7 +38,11 @@ const openPreviewHandler = (gallery: ImageType[]) => {
           class="review-details__gallery__image"
           @click="openPreviewHandler(review.gallery)"
         >
-          <NuxtImg provider="directus" :src="directus_files_id" />
+          <NuxtImg
+            loading="lazy"
+            provider="directus"
+            :src="directus_files_id"
+          />
         </div>
       </template>
     </div>
@@ -53,6 +57,7 @@ const openPreviewHandler = (gallery: ImageType[]) => {
         <NuxtImg
           provider="directus"
           format="webp"
+          loading="lazy"
           :src="directus_files_id"
           @click="isOpenPreview = !isOpenPreview"
         />

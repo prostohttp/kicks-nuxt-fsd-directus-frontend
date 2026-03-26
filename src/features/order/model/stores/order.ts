@@ -1,8 +1,10 @@
+import { useOrderStore, type OrderType } from "~/src/entities/Order";
 import { createFastOrderApi } from "../../api";
-import type { FastOrderType } from "../fastOrderSchema";
+import type { FastOrderSchemaType } from "../fastOrderSchema";
 
-export const useOrderStore = defineStore("order", () => {
-  const fastOrder = ref<FastOrderType>({
+export const useFeatureOrderStore = defineStore("order-feature", () => {
+  // TODO: refactor replace to entity order!!!
+  const fastOrder = ref<FastOrderSchemaType>({
     name: "",
     email: "",
     comment: "",
@@ -12,7 +14,9 @@ export const useOrderStore = defineStore("order", () => {
     options: [],
   });
 
-  const createFastOrder = async (order: FastOrderType) => {
+  const orderStore = useOrderStore();
+
+  const createFastOrder = async (order: FastOrderSchemaType) => {
     try {
       return await createFastOrderApi(order);
     } catch (e) {
@@ -25,5 +29,9 @@ export const useOrderStore = defineStore("order", () => {
     }
   };
 
-  return { fastOrder, createFastOrder };
+  const createOrder = async (createOrder?: OrderType) => {
+    orderStore.order = createOrder;
+  };
+
+  return { fastOrder, createFastOrder, createOrder };
 });

@@ -17,6 +17,7 @@ export {
   type ProductCartInStoreType,
   type OptionsProductCartInStoreType,
   type OptionValueProductCartInStoreType,
+  type ProductInStoreType,
 } from "./model/types";
 
 export { updataLocalStorageByKey } from "./model/helpers";
