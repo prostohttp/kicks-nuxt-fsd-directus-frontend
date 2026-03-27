@@ -2,6 +2,7 @@ export { useCartStore } from "./model/stores/cart";
 
 export type {
   CartTypeApi,
+  CartResponseTypeApi,
   CartWithoutPopulatedProductApi,
   CartProductApi,
   CartProductWithoutPopulatedProductApi,

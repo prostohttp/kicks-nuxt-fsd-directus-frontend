@@ -9,20 +9,14 @@ import { Button } from "~/src/shared/ui/form";
 
 const cartStore = useCartStore();
 
-const { cart } = storeToRefs(cartStore);
-
-const isLocalLoading = ref(true);
-
-onMounted(() => {
-  isLocalLoading.value = false;
-});
+const { cart, isReady } = storeToRefs(cartStore);
 
 const user = useDirectusUser();
 </script>
 
 <template>
   <section class="cart-page">
-    <Preloader v-if="isLocalLoading" />
+    <Preloader v-if="!isReady" />
     <div v-else-if="cart?.product.length" class="cart-page__content">
       <SmallHeading
         heading="Saving to celebrate"

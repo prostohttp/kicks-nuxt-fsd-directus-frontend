@@ -4,7 +4,13 @@ import { MainMenu } from "~/src/shared/ui/navigation";
 import { IconAccount, IconSearch } from "~/src/shared/ui/icons";
 import { ROUTES } from "~/src/shared/routes";
 import { getMainMenu } from "~/src/shared/api";
-import { CartCounterLabel } from "~/src/entities/Cart";
+import {
+  CartCounterLabel,
+  LOCAL_CART_KEY,
+  updataLocalStorageByKey,
+  useCartStore,
+} from "~/src/entities/Cart";
+import { useActionsCartStore } from "~/src/features/cart";
 
 const { data: menu } = useQuery({
   key: ["main-menu"],
@@ -12,6 +18,35 @@ const { data: menu } = useQuery({
 });
 
 const user = useDirectusUser();
+
+const cartStore = useCartStore();
+const { cart, isReady } = storeToRefs(cartStore);
+
+const actionsCartStore = useActionsCartStore();
+
+const { data } = useQuery({
+  key: () => ["user-cart"],
+  query: async () => {
+    return await cartStore.getUserCart();
+  },
+  placeholderData: (previousData) => previousData,
+});
+
+onMounted(async () => {
+  const localCart = localStorage.getItem(LOCAL_CART_KEY);
+  if (data.value) {
+    cart.value = data.value;
+    await actionsCartStore.replaceCart(cart.value);
+    updataLocalStorageByKey(LOCAL_CART_KEY, cart.value);
+  } else if (localCart) {
+    await actionsCartStore.replaceCart({
+      user_created: user.value?.id,
+      ...JSON.parse(localCart),
+    });
+    updataLocalStorageByKey(LOCAL_CART_KEY, cart.value);
+  }
+  isReady.value = true;
+});
 </script>
 
 <template>

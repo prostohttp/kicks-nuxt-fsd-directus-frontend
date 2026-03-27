@@ -4,6 +4,12 @@ export interface CartTypeApi {
   product: CartProductApi[];
 }
 
+export interface CartResponseTypeApi {
+  id: string;
+  user_created: string;
+  product: (string | undefined)[];
+}
+
 export interface CartProductApi {
   id?: string;
   product: {

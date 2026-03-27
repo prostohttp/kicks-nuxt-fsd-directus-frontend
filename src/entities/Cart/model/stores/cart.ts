@@ -6,13 +6,15 @@ export const useCartStore = defineStore("cart", () => {
   const user = useDirectusUser();
   const cart = ref<CartInStoreType | undefined>();
 
+  const isReady = ref(false);
+
   const getUserCart = async () => {
     if (user.value) {
-      cart.value = await getUserCartApiWithProductAndOptions(user.value.id);;
+      cart.value = await getUserCartApiWithProductAndOptions(user.value.id);
       useStorage(LOCAL_CART_KEY, cart.value);
       return cart.value;
     }
   };
 
-  return { cart, getUserCart };
+  return { cart, isReady, getUserCart };
 });
