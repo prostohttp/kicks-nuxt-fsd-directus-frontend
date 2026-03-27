@@ -114,7 +114,7 @@ export const useActionsCartStore = defineStore("actions-cart", () => {
 
   const replaceCart = async (cart: CartInStoreType) => {
     try {
-      cartStore.cart = await updateCartApi(cartWithUnfilledOptions(cart));
+      return await updateCartApi(cartWithUnfilledOptions(cart));
     } catch (e) {
       const error = e as Error;
       console.log(error.message);

@@ -29,24 +29,38 @@ const { data } = useQuery({
   query: async () => {
     return await cartStore.getUserCart();
   },
-  placeholderData: (previousData) => previousData,
 });
 
 onMounted(async () => {
   const localCart = localStorage.getItem(LOCAL_CART_KEY);
+
   if (data.value) {
     cart.value = data.value;
     await actionsCartStore.replaceCart(cart.value);
     updataLocalStorageByKey(LOCAL_CART_KEY, cart.value);
   } else if (localCart) {
-    await actionsCartStore.replaceCart({
+    cart.value = await actionsCartStore.replaceCart({
       user_created: user.value?.id,
       ...JSON.parse(localCart),
     });
+
     updataLocalStorageByKey(LOCAL_CART_KEY, cart.value);
   }
   isReady.value = true;
 });
+
+watch(
+  cart,
+  async (newCart) => {
+    if (newCart) {
+      await actionsCartStore.replaceCart(newCart);
+      updataLocalStorageByKey(LOCAL_CART_KEY, newCart);
+    }
+  },
+  {
+    deep: true,
+  },
+);
 </script>
 
 <template>
