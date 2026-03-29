@@ -1,0 +1,39 @@
+.switch-block {
+  margin-bottom: 24px;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  background-color: transparent;
+  border: 1px solid #232321;
+  color: #232321;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &__left {
+    h4 {
+      font-size: 22px;
+      font-weight: 600;
+      font-family: "Rubik";
+      padding-bottom: 8px;
+    }
+  }
+
+  &__right {
+    font-size: 20px;
+    font-family: "Rubik";
+    font-weight: 600;
+  }
+
+  &--active {
+    background-color: #fff;
+    border-color: #fff;
+
+    .switch-block__right {
+      color: #4a69e2;
+    }
+  }
+}

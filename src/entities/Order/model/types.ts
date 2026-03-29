@@ -8,14 +8,14 @@ export interface OrderType {
   status: OrderStatus;
   items?: number;
   price?: number;
-  delivery?: {
+  delivery: {
     id: string;
     title: string;
     price: number;
     description?: string;
   };
   cart?: string;
-  payment?: {
+  payment: {
     id: string;
     title: string;
     description?: string;
@@ -24,6 +24,6 @@ export interface OrderType {
   last_name?: string;
   address?: string;
   phone?: string;
-  email: string;
+  email?: string;
   total?: number;
 }

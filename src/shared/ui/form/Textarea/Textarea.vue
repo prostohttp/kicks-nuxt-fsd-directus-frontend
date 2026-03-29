@@ -9,12 +9,13 @@ const {
   name,
   placeholder,
   label,
+  info,
   error,
   disabled = false,
   theme = "dark",
   required,
 } = defineProps<TextareaType>();
-const model = defineModel<string>({ required: true });
+const model = defineModel<string>();
 </script>
 
 <template>
@@ -41,6 +42,9 @@ const model = defineModel<string>({ required: true });
         :disabled
       />
       <IconFieldError v-if="error" class="textarea-field-icon" />
+    </span>
+    <span class="textarea__info">
+      {{ info }}
     </span>
     <span v-if="error" class="textarea-message-error">
       {{ error }}

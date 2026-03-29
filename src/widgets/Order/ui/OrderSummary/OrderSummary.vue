@@ -25,7 +25,12 @@ const price = computed(() =>
     0,
   ),
 );
-const total = computed(() => (price.value ? price.value + 0 : 0));
+
+const total = computed(() =>
+  price.value && order.value
+    ? price.value + order.value.delivery.price
+    : price.value,
+);
 
 watch(
   cart,
@@ -49,8 +54,8 @@ watch(
         id: "",
         title: "",
       },
-      total: total.value,
-      email: "",
+      total: newOrder?.total || total.value,
+      email: newOrder?.email,
       status: "created",
     });
 
@@ -63,17 +68,17 @@ watch(
 watch(
   cart,
   () => {
-    featureOrderStore.createOrder({
-      ...order.value,
-      items: items.value,
-      price: price.value,
-      total: total.value,
-      email: "",
-      status: "created",
-    });
+    if (order.value) {
+      featureOrderStore.createOrder({
+        ...order.value,
+        items: items.value,
+        price: price.value,
+        total: total.value,
+      });
 
-    localStorage.removeItem(LOCAL_CART_ORDER);
-    useStorage(LOCAL_CART_ORDER, order);
+      localStorage.removeItem(LOCAL_CART_ORDER);
+      useStorage(LOCAL_CART_ORDER, order);
+    }
   },
   { deep: true },
 );

@@ -3,7 +3,6 @@ import { createFastOrderApi } from "../../api";
 import type { FastOrderSchemaType } from "../fastOrderSchema";
 
 export const useFeatureOrderStore = defineStore("order-feature", () => {
-  // TODO: refactor replace to entity order!!!
   const fastOrder = ref<FastOrderSchemaType>({
     name: "",
     email: "",

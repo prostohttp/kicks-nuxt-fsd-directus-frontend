@@ -13,6 +13,14 @@ $dark: #232321;
   flex-direction: column;
   gap: 8px;
 
+  &__info {
+    color: #36323b;
+    font-family: "Inter";
+    font-size: 12px;
+    position: relative;
+    top: -4px;
+  }
+
   &-disabled {
     opacity: 0.3;
   }

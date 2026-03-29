@@ -10,6 +10,7 @@ const {
   placeholder,
   label,
   error,
+  info,
   disabled = false,
   theme = "dark",
   type = "text",
@@ -44,6 +45,9 @@ const model = defineModel<string>();
         :disabled
       />
       <IconFieldError v-if="error" class="input-field-icon" />
+    </span>
+    <span class="input__info">
+      {{ info }}
     </span>
     <span v-if="error" class="input-message-error">
       {{ error }}
