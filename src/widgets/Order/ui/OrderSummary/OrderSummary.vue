@@ -32,56 +32,38 @@ const total = computed(() =>
     : price.value,
 );
 
-watch(
-  cart,
-  (newCart) => {
-    const localOrder = localStorage.getItem(LOCAL_CART_ORDER);
-    let newOrder;
-    if (localOrder) {
-      newOrder = JSON.parse(localOrder) as OrderType;
-    }
+onMounted(() => {
+  const localOrder = localStorage.getItem(LOCAL_CART_ORDER);
+  let newOrder;
+  if (localOrder) {
+    newOrder = JSON.parse(localOrder) as OrderType;
+  }
 
-    featureOrderStore.createOrder({
-      user_created: newCart?.user_created,
-      items: items.value,
-      price: price.value,
-      delivery: newOrder?.delivery || {
-        id: "",
-        title: "",
-        price: 0,
-      },
-      payment: newOrder?.payment || {
-        id: "",
-        title: "",
-      },
-      total: newOrder?.total || total.value,
-      email: newOrder?.email,
-      status: "created",
-    });
+  featureOrderStore.createOrder({
+    user_created: cart.value?.user_created,
+    items: items.value,
+    price: price.value,
+    delivery: newOrder
+      ? newOrder.delivery
+      : {
+          id: "",
+          title: "",
+          price: 0,
+        },
+    payment: newOrder
+      ? newOrder.payment
+      : {
+          id: "",
+          title: "",
+        },
+    total: newOrder ? newOrder.total : total.value,
+    email: newOrder?.email,
+    status: "created",
+  });
 
-    localStorage.removeItem(LOCAL_CART_ORDER);
-    useStorage(LOCAL_CART_ORDER, order);
-  },
-  { immediate: true, once: true },
-);
-
-watch(
-  cart,
-  () => {
-    if (order.value) {
-      featureOrderStore.createOrder({
-        ...order.value,
-        items: items.value,
-        price: price.value,
-        total: total.value,
-      });
-
-      localStorage.removeItem(LOCAL_CART_ORDER);
-      useStorage(LOCAL_CART_ORDER, order);
-    }
-  },
-  { deep: true },
-);
+  localStorage.removeItem(LOCAL_CART_ORDER);
+  useStorage(LOCAL_CART_ORDER, order);
+});
 </script>
 
 <template>

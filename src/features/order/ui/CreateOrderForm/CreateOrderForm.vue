@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { useOrderStore } from "~/src/entities/Order";
+import { useStorage } from "@vueuse/core";
+import { LOCAL_CART_ORDER, useOrderStore } from "~/src/entities/Order";
 import { Button, Checkbox, Input, Textarea } from "~/src/shared/ui/form";
 import { SmallHeading } from "~/src/shared/ui/heading";
 import type { OrderSchemaType } from "../../model/OrderSchema";
@@ -32,8 +33,11 @@ watch(
   () => order.value?.delivery.price,
   (newPrice) => {
     if (newPrice !== undefined) {
-      if (order.value?.total) {
+      if (order.value) {
         order.value.total = newPrice + Number(order.value.price);
+
+        localStorage.removeItem(LOCAL_CART_ORDER);
+        useStorage(LOCAL_CART_ORDER, order.value);
       }
     }
   },
