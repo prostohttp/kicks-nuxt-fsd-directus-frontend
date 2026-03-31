@@ -48,6 +48,7 @@ export const getUserCartApi = async (id: string) => {
         fields,
         filter: {
           user_created: { _eq: id },
+          in_order: { _eq: false },
         },
       },
     );
