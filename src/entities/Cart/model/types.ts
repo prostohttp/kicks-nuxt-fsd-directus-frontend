@@ -3,6 +3,7 @@ export const LOCAL_CART_KEY = "kicks-cart";
 export interface CartInStoreType {
   id?: string;
   user_created?: string;
+  in_order: boolean;
   product: ProductCartInStoreType[];
 }
 

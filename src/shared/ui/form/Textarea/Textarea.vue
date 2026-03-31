@@ -15,6 +15,7 @@ const {
   theme = "dark",
   required,
 } = defineProps<TextareaType>();
+
 const model = defineModel<string>();
 </script>
 

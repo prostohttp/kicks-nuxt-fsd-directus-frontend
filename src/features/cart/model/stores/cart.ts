@@ -60,6 +60,7 @@ export const useActionsCartStore = defineStore("actions-cart", () => {
         } else {
           if (!cart.value) {
             cart.value = {
+              in_order: false,
               product: [],
             };
           }
@@ -125,5 +126,19 @@ export const useActionsCartStore = defineStore("actions-cart", () => {
     }
   };
 
-  return { saveCart, replaceCart, saveProductToCart, addLocalProductToCart };
+  const clearCart = async () => {
+    if (cart.value) {
+      await replaceCart({ ...cart.value, in_order: true });
+    }
+    cart.value = undefined;
+    localStorage.removeItem(LOCAL_CART_KEY);
+  };
+
+  return {
+    saveCart,
+    replaceCart,
+    saveProductToCart,
+    addLocalProductToCart,
+    clearCart,
+  };
 });

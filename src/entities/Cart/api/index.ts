@@ -6,6 +6,7 @@ export const getUserCartApiWithProductAndOptions = async (id: string) => {
   try {
     const fields = [
       "user_created",
+      "in_order",
       "id",
       "product.product.id",
       "product.product.title",
@@ -26,6 +27,7 @@ export const getUserCartApiWithProductAndOptions = async (id: string) => {
         fields,
         filter: {
           user_created: { _eq: id },
+          in_order: { _eq: false },
         },
       },
     );
@@ -38,11 +40,7 @@ export const getUserCartApiWithProductAndOptions = async (id: string) => {
 
 export const getUserCartApi = async (id: string) => {
   try {
-    const fields = [
-      "user_created",
-      "id",
-      "product"
-    ];
+    const fields = ["user_created", "id", "product"];
 
     const cart = await useNuxtApp().$api.getAllRaw<CartTypeApi>(
       CollectionType.CART,

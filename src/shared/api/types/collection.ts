@@ -14,6 +14,7 @@ export enum CollectionType {
   CATEGORIES = "product_categories",
   FORM_SUBMISSIONS = "form_submissions",
   FAST_ORDERS = "fast_orders",
+  ORDERS = "orders",
   CART = "cart",
   SHIPPING = "delivery",
   PAYMENT = "payment",

@@ -33,14 +33,14 @@ const isUserAndEmail = computed(() =>
 
 fastOrder.value.email = isUserAndEmail.value;
 
-const errors = ref<Partial<FastOrderSchemaType>>({
+const errors = reactive<Partial<FastOrderSchemaType>>({
   name: "",
   email: "",
 });
 
 const clearErrors = () => {
-  errors.value.name = "";
-  errors.value.email = "";
+  errors.name = "";
+  errors.email = "";
 };
 
 const isCreatedOrder = ref(false);
@@ -58,13 +58,13 @@ const {
     if (!result.success) {
       result.error.issues.forEach((error) => {
         const key = error.path[0];
-        if (key && key in errors.value) {
-          if (key === "name") errors.value.name = error.message;
-          if (key === "email") errors.value.email = error.message;
+        if (key && key in errors) {
+          if (key === "name") errors.name = error.message;
+          if (key === "email") errors.email = error.message;
         }
       });
     } else {
-      await orderStore.createFastOrder(result.data);
+      await orderStore.saveFastOrder(result.data);
       clearErrors();
       isCreatedOrder.value = true;
     }

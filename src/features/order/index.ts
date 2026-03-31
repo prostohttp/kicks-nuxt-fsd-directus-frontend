@@ -6,4 +6,4 @@ export type { OrderSchemaType } from "./model/OrderSchema";
 
 export { useFeatureOrderStore } from "./model/stores/order";
 
-export { createFastOrderApi } from "./api/index";
+export { createFastOrderApi, createOrderApi } from "./api/index";
