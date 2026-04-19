@@ -6,12 +6,13 @@ import { CartList } from "~/src/widgets/CartList";
 import { ROUTES } from "~/src/shared/routes";
 import OrderSummary from "~/src/widgets/Order/ui/OrderSummary/OrderSummary.vue";
 import { Button } from "~/src/shared/ui/form";
+import { useAppUser } from "~/src/entities/User";
 
 const cartStore = useCartStore();
 
 const { cart, isReady } = storeToRefs(cartStore);
 
-const user = useDirectusUser();
+const user = useAppUser();
 </script>
 
 <template>

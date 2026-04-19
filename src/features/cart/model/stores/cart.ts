@@ -13,6 +13,7 @@ import {
   transformOptions,
 } from "../helpers";
 import { useOptionStore } from "~/src/entities/Option";
+import { useAppUser } from "~/src/entities/User";
 
 export const useActionsCartStore = defineStore("actions-cart", () => {
   const cartStore = useCartStore();
@@ -96,7 +97,7 @@ export const useActionsCartStore = defineStore("actions-cart", () => {
 
   const saveCart = async () => {
     try {
-      const user = useDirectusUser();
+      const user = useAppUser();
 
       if (user.value && cart.value) {
         await updateCartApi(cartWithUnfilledOptions(cart.value));

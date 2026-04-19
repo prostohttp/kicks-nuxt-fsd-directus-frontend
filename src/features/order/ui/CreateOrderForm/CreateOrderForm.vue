@@ -3,7 +3,7 @@ import { useStorage } from "@vueuse/core";
 import { LOCAL_CART_ORDER, useOrderStore } from "~/src/entities/Order";
 import { Button, Checkbox, Input, Textarea } from "~/src/shared/ui/form";
 import { SmallHeading } from "~/src/shared/ui/heading";
-import { Order, type OrderSchemaType } from "../../model/OrderSchema";
+import { Order, type OrderSchemaType } from "../../model/orderSchema";
 import { getShippingApi, ShippingList } from "~/src/entities/Shipping";
 import { getPaymentApi, PaymentList } from "~/src/entities/Payment";
 import { Placeholder } from "~/src/shared/ui/Placeholder";
@@ -14,8 +14,10 @@ import {
 } from "~/src/shared/ui/message";
 import { ROUTES } from "~/src/shared/routes";
 import { useCartStore } from "~/src/entities/Cart";
+
 // TODO: import from cart feature to order feature
 import { useActionsCartStore } from "~/src/features/cart";
+import { AccountTabs } from "~/src/entities/Account";
 
 const orderStore = useOrderStore();
 const { order } = storeToRefs(orderStore);
@@ -129,7 +131,12 @@ const redirectToAccount = () => {
   setTimeout(() => {
     actionOrderStore.clearOrder();
     actionCartStore.clearCart();
-    navigateTo(ROUTES.account);
+    navigateTo({
+      path: ROUTES.account,
+      query: {
+        tab: AccountTabs.orders,
+      },
+    });
   }, 3000);
 };
 

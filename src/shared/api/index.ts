@@ -24,6 +24,8 @@ export type {
   ApiProductActiveOptionType,
 } from "./types/option";
 
+export type { GenderType, UserTypeApi } from "./types/user";
+
 export { getPageBlocksAndSeo } from "./base/pageApi";
 export { getBanner } from "./base/bannerApi";
 export { getForm } from "../ui/form/api";

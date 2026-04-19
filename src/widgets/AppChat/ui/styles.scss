@@ -1,0 +1,11 @@
+.chat {
+  height: 600px;
+  overflow-y: auto;
+  background-color: #fff;
+  border-radius: 24px;
+  padding: 40px;
+
+  @media (max-width: 991px) {
+    height: 60dvh;
+  }
+}

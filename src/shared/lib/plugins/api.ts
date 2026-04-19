@@ -65,7 +65,6 @@ export default defineNuxtPlugin(() => {
   };
 
   const create = <T>(collection: CollectionType, items: T[]) => {
-
     return createItems<T>({ collection, items });
   };
 

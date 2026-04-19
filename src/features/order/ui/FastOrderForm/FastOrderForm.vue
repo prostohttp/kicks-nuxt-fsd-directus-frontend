@@ -16,22 +16,8 @@ const { optionIds, count, productId } = defineProps<{
   productId: number;
 }>();
 
-const user = useDirectusUser();
-
 const orderStore = useFeatureOrderStore();
 const { fastOrder } = storeToRefs(orderStore);
-
-const isUserAndName = computed(() =>
-  user.value && user.value.first_name ? user.value.first_name : "",
-);
-
-fastOrder.value.name = isUserAndName.value;
-
-const isUserAndEmail = computed(() =>
-  user.value && user.value.email ? user.value.email : "",
-);
-
-fastOrder.value.email = isUserAndEmail.value;
 
 const errors = reactive<Partial<FastOrderSchemaType>>({
   name: "",

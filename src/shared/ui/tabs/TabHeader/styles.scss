@@ -1,0 +1,40 @@
+.tab-header {
+  display: flex;
+  gap: 15px;
+
+  @media (max-width: 991px) {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    border-radius: 16px;
+    background-color: #fff;
+    height: 50px;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &--active {
+      color: #fff;
+      background-color: #000;
+    }
+
+    @media (max-width: 991px) {
+      padding: 0 10px;
+    }
+  }
+
+  &__action {
+    margin-left: auto;
+
+    @media (max-width: 480px) {
+      margin-left: 0;
+    }
+  }
+}

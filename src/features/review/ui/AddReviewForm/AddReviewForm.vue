@@ -12,6 +12,7 @@ import { AddReview } from "../../model/addReviewSchema";
 import { useProductStore } from "~/src/entities/Product";
 import { useReviewStore } from "../../model/stores/review";
 import { IconFieldError } from "~/src/shared/ui/icons";
+import { useAppUser } from "~/src/entities/User";
 
 const isOpenForm = defineModel<boolean>({ required: true });
 
@@ -116,7 +117,7 @@ const {
 
       errorMessages.value = errorsObject;
     } else {
-      const user = useDirectusUser();
+      const user = useAppUser();
       // TODO: review was added when user login on other tab and leave review another tab
       if (!user.value) {
         return createError({ message: "Please log in to write a review" });

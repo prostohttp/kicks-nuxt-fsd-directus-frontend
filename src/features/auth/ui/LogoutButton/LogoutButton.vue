@@ -38,3 +38,11 @@ const {
     </ErrorMessage>
   </section>
 </template>
+
+<style lang="scss">
+.logout-button {
+  button {
+    background-color: #4a69e2;
+  }
+}
+</style>

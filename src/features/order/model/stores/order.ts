@@ -5,12 +5,14 @@ import {
 } from "~/src/entities/Order";
 import { createFastOrderApi, createOrderApi } from "../../api";
 import type { FastOrderSchemaType } from "../fastOrderSchema";
-import type { OrderSchemaType } from "../OrderSchema";
+import type { OrderSchemaType } from "../orderSchema";
+import { useAppUser } from "~/src/entities/User";
 
 export const useFeatureOrderStore = defineStore("order-feature", () => {
+  const user = useAppUser();
   const fastOrder = ref<FastOrderSchemaType>({
-    name: "",
-    email: "",
+    name: user.value?.first_name || "",
+    email: user.value?.email || "",
     comment: "",
     status: "inProgress",
     product: undefined,
@@ -21,10 +23,10 @@ export const useFeatureOrderStore = defineStore("order-feature", () => {
   const order = ref<OrderSchemaType>({
     user_created: "",
     cart: "",
-    first_name: "",
-    last_name: "",
-    email: "",
-    address: "",
+    first_name: user.value?.first_name || "",
+    last_name: user.value?.last_name || "",
+    email: user.value?.email || "",
+    address: user.value?.address || "",
     payment: "",
     delivery: "",
     status: "created",

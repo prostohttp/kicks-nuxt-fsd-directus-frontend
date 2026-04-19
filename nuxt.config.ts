@@ -72,13 +72,14 @@ export default defineNuxtConfig({
     presets: [],
     breakpoint: 991,
   },
-  security: {
-    headers: {
-      contentSecurityPolicy: {
-        "img-src": false,
-      },
-    },
-  },
+  //TODO: use only prod
+  // security: {
+  //   headers: {
+  //     contentSecurityPolicy: {
+  //       "img-src": false,
+  //     },
+  //   },
+  // },
   directus: {
     cookieMaxAge: 7 * 24 * 60 * 60 * 1000,
     autoRefresh: true,
@@ -95,7 +96,8 @@ export default defineNuxtConfig({
     "@nuxtjs/seo",
     "nuxt-directus",
     "v-gsap-nuxt",
-    "nuxt-security",
+    //TODO: use only prod
+    // "nuxt-security",
     "vue3-carousel-nuxt",
   ],
 });

@@ -1,4 +1,5 @@
 import type { DirectusFile } from "nuxt-directus";
+import { useAppUser } from "~/src/entities/User";
 import {
   CollectionType,
   type AddedReviewType,
@@ -7,7 +8,7 @@ import {
 } from "~/src/shared/api";
 
 export const addReview = async (item: AddReviewType, images: File[]) => {
-  const user = useDirectusUser();
+  const user = useAppUser();
   const files = useDirectusFiles();
 
   try {

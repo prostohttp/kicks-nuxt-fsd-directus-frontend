@@ -3,10 +3,11 @@ import { Button } from "~/src/shared/ui/form";
 import { useActionsCartStore } from "../../model/stores/cart";
 import { IconCircleLoading } from "~/src/shared/ui/icons";
 import type { CartProductApi } from "~/src/entities/Cart";
+import { useAppUser } from "~/src/entities/User";
 
 const { loading } = defineProps<{ loading: boolean }>();
 
-const user = useDirectusUser();
+const user = useAppUser();
 
 const actionsCartStore = useActionsCartStore();
 

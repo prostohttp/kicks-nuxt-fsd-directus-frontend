@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { getReviews, ReviewDetails } from "~/src/entities/Review";
+import { useAppUser } from "~/src/entities/User";
 import { AddReviewForm } from "~/src/features/review";
 import { CollectionType, getForm } from "~/src/shared/api";
 import { ROUTES } from "~/src/shared/routes";
@@ -11,7 +12,7 @@ const { reviewIds, productId } = defineProps<{
   productId: number;
 }>();
 
-const user = useDirectusUser();
+const user = useAppUser();
 const isOpenForm = ref(false);
 const isAlwaysOpenForm = ref(true);
 

@@ -1,6 +1,6 @@
 import { CollectionType } from "~/src/shared/api";
 import type { FastOrderSchemaType } from "../model/fastOrderSchema";
-import type { OrderSchemaType } from "../model/OrderSchema";
+import type { OrderSchemaType } from "../model/orderSchema";
 
 export const createFastOrderApi = (order: FastOrderSchemaType) => {
   try {

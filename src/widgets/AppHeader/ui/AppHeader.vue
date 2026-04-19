@@ -14,13 +14,14 @@ import {
 import { useActionsCartStore } from "~/src/features/cart";
 import { LOCAL_CART_ORDER, useOrderStore } from "~/src/entities/Order";
 import { useFeatureOrderStore } from "~/src/features/order";
+import { useAppUser } from "~/src/entities/User";
 
 const { data: menu } = useQuery({
   key: ["main-menu"],
   query: async () => await getMainMenu(),
 });
 
-const user = useDirectusUser();
+const user = useAppUser();
 
 const cartStore = useCartStore();
 const { cart, isReady } = storeToRefs(cartStore);
